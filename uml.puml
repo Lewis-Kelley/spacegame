@@ -1,0 +1,182 @@
+@startuml
+abstract class drawable {
++ {abstract} draw(): bool
+}
+
+class sprite extends drawable {
+- x: double
+- y: double
+- w: double
+- h: double
++ draw(): bool
+}
+sprite --> window
+
+note top of entity
+Technically, this is a decorator of drawable,
+with the draw() method really just calling the
+image's method
+end note
+abstract class entity extends drawable {
+- image: drawable
+- occ_tile: tile
++ draw(): bool
++ make_attack(target: unit): attack
+}
+entity --> drawable
+entity --> tile
+entity --> attack
+
+abstract class unit extends entity {
++ {abstract} get_hull_health(): short
++ {abstract} get_shield_health(): short
++ {abstract} get_engine_health(): short
++ {abstract} get_weapon_health(): short
++ {abstract} get_total_power(): short
++ {abstract} get_shield_power(): short
++ {abstract} get_engine_power(): short
++ {abstract} get_weapon_power(): short
++ {abstract} get_move_range(): short
++ {abstract} get_attack_range(): short
++ {abstract} handle_attack(att: attack): void
+}
+
+unit --> attack
+
+class turret extends unit, listener {
+- hull_health: short
+- shield_health: short
+- weapon_health: short
+- total_power: short
++ get_hull_health(): short
++ get_shield_health(): short
++ get_engine_health(): short
++ get_weapon_health(): short
++ get_total_power(): short
++ get_shield_power(): short
++ get_engine_power(): short
++ get_weapon_power(): short
++ get_move_range(): short
++ get_attack_range(): short
++ handle_attack(att: attack): void
++ handle_event(event: SDL_Event *): void
+}
+
+class fighter extends unit, listener {
+- hull_health: short
+- shield_health: short
+- engine_power: short
+- weapon_health: short
+- total_power: short
+- shield_power: short
+- engine_power: short
+- weapon_power: short
++ get_hull_health(): short
++ get_shield_health(): short
++ get_engine_health(): short
++ get_weapon_health(): short
++ get_total_power(): short
++ get_shield_power(): short
++ get_engine_power(): short
++ get_weapon_power(): short
++ get_move_range(): short
++ get_attack_range(): short
++ handle_attack(att: attack): void
++ handle_event(event: SDL_Event *): void
+}
+
+abstract class entity_factory {
++ {abstract} create(): entity *
+}
+
+entity_factory --> entity
+
+class tile {
+- x: short
+- y: short
+- neighbors: tile * [4]
+- occ_ent: entity *
+- trans_ent: entity *
++ move_occ_ent(dir: direction): boolean
+}
+
+tile --> direction
+
+enum direction {
+EAST = 1
+NORTH = 2
+WEST = 4
+SOUTH = 8
+}
+
+tile --> entity
+
+abstract class attack {
+- tar_comp: component
+- weapon_power: short
+- distance: short
++ get_weapon_power(): short
++ get_targeted_comp(): component
++ get_distance(): short
++ {abstract} get_base_dmg(): short
+}
+note left
+To be used to pass around as a data
+packet for entities to deal with
+as needed
+end note
+
+attack --> component
+
+enum component {
+SHIELD = 1
+ENGINE = 2
+WEAPON = 4
+ALL = 7
+}
+
+class window {
+wind: SDL_Window *
+rend: SDL_Renderer *
+width: short
+height: short
+init(): bool
+free(): void
+}
+note left
+Actually a namespace
+end note
+
+class event_handler {
+- {static} listeners: map<uint32_t, vector<listener>>
++ {static} handle_event(event: SDL_Event *): void
++ {static} add_handler(event_code: uint32_t, action: listener): void
+}
+event_handler --> listener
+
+abstract class listener {
++ {abstract} handle_event(event: SDL_Event *): void
+}
+
+class main {
+- entity_factory_map: map<string, entity_factory>
+- drawables: vector<drawable>
+- e_handler: event_handler
+}
+
+main --> window
+main --> entity_factory
+main --> drawable
+main --> event_handler
+main --> map_loader
+
+class map_loader {
+load_map(filename: string): vector<vector<tile>>
+}
+note top
+Actually a namespace
+end note
+
+map_loader --> tile
+
+@enduml
