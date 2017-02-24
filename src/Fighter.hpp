@@ -1,8 +1,10 @@
 #ifndef FIGHTER_H
 #define FIGHTER_H
 
+#include "MoveEvent.hpp"
 #include "Unit.hpp"
 #include "Listener.hpp"
+#include "Sprite.hpp"
 
 /**
  * The standard Fighter Unit that will be the primary game board Unit.
@@ -18,7 +20,7 @@ private:
     short engine_power;
     short weapon_power;
 public:
-    Fighter(Drawable *img);
+    Fighter(Tile *tile, Sprite *img);
     virtual short get_hull_health() { return hull_health; }
     virtual short get_shield_health() { return shield_health; }
     virtual short get_engine_health() { return engine_health; }
@@ -30,8 +32,8 @@ public:
     virtual Attack *make_attack(Unit *target);
     virtual short get_move_range();
     virtual void handle_attack(Attack *att);
-    virtual void handle_event(SDL_Event *event);
     virtual void catch_event(Event *event);
+    void handle_move_event(MoveEvent *event);
 };
 
 #endif /* FIGHTER_H */

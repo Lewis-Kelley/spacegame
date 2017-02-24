@@ -14,6 +14,7 @@ public:
      * @return True if successfully drawn, false if there was an error.
      */
     virtual bool draw() = 0;
+    virtual void update(double delta) = 0;
 };
 
 #endif /* DRAWABLE_H */

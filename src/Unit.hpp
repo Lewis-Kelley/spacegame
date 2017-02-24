@@ -10,8 +10,8 @@
  */
 class Unit : public Entity {
 public:
-    Unit();
-    Unit(Drawable *img);
+    Unit(Tile *tile);
+    Unit(Tile *tile, Drawable *img);
 
     /**
      * TODO Check what this means in the design docs.

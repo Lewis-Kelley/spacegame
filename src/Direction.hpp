@@ -8,4 +8,6 @@ enum Direction {
     SOUTH = 3
 };
 
+Direction opp_dir(Direction dir);
+
 #endif /* DIRECTION_H */

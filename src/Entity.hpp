@@ -5,6 +5,7 @@
 
 #include "Drawable.hpp"
 #include "Attack.hpp"
+#include "Direction.hpp"
 
 class Tile;
 class Unit;
@@ -15,12 +16,12 @@ class Unit;
  * tile on the board.
  */
 class Entity : public Drawable {
-private:
+protected:
     Drawable *image; ///< The image representing this entity or NULL if none
     Tile *occ_tile; ///< The tile this entity occupies
 public:
-    Entity();
-    Entity(Drawable *img);
+    Entity(Tile *tile);
+    Entity(Tile *tile, Drawable *img);
 
     /**
      * Draws this entity on the screen if there is one to be drawn.
@@ -29,6 +30,8 @@ public:
      * this entity. False otherwise.
      */
     bool draw() { return (image == NULL) ? true : image->draw(); }
+
+    virtual void update(double delta) { if (image != NULL) image->update(delta); }
 
     /**
      * Creates a new attack object with target as the target of the
@@ -39,6 +42,8 @@ public:
      * information about the attack.
      */
     virtual Attack *make_attack(Unit *target) = 0;
+
+    bool move(Direction dir);
 };
 #include "Tile.hpp"
 #include "Unit.hpp"

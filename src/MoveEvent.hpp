@@ -4,6 +4,9 @@
 #include "Event.hpp"
 #include "Direction.hpp"
 
+/**
+ * Event dealing with moving units.
+ */
 class MoveEvent : public Event {
 private:
     Direction dir;
