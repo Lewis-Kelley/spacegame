@@ -5,8 +5,9 @@
  * An abstract class representing anything that can be drawn onto the
  * screen.
  */
-class drawable {
+class Drawable {
 public:
+    virtual ~Drawable() {}
     /**
      * Draws whatever this drawable represents to the screen.
      *

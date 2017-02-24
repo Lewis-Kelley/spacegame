@@ -1,7 +1,7 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-enum component {
+enum Component {
     SHIELD = 1,
     ENGINE = 2,
     WEAPON = 4,

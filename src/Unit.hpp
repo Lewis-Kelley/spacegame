@@ -1,14 +1,18 @@
 #ifndef UNIT_H
 #define UNIT_H
 
-#include "entity.hpp"
-#include "attack.hpp"
+#include "Drawable.hpp"
+#include "Entity.hpp"
+#include "Attack.hpp"
 
 /**
  * An entity that has stats and can be attacked
  */
-class unit : entity {
+class Unit : public Entity {
 public:
+    Unit();
+    Unit(Drawable *img);
+
     /**
      * TODO Check what this means in the design docs.
      *
@@ -66,7 +70,7 @@ public:
      * Accepts an attack targeted at this unit and handles it in
      * whatever way is appropriate.
      */
-    virtual void handle_attack(attack att) = 0;
+    virtual void handle_attack(Attack *att) = 0;
 };
 
 #endif /* UNIT_H */

@@ -3,11 +3,13 @@
 
 #include <SDL2/SDL.h>
 
+#include "Event.hpp"
+
 /**
  * Abstract class representing all things that want to be triggered
  * upon some SDL_Event.
  */
-class listener {
+class Listener {
 public:
     /**
      * Handles whatever SDL_Event it expects to get. The
@@ -15,7 +17,7 @@ public:
      *
      * @param event The SDL_Event to handle.
      */
-    virtual void catch_event(SDL_Event *event) = 0;
+    virtual void catch_event(Event *event) = 0;
 };
 
 #endif /* LISTENER_H */

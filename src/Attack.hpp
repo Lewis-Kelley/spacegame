@@ -1,21 +1,21 @@
 #ifndef ATTACK_H
 #define ATTACK_H
 
-#include "component.hpp"
+#include "Component.hpp"
 
 /**
  * Holds all the pertinant information about an attack in a packet
  * that can be easily passed around.
  */
-class attack {
+class Attack {
 private:
-    component tar_comp; ///< The targeted component
+    Component tar_comp; ///< The targeted component
     short distance; ///< The grid distance between attacker and attacked unit
 public:
     /**
      * @return The component under attack.
      */
-    component get_targeted_comp() { return tar_comp; }
+    Component get_targeted_comp() { return tar_comp; }
 
     /**
      * @return The Manhattan distance between the attacking entity and

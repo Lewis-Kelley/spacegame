@@ -9,19 +9,20 @@
 
 /**
  * Singleton class holding all the information about the physical
- * window itself, including the SDL instances of the renderer and
- * window.
+ * Window itself, including the SDL instances of the renderer and
+ * Window.
  */
-class window {
+class Window {
 private:
-    static window *self;
+    static Window *self;
+    double prev_time;
     SDL_Window *wind;
     SDL_Renderer *rend;
     short width;
     short height;
-    window();
+    Window();
 public:
-    static window *get_instance();
+    static Window *get_instance();
     bool init();
     bool init(short width, short height);
     void free();
@@ -44,7 +45,15 @@ public:
     /**
      * Draws whatever has been held in the renderer to the screen.
      */
-    void present_render() { SDL_RenderPresent(rend); }
+    void present_render() {
+        prev_time = SDL_GetTicks();
+        SDL_RenderPresent(rend);
+    }
+
+    /**
+     * Return the delta time since last the previous render.
+     */
+    double get_delta() { return SDL_GetTicks() - prev_time; }
 };
 
 #endif /* WINDOW_H */

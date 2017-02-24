@@ -3,22 +3,25 @@
 
 #include <stdlib.h>
 
-#include "drawable.hpp"
-#include "attack.hpp"
+#include "Drawable.hpp"
+#include "Attack.hpp"
 
-class tile;
-class unit;
+class Tile;
+class Unit;
 
 /**
  * Represents any entity that can occupy a tile. It may or may not be
  * attackable, mobile, or anything else. All it does is exists in one
  * tile on the board.
  */
-class entity : drawable {
+class Entity : public Drawable {
 private:
-    drawable *image; ///< The image representing this entity or NULL if none
-    tile *occ_tile; ///< The tile this entity occupies
+    Drawable *image; ///< The image representing this entity or NULL if none
+    Tile *occ_tile; ///< The tile this entity occupies
 public:
+    Entity();
+    Entity(Drawable *img);
+
     /**
      * Draws this entity on the screen if there is one to be drawn.
      *
@@ -35,9 +38,9 @@ public:
      * @return A new attack object filled with all the pertinent
      * information about the attack.
      */
-    virtual attack make_attack(unit target) = 0;
+    virtual Attack *make_attack(Unit *target) = 0;
 };
-#include "tile.hpp"
-#include "unit.hpp"
+#include "Tile.hpp"
+#include "Unit.hpp"
 
 #endif /* ENTITY_H */

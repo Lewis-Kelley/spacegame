@@ -1,7 +1,7 @@
 #ifndef DIRECTION_H
 #define DIRECTION_H
 
-enum direction {
+enum Direction {
     EAST = 0,
     NORTH = 1,
     WEST = 2,
