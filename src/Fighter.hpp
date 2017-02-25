@@ -5,6 +5,7 @@
 #include "Unit.hpp"
 #include "Listener.hpp"
 #include "Sprite.hpp"
+#include "TileDrawable.hpp"
 
 /**
  * The standard Fighter Unit that will be the primary game board Unit.
@@ -20,7 +21,7 @@ private:
     short engine_power;
     short weapon_power;
 public:
-    Fighter(Tile *tile, Sprite *img);
+    Fighter(Tile *tile, Drawable *img);
     virtual short get_hull_health() { return hull_health; }
     virtual short get_shield_health() { return shield_health; }
     virtual short get_engine_health() { return engine_health; }

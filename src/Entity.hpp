@@ -2,8 +2,10 @@
 #define ENTITY_H
 
 #include <stdlib.h>
+#include <exception>
 
 #include "Drawable.hpp"
+#include "TileDrawable.hpp"
 #include "Attack.hpp"
 #include "Direction.hpp"
 
@@ -16,12 +18,19 @@ class Unit;
  * tile on the board.
  */
 class Entity : public Drawable {
+private:
+    class NoDrawableException : public std::exception {
+        virtual const char* what() const throw()
+        {
+            return "This Entity has no Drawable\n";
+        }
+    };
 protected:
-    Drawable *image; ///< The image representing this entity or NULL if none
+    TileDrawable *image; ///< The image representing this entity or NULL if none
     Tile *occ_tile; ///< The tile this entity occupies
 public:
     Entity(Tile *tile);
-    Entity(Tile *tile, Drawable *img);
+    Entity(Tile *tile, TileDrawable *img);
 
     /**
      * Draws this entity on the screen if there is one to be drawn.
@@ -33,6 +42,11 @@ public:
 
     virtual void update(double delta) { if (image != NULL) image->update(delta); }
 
+    virtual double get_draw_x();
+    virtual double get_draw_y();
+    virtual void set_draw_x(double x);
+    virtual void set_draw_y(double y);
+
     /**
      * Creates a new attack object with target as the target of the
      * attack.
@@ -43,7 +57,7 @@ public:
      */
     virtual Attack *make_attack(Unit *target) = 0;
 
-    bool move(Direction dir);
+    virtual bool move_ent(Direction dir);
 };
 #include "Tile.hpp"
 #include "Unit.hpp"

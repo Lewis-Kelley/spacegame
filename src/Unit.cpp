@@ -15,5 +15,5 @@ Unit::Unit(Tile *tile) : Entity(tile)
  * @param tile The Tile this Unit occupies.
  * @param img The Sprite that represents this Unit.
  */
-Unit::Unit(Tile *tile, Drawable *img) : Entity(tile, img) {
+Unit::Unit(Tile *tile, TileDrawable *img) : Entity(tile, img) {
 }

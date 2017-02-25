@@ -10,7 +10,7 @@
 #include "Listener.hpp"
 
 /**
- * Handles SDL_Event's.
+ * Handles Event's.
  */
 class EventHandler {
 private:

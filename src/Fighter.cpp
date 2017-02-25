@@ -6,9 +6,8 @@
  * @param tile The Tile this Fighter occupies.
  * @param img The image representing this Fighter.
  */
-Fighter::Fighter(Tile *tile, Sprite *img) : Unit(tile, img)
-{
-}
+Fighter::Fighter(Tile *tile, Drawable *img)
+    : Unit(tile, new TileDrawable(50, img)) { }
 
 void Fighter::handle_attack(Attack *att)
 {
@@ -22,29 +21,19 @@ void Fighter::handle_attack(Attack *att)
  */
 void Fighter::handle_move_event(MoveEvent *event) {
     Direction dir;
-    double dx;
-    double dy;
     double speed = 0.1;
     switch(event->get_type()) {
     case Event::START_MOVE_EAST:
         dir = EAST;
-        dx = speed;
-        dy = 0;
         break;
     case Event::START_MOVE_NORTH:
         dir = NORTH;
-        dx = 0;
-        dy = -speed;
         break;
     case Event::START_MOVE_WEST:
         dir = WEST;
-        dx = -speed;
-        dy = 0;
         break;
     case Event::START_MOVE_SOUTH:
         dir = SOUTH;
-        dx = 0;
-        dy = speed;
         break;
     default:
         fprintf(stderr,
@@ -52,13 +41,20 @@ void Fighter::handle_move_event(MoveEvent *event) {
         return;
     }
 
-    if (!Entity::move(dir)) {
+    TileDrawable *img = (TileDrawable *)Entity::image;
+    try {
+        img->start_move(speed, 1, dir);
+    } catch (std::exception e) {
+        fprintf(stderr, "%s\n", e.what());
         return;
     }
 
-    Sprite *sprite = (Sprite *)Entity::image;
-    sprite->set_dx(dx);
-    sprite->set_dy(dy);
+    if (!move_ent(dir)) {
+        img->stop_move();
+        return;
+    }
+
+    occ_tile = occ_tile->get_neighbor(dir);
 }
 
 void Fighter::catch_event(Event *event)

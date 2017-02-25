@@ -15,8 +15,6 @@ Sprite::Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, SDL_Texture *tex) {
     this->dest_rect = new SDL_Rect();
     *this->dest_rect = dest_rect;
     given_tex = true;
-    dx = 0;
-    dy = 0;
 }
 
 /**
@@ -49,8 +47,6 @@ Sprite::Sprite(SDL_Rect rect, SDL_Texture *tex, bool dest) {
     **target_rect = rect;
     *other_rect = NULL;
     given_tex = true;
-    dx = 0;
-    dy = 0;
 }
 
 /**
@@ -65,8 +61,6 @@ Sprite::Sprite(SDL_Texture *tex) {
     src_rect = NULL;
     dest_rect = NULL;
     given_tex = true;
-    dx = 0;
-    dy = 0;
 }
 
 /**
@@ -84,8 +78,6 @@ Sprite::Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, std::string filename) {
     this->dest_rect = new SDL_Rect();
     *this->dest_rect = dest_rect;
     given_tex = false;
-    dx = 0;
-    dy = 0;
 }
 
 /**
@@ -118,8 +110,6 @@ Sprite::Sprite(SDL_Rect rect, std::string filename, bool dest) {
     **target_rect = rect;
     *other_rect = NULL;
     given_tex = false;
-    dx = 0;
-    dy = 0;
 }
 
 /**
@@ -134,8 +124,6 @@ Sprite::Sprite(std::string filename) {
     src_rect = NULL;
     dest_rect = NULL;
     given_tex = false;
-    dx = 0;
-    dy = 0;
 }
 
 /**
@@ -157,6 +145,26 @@ Sprite::~Sprite() {
         SDL_DestroyTexture(tex);
         tex = NULL;
     }
+}
+
+double Sprite::get_draw_x()
+{
+    return dest_rect->x;
+}
+
+double Sprite::get_draw_y()
+{
+    return dest_rect->y;
+}
+
+void Sprite::set_draw_x(double x)
+{
+    dest_rect->x = x;
+}
+
+void Sprite::set_draw_y(double y)
+{
+    dest_rect->y = y;
 }
 
 /**
@@ -193,14 +201,4 @@ SDL_Texture *Sprite::load_texture(std::string filename) {
  */
 bool Sprite::draw() {
     return SDL_RenderCopy(wind->get_renderer(), tex, src_rect, dest_rect);
-}
-
-/**
- * Move the sprite according to its dx, dy, and the time passed.
- *
- * @param delta The amount of time passed since the last tick.
- */
-void Sprite::update(double delta) {
-    dest_rect->x += delta * dx;
-    dest_rect->y += delta * dy;
 }

@@ -17,8 +17,11 @@ private:
     SDL_Rect *src_rect; ///< The source rectangle of the Sprite.
     SDL_Rect *dest_rect; ///< The rectangle of where the Sprite will be drawn.
     bool given_tex; ///< Used to decide whether or not to destroy tex.
-    double dx;
-    double dy;
+protected:
+    double get_draw_x();
+    double get_draw_y();
+    void set_draw_x(double x);
+    void set_draw_y(double y);
 public:
     Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, SDL_Texture *tex);
     Sprite(SDL_Rect rect, SDL_Texture *tex, bool dest);
@@ -29,17 +32,6 @@ public:
     ~Sprite();
     static SDL_Texture *load_texture(std::string filename);
     bool draw();
-    void update(double delta);
-
-    /**
-     * @param dx The value to set dx to.
-     */
-    void set_dx(double dx) { this->dx = dx; }
-
-    /**
-     * @param dy The value to set dy to.
-     */
-    void set_dy(double dy) { this->dy = dy; }
 };
 
 #endif /* SPRITE_H */

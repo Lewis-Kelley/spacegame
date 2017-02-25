@@ -1,5 +1,5 @@
-#ifndef MOVEEVENT_H
-#define MOVEEVENT_H
+#ifndef STOPMOVEEVENT_H
+#define STOPMOVEEVENT_H
 
 #include <stdio.h>
 
@@ -9,12 +9,12 @@
 /**
  * Event dealing with moving units.
  */
-class MoveEvent : public Event {
+class StopMoveEvent : public Event {
 private:
     Direction dir;
 public:
-    MoveEvent(Direction dir);
+    StopMoveEvent(Direction dir);
     virtual Event_Type get_type();
 };
 
-#endif /* MOVEEVENT_H */
+#endif /* STOPMOVEEVENT_H */

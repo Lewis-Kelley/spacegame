@@ -12,12 +12,12 @@
  */
 class Tile {
 private:
-    short x; ///< The x coordinate of this tile in the board (left = 0)
-    short y; ///< The y coordinate of this tile in the board (up = 0)
+    short row;
+    short col;
     Tile *neighbors[4]; ///< The 4 tiles next to this tile ordered by direction
     std::vector<Entity *> occ_ents; ///< The Entity's in this Tile
 public:
-    Tile(short x, short y);
+    Tile(short row, short col);
     void set_neighbor(Direction dir, Tile *neighbor);
     void add_neighbor(Direction dir, Tile *neighbor);
     Tile *get_neighbor(Direction dir);

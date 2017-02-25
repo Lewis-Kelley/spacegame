@@ -20,11 +20,50 @@ Entity::Entity(Tile *tile)
  * @param tile The tile this Entity occupies.
  * @param img The drawable that will represent this entity.
  */
-Entity::Entity(Tile *tile, Drawable *img)
+Entity::Entity(Tile *tile, TileDrawable *img)
 {
     occ_tile = tile;
     image = img;
     occ_tile->add_entity(this);
+}
+
+double Entity::get_draw_x()
+{
+    if (image != NULL) {
+        return image->get_draw_x();
+    }
+
+    NoDrawableException ex;
+    throw ex;
+}
+
+double Entity::get_draw_y()
+{
+    if (image != NULL) {
+        return image->get_draw_y();
+    }
+
+    NoDrawableException ex;
+    throw ex;
+}
+void Entity::set_draw_x(double x)
+{
+    if (image != NULL) {
+        image->set_draw_x(x);
+    }
+
+    NoDrawableException ex;
+    throw ex;
+}
+
+void Entity::set_draw_y(double y)
+{
+    if (image != NULL) {
+        image->set_draw_y(y);
+    }
+
+    NoDrawableException ex;
+    throw ex;
 }
 
 /**
@@ -33,7 +72,7 @@ Entity::Entity(Tile *tile, Drawable *img)
  * @param dir The Direction in which to move this Entity.
  * @return True if successfully moved, false if the process failed.
  */
-bool Entity::move(Direction dir)
+bool Entity::move_ent(Direction dir)
 {
     return occ_tile->move_entity(this, dir);
 }

@@ -70,7 +70,8 @@ Event *events::convert_SDL_Event(SDL_Event *sdl_event) {
 
     if (type == Event::NONE
         || events::event_fact_map.find(type) == events::event_fact_map.end()) {
-        fprintf(stderr, "No available event factory.\n");
+        fprintf(stderr, "Events::convert_sdl_events: \
+No available event factory.\n");
         return NULL;
     }
 

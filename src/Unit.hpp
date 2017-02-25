@@ -4,14 +4,17 @@
 #include "Drawable.hpp"
 #include "Entity.hpp"
 #include "Attack.hpp"
+#include "TileDrawable.hpp"
 
 /**
  * An entity that has stats and can be attacked
  */
 class Unit : public Entity {
+protected:
+    TileDrawable *image;
 public:
     Unit(Tile *tile);
-    Unit(Tile *tile, Drawable *img);
+    Unit(Tile *tile, TileDrawable *img);
 
     /**
      * TODO Check what this means in the design docs.

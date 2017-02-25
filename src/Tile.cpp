@@ -3,13 +3,13 @@
 /**
  * Create a new tile at the given coordinates.
  *
- * @param x The x coordinate of the tile (left = 0)
- * @param y The y coordinate of the tile (up = 0)
+ * @param row The row this Tile occupies
+ * @param col The column this Tile occupies
  */
-Tile::Tile(short x, short y)
+Tile::Tile(short row, short col)
 {
-    this->x = x;
-    this->y = y;
+    this->row = row;
+    this->col = col;
 
     for (int i = 0; i < 4; i++) {
         neighbors[i] = NULL;

@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+#include "TileMap.hpp"
 #include "QuitListener.hpp"
 #include "Window.hpp"
 #include "EventHandler.hpp"
@@ -25,17 +26,15 @@ int main(int argc, char *argv[])
     EventHandler *handler = EventHandler::get_instance();
     std::vector<Drawable *> drawings;
 
-    Tile *tile = NULL;
+    Tile ***tile_map = generate_grid(10, 10);
     Sprite *fighter_sprite = NULL;
     Fighter *red_fighter = NULL;
     try {
-        tile = new Tile(0, 0);
-        tile->add_neighbor(EAST, new Tile(0, 1));
         fighter_sprite
             = new Sprite((SDL_Rect){0, 0, 50, 50},
                          "/home/lewis/programs/spacegame/assets/red_ship.png",
                          true);
-        red_fighter = new Fighter(tile, fighter_sprite);
+        red_fighter = new Fighter(tile_map[0][0], fighter_sprite);
         handler->add_listener(Event::START_MOVE_EAST, red_fighter);
         handler->add_listener(Event::START_MOVE_NORTH, red_fighter);
         handler->add_listener(Event::START_MOVE_WEST, red_fighter);
