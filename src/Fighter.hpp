@@ -1,17 +1,21 @@
 #ifndef FIGHTER_H
 #define FIGHTER_H
 
+#include "StopMoveEvent.hpp"
 #include "MoveEvent.hpp"
 #include "Unit.hpp"
 #include "Listener.hpp"
 #include "Sprite.hpp"
 #include "TileDrawable.hpp"
 
+#define MOVE_SPEED 0.25
+
 /**
  * The standard Fighter Unit that will be the primary game board Unit.
  */
 class Fighter : public Unit, public Listener {
 private:
+    Direction moving;
     short hull_health;
     short shield_health;
     short engine_health;
@@ -34,7 +38,10 @@ public:
     virtual short get_move_range();
     virtual void handle_attack(Attack *att);
     virtual void catch_event(Event *event);
+    bool move_fighter(Direction dir);
     void handle_move_event(MoveEvent *event);
+    void handle_stop_event(StopMoveEvent *event);
+    void handle_move_finished_event(MoveFinishedEvent *event);
 };
 
 #endif /* FIGHTER_H */

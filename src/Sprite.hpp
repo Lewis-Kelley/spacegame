@@ -12,6 +12,8 @@
  */
 class Sprite : public Drawable {
 private:
+    double x; ///< The full-detail x position.
+    double y; ///< The full-detail y position.
     Window *wind; ///< The information about the SDL renderer.
     SDL_Texture *tex; ///< The SDL_Texture that actually holds the Sprite.
     SDL_Rect *src_rect; ///< The source rectangle of the Sprite.

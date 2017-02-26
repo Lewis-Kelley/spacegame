@@ -19,13 +19,13 @@ void TileDrawable::update(double delta)
     Drawable::move(dx * delta, dy * delta);
 
     if (dx * (get_draw_x() - end_x) > 0) {
-        events::event_queue.push(new StopMoveEvent(dx > 0 ? EAST : WEST));
+        events::event_queue.push(new MoveFinishedEvent());
         set_draw_x(end_x);
         dx = 0;
     }
 
     if (dy * (get_draw_y() - end_y) > 0) {
-        events::event_queue.push(new StopMoveEvent(dy > 0 ? NORTH : NORTH));
+        events::event_queue.push(new MoveFinishedEvent());
         set_draw_y(end_y);
         dy = 0;
     }
@@ -36,7 +36,7 @@ void TileDrawable::update(double delta)
  *
  * @param speed The number of pixels to move per second.
  * @param num_tiles The number of tiles to move in the given
- * direction.
+ * direction or -1 if should continue endlessly.
  * @param dir The Direction in which to move.
  */
 void TileDrawable::start_move(double speed, int num_tiles, Direction dir)
@@ -65,15 +65,15 @@ void TileDrawable::start_move(double speed, int num_tiles, Direction dir)
         d_other = &dx;
     }
 
-    if (*d_other != 0) {
+    if (ABS(*d_other) >= ROUNDOFF) {
         AlreadyMovingException ex;
         throw ex;
     }
 
-    if (*d_goal == 0) {
+    if (ABS(*d_goal) < ROUNDOFF) {
         *end_goal = base_goal;
     }
-    *end_goal += sign * num_tiles * tile_width;
+    *end_goal += sign * (num_tiles != -1 ? num_tiles : MAX_TILES) * tile_width;
     *end_other = base_other;
 
     *d_goal = sign * speed;
@@ -81,9 +81,37 @@ void TileDrawable::start_move(double speed, int num_tiles, Direction dir)
 }
 
 /**
- * Immediately halts whatever movement is going on.
+ * Stops the move at the next tile.
+ *
+ * FIXME Currently buggy?
  */
 void TileDrawable::stop_move()
+{
+    double *dgoal;
+    double *end_goal;
+    int sign;
+
+    if (dx != 0) {
+        dgoal = &dx;
+        end_goal = &end_x;
+    } else if (dy != 0) {
+        dgoal = &dy;
+        end_goal = &end_y;
+    } else {
+        return; // Not moving to begin with
+    }
+
+    sign = (*dgoal > 0 ? 1 : -1);
+
+    while (*end_goal - sign * get_draw_x() > tile_width) {
+        *end_goal -= tile_width;
+    }
+}
+
+/**
+ * Immediately halts whatever movement is going on.
+ */
+void TileDrawable::kill_move()
 {
     dx = 0;
     dy = 0;

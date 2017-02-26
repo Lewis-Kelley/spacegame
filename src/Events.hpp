@@ -9,6 +9,7 @@
 #include "Event.hpp"
 #include "QuitEvent.hpp"
 #include "MoveEvent.hpp"
+#include "StopMoveEvent.hpp"
 
 namespace events {
     extern std::map<SDL_Keycode, Event::Event_Type> key_up_map;

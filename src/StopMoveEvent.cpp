@@ -26,6 +26,9 @@ Event::Event_Type StopMoveEvent::get_type()
     case SOUTH:
         type = Event::END_MOVE_SOUTH;
         break;
+    case NO_DIRECTION:
+        type = Event::NONE;
+        break;
     }
 
     return type;

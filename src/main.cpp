@@ -39,6 +39,11 @@ int main(int argc, char *argv[])
         handler->add_listener(Event::START_MOVE_NORTH, red_fighter);
         handler->add_listener(Event::START_MOVE_WEST, red_fighter);
         handler->add_listener(Event::START_MOVE_SOUTH, red_fighter);
+        handler->add_listener(Event::END_MOVE_EAST, red_fighter);
+        handler->add_listener(Event::END_MOVE_NORTH, red_fighter);
+        handler->add_listener(Event::END_MOVE_WEST, red_fighter);
+        handler->add_listener(Event::END_MOVE_SOUTH, red_fighter);
+        handler->add_listener(Event::MOVE_FINISHED, red_fighter);
         drawings.push_back(red_fighter);
     } catch (char const* err) {
         fprintf(stderr, "ERROR: %s\n", err);

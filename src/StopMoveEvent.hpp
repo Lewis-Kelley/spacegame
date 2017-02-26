@@ -15,6 +15,11 @@ private:
 public:
     StopMoveEvent(Direction dir);
     virtual Event_Type get_type();
+
+    /**
+     * @return The direction this StopMoveEvent corresponds to.
+     */
+    Direction get_direction() { return dir; }
 };
 
 #endif /* STOPMOVEEVENT_H */

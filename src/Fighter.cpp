@@ -7,10 +7,32 @@
  * @param img The image representing this Fighter.
  */
 Fighter::Fighter(Tile *tile, Drawable *img)
-    : Unit(tile, new TileDrawable(50, img)) { }
+    : Unit(tile, new TileDrawable(50, img))
+{
+    moving = NO_DIRECTION;
+}
 
 void Fighter::handle_attack(Attack *att)
 {
+}
+
+bool Fighter::move_fighter(Direction dir)
+{
+    TileDrawable *img = (TileDrawable *)Entity::image;
+
+    if (img->is_moving()) {
+        return false;
+    }
+
+    img->start_move(MOVE_SPEED, 1, dir);
+
+    if (!move_ent(dir)) {
+        img->kill_move();
+        return false;
+    }
+
+    occ_tile = occ_tile->get_neighbor(dir);
+    return true;
 }
 
 /**
@@ -19,42 +41,29 @@ void Fighter::handle_attack(Attack *att)
  *
  * @param event The MoveEvent to handle
  */
-void Fighter::handle_move_event(MoveEvent *event) {
-    Direction dir;
-    double speed = 0.1;
-    switch(event->get_type()) {
-    case Event::START_MOVE_EAST:
-        dir = EAST;
-        break;
-    case Event::START_MOVE_NORTH:
-        dir = NORTH;
-        break;
-    case Event::START_MOVE_WEST:
-        dir = WEST;
-        break;
-    case Event::START_MOVE_SOUTH:
-        dir = SOUTH;
-        break;
-    default:
-        fprintf(stderr,
-                "Invalid MoveEvent received in Fighter::handle_move_event.\n");
+void Fighter::handle_move_event(MoveEvent *event)
+{
+    Direction dir = event->get_direction();
+
+    if (move_fighter(dir)) {
+        moving = dir;
+    }
+}
+
+void Fighter::handle_stop_event(StopMoveEvent *event)
+{
+    if (event->get_direction() == moving) {
+        moving = NO_DIRECTION;
+    }
+}
+
+void Fighter::handle_move_finished_event(MoveFinishedEvent *event)
+{
+    if (moving == NO_DIRECTION) {
         return;
     }
 
-    TileDrawable *img = (TileDrawable *)Entity::image;
-    try {
-        img->start_move(speed, 1, dir);
-    } catch (std::exception e) {
-        fprintf(stderr, "%s\n", e.what());
-        return;
-    }
-
-    if (!move_ent(dir)) {
-        img->stop_move();
-        return;
-    }
-
-    occ_tile = occ_tile->get_neighbor(dir);
+    move_fighter(moving);
 }
 
 void Fighter::catch_event(Event *event)
@@ -65,6 +74,15 @@ void Fighter::catch_event(Event *event)
     case Event::START_MOVE_WEST:
     case Event::START_MOVE_SOUTH:
         handle_move_event((MoveEvent *)event);
+        break;
+    case Event::END_MOVE_EAST:
+    case Event::END_MOVE_NORTH:
+    case Event::END_MOVE_WEST:
+    case Event::END_MOVE_SOUTH:
+        handle_stop_event((StopMoveEvent *)event);
+        break;
+    case Event::MOVE_FINISHED:
+        handle_move_finished_event((MoveFinishedEvent *)event);
         break;
     default:
         break;

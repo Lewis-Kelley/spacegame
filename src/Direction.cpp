@@ -9,5 +9,8 @@
  */
 Direction opp_dir(Direction dir)
 {
+    if (dir == NO_DIRECTION) {
+        return NO_DIRECTION;
+    }
     return (Direction)(((int)dir + 2) % 4);
 }

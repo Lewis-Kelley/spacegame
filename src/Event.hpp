@@ -28,7 +28,8 @@ public:
         MOUSE_MIDDLE_CLICK,
         MOUSE_LEFT_RELEASE,
         MOUSE_RIGHT_RELEASE,
-        MOUSE_MIDDLE_RELEASE
+        MOUSE_MIDDLE_RELEASE,
+        MOVE_FINISHED
     };
 
     virtual ~Event() { }

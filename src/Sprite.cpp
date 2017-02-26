@@ -15,6 +15,8 @@ Sprite::Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, SDL_Texture *tex) {
     this->dest_rect = new SDL_Rect();
     *this->dest_rect = dest_rect;
     given_tex = true;
+    x = dest_rect.x;
+    y = dest_rect.y;
 }
 
 /**
@@ -38,9 +40,13 @@ Sprite::Sprite(SDL_Rect rect, SDL_Texture *tex, bool dest) {
     if (dest) {
         target_rect = &dest_rect;
         other_rect = &src_rect;
+        x = rect.x;
+        y = rect.y;
     } else {
         target_rect = &src_rect;
         other_rect = &dest_rect;
+        x = 0;
+        y = 0;
     }
 
     *target_rect = new SDL_Rect();
@@ -61,6 +67,8 @@ Sprite::Sprite(SDL_Texture *tex) {
     src_rect = NULL;
     dest_rect = NULL;
     given_tex = true;
+    x = 0;
+    y = 0;
 }
 
 /**
@@ -78,6 +86,8 @@ Sprite::Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, std::string filename) {
     this->dest_rect = new SDL_Rect();
     *this->dest_rect = dest_rect;
     given_tex = false;
+    x = dest_rect.x;
+    y = dest_rect.y;
 }
 
 /**
@@ -101,9 +111,13 @@ Sprite::Sprite(SDL_Rect rect, std::string filename, bool dest) {
     if (dest) {
         target_rect = &dest_rect;
         other_rect = &src_rect;
+        x = rect.x;
+        y = rect.y;
     } else {
         target_rect = &src_rect;
         other_rect = &dest_rect;
+        x = 0;
+        y = 0;
     }
 
     *target_rect = new SDL_Rect();
@@ -124,6 +138,8 @@ Sprite::Sprite(std::string filename) {
     src_rect = NULL;
     dest_rect = NULL;
     given_tex = false;
+    x = 0;
+    y = 0;
 }
 
 /**
@@ -149,22 +165,22 @@ Sprite::~Sprite() {
 
 double Sprite::get_draw_x()
 {
-    return dest_rect->x;
+    return x;
 }
 
 double Sprite::get_draw_y()
 {
-    return dest_rect->y;
+    return y;
 }
 
 void Sprite::set_draw_x(double x)
 {
-    dest_rect->x = x;
+    this->x = x;
 }
 
 void Sprite::set_draw_y(double y)
 {
-    dest_rect->y = y;
+    this->y = y;
 }
 
 /**
@@ -200,5 +216,7 @@ SDL_Texture *Sprite::load_texture(std::string filename) {
  * @return True if successfully renderer, false otherwise.
  */
 bool Sprite::draw() {
+    dest_rect->x = x;
+    dest_rect->y = y;
     return SDL_RenderCopy(wind->get_renderer(), tex, src_rect, dest_rect);
 }

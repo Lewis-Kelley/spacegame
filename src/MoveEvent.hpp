@@ -15,6 +15,11 @@ private:
 public:
     MoveEvent(Direction dir);
     virtual Event_Type get_type();
+
+    /**
+     * @return The direction this MoveEvent corresponds to.
+     */
+    Direction get_direction() { return dir; }
 };
 
 #endif /* MOVEEVENT_H */

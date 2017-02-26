@@ -71,24 +71,25 @@ Event *events::convert_SDL_Event(SDL_Event *sdl_event) {
     if (type == Event::NONE
         || events::event_fact_map.find(type) == events::event_fact_map.end()) {
         fprintf(stderr, "Events::convert_sdl_events: \
-No available event factory.\n");
+No available event factory for event %d.\n", type);
         return NULL;
     }
 
     return events::event_fact_map.at(type)();
 }
 
-template <class e>
+template <class E>
 Event *create_event()
 {
-    return new e();
+    return new E();
 }
 
-template <Direction dir>
-Event *create_move_event()
+template <class E, Direction dir>
+Event *create_dir_event()
 {
-    return new MoveEvent(dir);
+    return new E(dir);
 }
+
 
 void events::fill_defaults()
 {
@@ -101,13 +102,26 @@ void events::fill_defaults()
     key_dwn_map.insert(key_pair(SDLK_LEFT, Event::START_MOVE_WEST));
     key_dwn_map.insert(key_pair(SDLK_DOWN, Event::START_MOVE_SOUTH));
 
+    key_up_map.insert(key_pair(SDLK_RIGHT, Event::END_MOVE_EAST));
+    key_up_map.insert(key_pair(SDLK_UP, Event::END_MOVE_NORTH));
+    key_up_map.insert(key_pair(SDLK_LEFT, Event::END_MOVE_WEST));
+    key_up_map.insert(key_pair(SDLK_DOWN, Event::END_MOVE_SOUTH));
+
     event_fact_map.insert(event_pair(Event::QUIT, create_event<QuitEvent>));
     event_fact_map.insert(event_pair(Event::START_MOVE_EAST,
-                                     create_move_event<EAST>));
+                                     create_dir_event<MoveEvent, EAST>));
     event_fact_map.insert(event_pair(Event::START_MOVE_NORTH,
-                                     create_move_event<NORTH>));
+                                     create_dir_event<MoveEvent, NORTH>));
     event_fact_map.insert(event_pair(Event::START_MOVE_WEST,
-                                     create_move_event<WEST>));
+                                     create_dir_event<MoveEvent, WEST>));
     event_fact_map.insert(event_pair(Event::START_MOVE_SOUTH,
-                                     create_move_event<SOUTH>));
+                                     create_dir_event<MoveEvent, SOUTH>));
+    event_fact_map.insert(event_pair(Event::END_MOVE_EAST,
+                                     create_dir_event<StopMoveEvent, EAST>));
+    event_fact_map.insert(event_pair(Event::END_MOVE_NORTH,
+                                     create_dir_event<StopMoveEvent, NORTH>));
+    event_fact_map.insert(event_pair(Event::END_MOVE_WEST,
+                                     create_dir_event<StopMoveEvent, WEST>));
+    event_fact_map.insert(event_pair(Event::END_MOVE_SOUTH,
+                                     create_dir_event<StopMoveEvent, SOUTH>));
 }
