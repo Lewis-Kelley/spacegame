@@ -65,12 +65,12 @@ void TileDrawable::start_move(double speed, int num_tiles, Direction dir)
         d_other = &dx;
     }
 
-    if (ABS(*d_other) >= ROUNDOFF) {
+    if (!NEAR_ZERO(*d_other)) {
         AlreadyMovingException ex;
         throw ex;
     }
 
-    if (ABS(*d_goal) < ROUNDOFF) {
+    if (NEAR_ZERO(*d_goal)) {
         *end_goal = base_goal;
     }
     *end_goal += sign * (num_tiles != -1 ? num_tiles : MAX_TILES) * tile_width;
@@ -78,34 +78,6 @@ void TileDrawable::start_move(double speed, int num_tiles, Direction dir)
 
     *d_goal = sign * speed;
     *d_other = 0;
-}
-
-/**
- * Stops the move at the next tile.
- *
- * FIXME Currently buggy?
- */
-void TileDrawable::stop_move()
-{
-    double *dgoal;
-    double *end_goal;
-    int sign;
-
-    if (dx != 0) {
-        dgoal = &dx;
-        end_goal = &end_x;
-    } else if (dy != 0) {
-        dgoal = &dy;
-        end_goal = &end_y;
-    } else {
-        return; // Not moving to begin with
-    }
-
-    sign = (*dgoal > 0 ? 1 : -1);
-
-    while (*end_goal - sign * get_draw_x() > tile_width) {
-        *end_goal -= tile_width;
-    }
 }
 
 /**

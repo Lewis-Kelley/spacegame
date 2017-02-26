@@ -16,6 +16,12 @@ void Fighter::handle_attack(Attack *att)
 {
 }
 
+/**
+ * Attempts to move this Fighter in the given Direction.
+ *
+ * @param dir The Direction in which to move this Fighter.
+ * @return True if successful, false if there was a problem.
+ */
 bool Fighter::move_fighter(Direction dir)
 {
     TileDrawable *img = (TileDrawable *)Entity::image;
@@ -50,6 +56,11 @@ void Fighter::handle_move_event(MoveEvent *event)
     }
 }
 
+/**
+ * Handle a StopMoveEvent to stop the Fighter from continuing to move.
+ *
+ * @param event The StopMoveEvent to handle.
+ */
 void Fighter::handle_stop_event(StopMoveEvent *event)
 {
     if (event->get_direction() == moving) {
@@ -57,6 +68,12 @@ void Fighter::handle_stop_event(StopMoveEvent *event)
     }
 }
 
+/**
+ * Handle a MoveFinishedEvent to continue moving in whatever direction
+ * the Fighter is currently moving.
+ *
+ * @param event The MoveFinishedEvent to handle.
+ */
 void Fighter::handle_move_finished_event(MoveFinishedEvent *event)
 {
     if (moving == NO_DIRECTION) {

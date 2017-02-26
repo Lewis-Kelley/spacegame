@@ -12,6 +12,7 @@
 #define ABS(x) (x > 0 ? x : -x)
 #define MAX_TILES 500
 #define ROUNDOFF 0.0001
+#define NEAR_ZERO(x) (ABS(x) < ROUNDOFF)
 
 /**
  * A decorator that handles drawings that are bound to tiles.
@@ -33,14 +34,13 @@ public:
     TileDrawable(double tile_width, Drawable *inner);
     void update(double delta);
     void start_move(double speed, int num_tiles, Direction dir);
-    void stop_move();
     void kill_move();
 
     /**
      * @return True if this is still animating a motion, false
      * otherwise.
      */
-    bool is_moving() { return ABS(dx) >= ROUNDOFF || ABS(dy) >= ROUNDOFF; }
+    bool is_moving() { return !NEAR_ZERO(dx) || !NEAR_ZERO(dy); }
 };
 
 #endif /* TILEDRAWABLE_H */

@@ -10,8 +10,6 @@
  * An entity that has stats and can be attacked
  */
 class Unit : public Entity {
-protected:
-    TileDrawable *image;
 public:
     Unit(Tile *tile);
     Unit(Tile *tile, TileDrawable *img);

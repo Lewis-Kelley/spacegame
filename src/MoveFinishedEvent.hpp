@@ -3,6 +3,9 @@
 
 #include "Event.hpp"
 
+/**
+ * Event dealing with the animation of a movement ending.
+ */
 class MoveFinishedEvent : public Event {
 public:
     virtual Event_Type get_type() { return MOVE_FINISHED; }
