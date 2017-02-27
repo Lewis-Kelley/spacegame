@@ -52,13 +52,13 @@ void events::fill_defaults()
     key_dwn_map.insert(key_pair(SDLK_LEFT, create_dir_event<MoveEvent, WEST>));
     key_dwn_map.insert(key_pair(SDLK_DOWN, create_dir_event<MoveEvent, SOUTH>));
 
-    key_dwn_map.insert(key_pair(SDLK_RIGHT,
+    key_dwn_map.insert(key_pair(SDLK_s,
                                 create_dir_event<CameraMoveEvent, EAST>));
-    key_dwn_map.insert(key_pair(SDLK_UP,
+    key_dwn_map.insert(key_pair(SDLK_w,
                                 create_dir_event<CameraMoveEvent, NORTH>));
-    key_dwn_map.insert(key_pair(SDLK_LEFT,
+    key_dwn_map.insert(key_pair(SDLK_a,
                                 create_dir_event<CameraMoveEvent, WEST>));
-    key_dwn_map.insert(key_pair(SDLK_DOWN,
+    key_dwn_map.insert(key_pair(SDLK_r,
                                 create_dir_event<CameraMoveEvent, SOUTH>));
 
     key_up_map.insert(key_pair(SDLK_RIGHT,

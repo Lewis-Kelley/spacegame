@@ -37,6 +37,10 @@ void Tile::set_neighbor(Direction dir, Tile *neighbor)
 void Tile::add_neighbor(Direction dir, Tile *neighbor)
 {
     set_neighbor(dir, neighbor);
+    // print_dir(dir);
+    // printf("V\n");
+    // print_dir(opp_dir(dir));
+    // printf("\n");
     neighbor->set_neighbor(opp_dir(dir), this);
 }
 

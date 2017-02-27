@@ -30,14 +30,15 @@ int main(int argc, char *argv[])
     Sprite *fighter_sprite = NULL;
     Fighter *red_fighter = NULL;
     try {
-        fighter_sprite
-            = new Sprite((SDL_Rect){0, 0, 50, 50},
-                         "/home/lewis/programs/spacegame/assets/red_ship.png",
-                         true);
+        // fighter_sprite
+        //     = new Sprite((SDL_Rect){0, 0, 50, 50},
+        //                  "/home/lewis/programs/spacegame/assets/red_ship.png",
+        //                  true);
         red_fighter = new Fighter(tile_map[0][0], fighter_sprite);
         handler->add_listener(Event::START_UNIT_MOVE, red_fighter);
         handler->add_listener(Event::END_UNIT_MOVE, red_fighter);
         handler->add_listener(Event::UNIT_MOVE_FINISHED, red_fighter);
+        handler->add_listener(Event::START_CAMERA_MOVE, red_fighter);
         drawings.push_back(red_fighter);
     } catch (char const* err) {
         fprintf(stderr, "ERROR: %s\n", err);

@@ -25,7 +25,7 @@ Tile ***generate_grid(short width, short height) {
         map[i][0] = new Tile(i, 0);
         map[i][0]->add_neighbor(NORTH, map[i - 1][0]);
         for (short j = 1; j < width; j++) {
-            map[i][j] = new Tile(j, i);
+            map[i][j] = new Tile(i, j);
             map[i][j]->add_neighbor(NORTH, map[i - 1][j]);
             map[i][j]->add_neighbor(WEST, map[i][j - 1]);
         }
