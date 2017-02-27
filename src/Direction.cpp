@@ -9,36 +9,32 @@
  */
 Direction opp_dir(Direction dir)
 {
-    if (dir == NO_DIRECTION) {
-        return NO_DIRECTION;
+    switch (dir) {
+    case EAST:
+        return WEST;
+    case NORTH:
+        return SOUTH;
+    case WEST:
+        return EAST;
+    case SOUTH:
+        return NORTH;
     }
 
-    int shifted = (int)dir << 2;
-    shifted = (shifted & 0xc) + (shifted >> 4);
-    return (Direction)shifted;
-    // return (Direction)(((int)dir + 2) % 4);
+    return (Direction)(((int)dir + 2) % 4);
 }
 
-void print_dir(Direction dir)
+int index_value(Direction dir)
 {
     switch (dir) {
-    case NO_DIRECTION:
-        printf("NO_DIRECTION\n");
-        break;
     case EAST:
-        printf("EAST\n");
-        break;
+        return 0;
     case NORTH:
-        printf("NORTH\n");
-        break;
+        return 1;
     case WEST:
-        printf("WEST\n");
-        break;
+        return 2;
     case SOUTH:
-        printf("SOUTH\n");
-        break;
+        return 3;
     default:
-        printf("Diagonal\n");
-        break;
+        return -1;
     }
 }

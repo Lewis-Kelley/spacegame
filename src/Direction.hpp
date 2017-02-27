@@ -4,11 +4,6 @@
 #include <stdio.h>
 
 enum Direction {
-    // EAST = 0,
-    // NORTH = 1,
-    // WEST = 2,
-    // SOUTH = 3,
-    // NO_DIRECTION
     NO_DIRECTION = 0,
     EAST = 1,
     NORTH = 2,
@@ -21,6 +16,6 @@ enum Direction {
 };
 
 Direction opp_dir(Direction dir);
-void print_dir(Direction dir);
+int index_value(Direction dir);
 
 #endif /* DIRECTION_H */

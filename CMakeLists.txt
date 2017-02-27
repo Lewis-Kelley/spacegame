@@ -11,7 +11,7 @@ include_directories(${SDL2_INCLUDE_DIRS}
   ${SDL2IMAGE_INCLUDE_DIRS}
   ${CMAKE_CURRENT_SOURCE_DIR})
 
-set(CMAKE_CXX_FLAGS "-g -O2 -Wall")
+set(CMAKE_CXX_FLAGS "-g -O0 -Wall")
 
 file(GLOB sources "src/*.cpp")
 
