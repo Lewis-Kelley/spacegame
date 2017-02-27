@@ -1,35 +1,62 @@
 #include "TileMap.hpp"
 
-/**
- * Return a 2D array of the given dimensions of empty Tile's all
- * properly linked together.
- *
- * @param width The number of Tile's in a row.
- * @param height The number of Tile's in a column.
- * @return A width x height array of pointers to linked Tile's.
- */
-Tile ***generate_grid(short width, short height) {
-    Tile ***map = new Tile**[height];
+TileMap::TileMap(short width, short height)
+{
+    this->width = width;
+    this->height = height;
+    tiles = new Tile *[width * height]();
 
-    for (short i = 0; i < height; i++) {
-        map[i] = new Tile*[width];
+    set(new Tile(0, 0), 0, 0);
+    for (short col = 1; col < width; col++) {
+        set(new Tile(0, col), 0, col);
+        at(0, col)->add_neighbor(WEST, at(0, col - 1));
     }
 
-    map[0][0] = new Tile(0, 0);
-    for (short i = 1; i < width; i++) {
-        map[0][i] = new Tile(0, i);
-        map[0][i]->add_neighbor(WEST, map[0][i - 1]);
-    }
+    for (short row = 1; row < height; row++) {
+        set(new Tile(row, 0), row, 0);
+        at(row, 0)->add_neighbor(NORTH, at(row - 1, 0));
 
-    for (short i = 1; i < height; i++) {
-        map[i][0] = new Tile(i, 0);
-        map[i][0]->add_neighbor(NORTH, map[i - 1][0]);
-        for (short j = 1; j < width; j++) {
-            map[i][j] = new Tile(j, i);
-            map[i][j]->add_neighbor(NORTH, map[i - 1][j]);
-            map[i][j]->add_neighbor(WEST, map[i][j - 1]);
+        for (short col = 1; col < width; col++) {
+            set(new Tile(row, col), row, col);
+            at(row, col)->add_neighbor(NORTH, at(row - 1, col));
+            at(row, col)->add_neighbor(WEST, at(row, col - 1));
+        }
+    }
+}
+
+TileMap::~TileMap()
+{
+    for (short row = 0; row < height; row++) {
+        for (short col = 0; col < width; col++) {
+            delete at(row, col);
         }
     }
 
-    return map;
+    delete tiles;
+}
+
+Tile *TileMap::at(short row, short col)
+{
+    if (in_bounds(row, col)) {
+        return tiles[row * width + col];
+    }
+
+    OutOfBounds ex;
+    throw ex;
+}
+
+void TileMap::set(Tile *tile, short row, short col)
+{
+    if (in_bounds(row, col)) {
+        tiles[row * width + col] = tile;
+        return;
+    }
+
+    OutOfBounds ex;
+    throw ex;
+}
+
+bool TileMap::in_bounds(short row, short col)
+{
+    return !(row >= height || col >= width || row < 0 || col < 0);
 }

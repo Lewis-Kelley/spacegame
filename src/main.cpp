@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     EventHandler *handler = EventHandler::get_instance();
     std::vector<Drawable *> drawings;
 
-    Tile ***tile_map = generate_grid(10, 10);
+    TileMap tile_map(10, 10);
     Sprite *fighter_sprite = NULL;
     Fighter *red_fighter = NULL;
     try {
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
             = new Sprite((SDL_Rect){0, 0, 50, 50},
                          "/home/lewis/programs/spacegame/assets/red_ship.png",
                          true);
-        red_fighter = new Fighter(tile_map[0][0], fighter_sprite);
+        red_fighter = new Fighter(tile_map.at(0, 0), fighter_sprite);
         handler->add_listener(Event::START_UNIT_MOVE, red_fighter);
         handler->add_listener(Event::END_UNIT_MOVE, red_fighter);
         handler->add_listener(Event::UNIT_MOVE_FINISHED, red_fighter);

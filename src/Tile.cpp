@@ -1,5 +1,10 @@
 #include "Tile.hpp"
 
+std::vector<Entity *> Tile::get_occ_ents()
+{
+    return occ_ents;
+}
+
 /**
  * Create a new tile at the given coordinates.
  *
@@ -24,7 +29,7 @@ Tile::Tile(short row, short col)
  */
 void Tile::set_neighbor(Direction dir, Tile *neighbor)
 {
-    neighbors[dir] = neighbor;
+    neighbors[index_value(dir)] = neighbor;
 }
 
 /**
@@ -48,7 +53,7 @@ void Tile::add_neighbor(Direction dir, Tile *neighbor)
  */
 Tile *Tile::get_neighbor(Direction dir)
 {
-    return neighbors[dir];
+    return neighbors[index_value(dir)];
 }
 
 /**

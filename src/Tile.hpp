@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <stdio.h>
+#include <stdexcept>
 
 #include "Direction.hpp"
 #include "Entity.hpp"
@@ -24,6 +25,9 @@ public:
     void add_entity(Entity *ent);
     bool remove_entity(Entity *ent);
     bool move_entity(Entity *ent, Direction dir);
+    short get_row() { return row; }
+    short get_col() { return col; }
+    std::vector<Entity *> get_occ_ents();
 };
 
 #endif /* TILE_H */
