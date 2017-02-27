@@ -14,14 +14,8 @@ public:
     enum Event_Type {
         NONE,
         QUIT,
-        START_MOVE_EAST,
-        START_MOVE_NORTH,
-        START_MOVE_WEST,
-        START_MOVE_SOUTH,
-        END_MOVE_EAST,
-        END_MOVE_NORTH,
-        END_MOVE_WEST,
-        END_MOVE_SOUTH,
+        START_UNIT_MOVE,
+        END_UNIT_MOVE,
         MOUSE_MOTION,
         MOUSE_LEFT_CLICK,
         MOUSE_RIGHT_CLICK,
@@ -29,7 +23,8 @@ public:
         MOUSE_LEFT_RELEASE,
         MOUSE_RIGHT_RELEASE,
         MOUSE_MIDDLE_RELEASE,
-        MOVE_FINISHED
+        UNIT_MOVE_FINISHED,
+        START_CAMERA_MOVE,
     };
 
     virtual ~Event() { }

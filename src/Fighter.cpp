@@ -86,19 +86,13 @@ void Fighter::handle_move_finished_event(MoveFinishedEvent *event)
 void Fighter::catch_event(Event *event)
 {
     switch (event->get_type()) {
-    case Event::START_MOVE_EAST:
-    case Event::START_MOVE_NORTH:
-    case Event::START_MOVE_WEST:
-    case Event::START_MOVE_SOUTH:
+    case Event::START_UNIT_MOVE:
         handle_move_event((MoveEvent *)event);
         break;
-    case Event::END_MOVE_EAST:
-    case Event::END_MOVE_NORTH:
-    case Event::END_MOVE_WEST:
-    case Event::END_MOVE_SOUTH:
+    case Event::END_UNIT_MOVE:
         handle_stop_event((StopMoveEvent *)event);
         break;
-    case Event::MOVE_FINISHED:
+    case Event::UNIT_MOVE_FINISHED:
         handle_move_finished_event((MoveFinishedEvent *)event);
         break;
     default:

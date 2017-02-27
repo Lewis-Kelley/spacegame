@@ -8,7 +8,7 @@
  */
 class MoveFinishedEvent : public Event {
 public:
-    virtual Event_Type get_type() { return MOVE_FINISHED; }
+    virtual Event_Type get_type() { return UNIT_MOVE_FINISHED; }
 };
 
 #endif /* MOVEFINISHEDEVENT_H */

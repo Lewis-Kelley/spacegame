@@ -12,24 +12,5 @@ StopMoveEvent::StopMoveEvent(Direction dir)
 
 Event::Event_Type StopMoveEvent::get_type()
 {
-    Event_Type type = Event::NONE;
-    switch (dir) {
-    case EAST:
-        type = Event::END_MOVE_EAST;
-        break;
-    case NORTH:
-        type = Event::END_MOVE_NORTH;
-        break;
-    case WEST:
-        type = Event::END_MOVE_WEST;
-        break;
-    case SOUTH:
-        type = Event::END_MOVE_SOUTH;
-        break;
-    case NO_DIRECTION:
-        type = Event::NONE;
-        break;
-    }
-
-    return type;
+    return END_UNIT_MOVE;
 }
