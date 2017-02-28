@@ -1,0 +1,105 @@
+* Spacegame
+Well, if you've payed any attention to my repos before, you should be
+thinking "here we go again" to yourself, and rightly so. This is my
+fourth time trying to make this thing, and the third time posting my
+endeavors on GitHub. Things go better each time, and so far this run
+is no exception. Who knows, I might actually get limited movements to
+work this time!
+
+The goal of this project is to make an SRPG (games like /Fire Emblem/,
+/Shining Force/, or /X-COM/) set in space. There will be two forces of
+fighters and turrets fighting each other in big space-carrier battles,
+kind of like /Battlestar Galactica/.
+* Motivation
+I haven't really made any big projects in C++ (most of my school
+projects have been in Java), and I also want to try to learn more
+about making a big project like this from the ground up.
+
+I also just really want this game to be made. It sounds so good in my
+head, it just takes a lot to actually implement it.
+* Current Status: WORKING / NOT PLAYABLE
+Unit movement is running, as is 4-directional camera motion. I kind of
+want to smooth out the controls, but for now, it's fine.
+* Instructions
+** System Requirements
+To run this, you need both SDL2 and SDL_Image, which are pretty
+readily available on Linux. If you're on Windows or Mac… have
+fun. I'll try compiling this on them… someday.
+** Compiling
+To compile, just =cd= into the =build= directory, run =cmake ..= and
+=make= to generate the executable, and now you can run it using
+=./spacegame=.
+** Controls
+Since I'm crazy and use Colemak, the camera keys are WARS instead of
+WASD. If you want to change this, just go to
+Events.cpp::fill_defaults and change the appropriate SDLK constants as
+you see fit. It's not hard to follow, so you should be able to figure
+it out.
+
+With regards to moving units, just use the arrow keys.
+* Software Design
+The general design of the system involves a few interfaces and what
+I'm calling an events system.
+** Main Interfaces
+*** Drawable
+All things that can be drawn to the screen, be that the units or the
+UI, will extend this class.
+*** Entity
+Anything that has a presence on the board is considered an
+Entity. Tile's (which make up the board) have a vector of Entity's
+that currently belong in that Tile, and each Entity is bound to a Tile
+as well. Entity's also contain and are Drawable's themselves.
+*** Unit
+An Entity that can be interacted with in combat (i.e. has stats and
+can attack / be attacked) is a Unit.
+*** Listener
+Anything that can listen to an event is considered a
+Listener. Entities are currently the only Listener, but they can
+include UI elements and various other things as well.
+** Events
+All types of Event's are held in an enum in Event.hpp, and these are
+used by Listener's to determine which types of Event's they care
+about. All Drawable's will likely need to listen to CAMERA_MOVE
+Event's but not necessarily the ones pertaining to clicking the mouse.
+
+The different types of Event's are all coupled to these enum types,
+and they also have information specific to whatever they're dealing
+with. Movement Event's, for instance, have a Direction field.
+
+The construction of new Event's from SDL_Events (which are caused by
+I/O) takes place in Events.cpp, where there is a map from
+SDL_EventType's to functions that create new instances of these
+Event's as appropriate. Two of these, KEY_UP and KEY_DOWN have special
+functions which in turn use maps from keys to more Event factory
+functions. These maps are filled using a fill_defaults function, and
+they can be easily modified.
+* Documentation
+I've been using Doxygen (also readily available on Linux) to
+auto-generate my documentation in nice HTML pages. To use, =cd= to
+=src= and run =doxygen=. This should spit out a =latex= and =html=
+directory filled with the documentation. It's basically just function
+and variable descriptors, but I hope to add a little more as I learn
+more about how to use it.
+* To Do's (In Rough Order Of Priority)
+** TODO Multiple Fighters [0/2]
+:PROPERTIES:
+:Effort:   120
+:END:
+- [ ] Allow for the control of two Fighter's that can be toggled
+  between by pressing space.
+- [ ] Make it so that the two Fighter's cannot pass on top of each
+  other.
+** TODO Highlighting Available Tiles [0/2]
+:PROPERTIES:
+:Effort:   120
+:END:
+- [ ] Calculate available Tiles given a starting position
+- [ ] Change Tile colors or something to indicate this change
+** TODO Limit Movement Range [0/1]
+:PROPERTIES:
+:Effort:   90
+:END:
+- [ ] Given the available Tiles, bound the motion of any Fighter to
+  that range
+* Known Bugs
+None at this time (Hooray!)
