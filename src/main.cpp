@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
         handler->add_listener(Event::END_UNIT_MOVE, red_fighter);
         handler->add_listener(Event::UNIT_MOVE_FINISHED, red_fighter);
         handler->add_listener(Event::START_CAMERA_MOVE, red_fighter);
+        handler->add_listener(Event::STOP_CAMERA_MOVE, red_fighter);
         drawings.push_back(red_fighter);
     } catch (char const* err) {
         fprintf(stderr, "ERROR: %s\n", err);

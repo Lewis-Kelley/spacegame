@@ -5,6 +5,9 @@
 
 #include "Tile.hpp"
 
+/**
+ * Holds a full grid of Tile's.
+ */
 class TileMap {
 private:
     class OutOfBounds : public std::exception {

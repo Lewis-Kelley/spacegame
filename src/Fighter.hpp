@@ -7,6 +7,8 @@
 #include "Listener.hpp"
 #include "Sprite.hpp"
 #include "TileDrawable.hpp"
+#include "CameraMoveEvent.hpp"
+#include "StopCameraMoveEvent.hpp"
 
 #define MOVE_SPEED 0.25
 
@@ -15,7 +17,8 @@
  */
 class Fighter : public Unit, public Listener {
 private:
-    Direction moving;
+    Direction moving_dir;
+    Direction camera_dir;
     short hull_health;
     short shield_health;
     short engine_health;
@@ -24,6 +27,12 @@ private:
     short shield_power;
     short engine_power;
     short weapon_power;
+
+    void handle_move_event(MoveEvent *event);
+    void handle_stop_event(StopMoveEvent *event);
+    void handle_move_finished_event(MoveFinishedEvent *event);
+    void handle_camera_move_event(CameraMoveEvent *event);
+    void handle_camera_stop_move_event(StopCameraMoveEvent *event);
 public:
     Fighter(Tile *tile, Drawable *img);
     virtual short get_hull_health() { return hull_health; }
@@ -39,9 +48,6 @@ public:
     virtual void handle_attack(Attack *att);
     virtual void catch_event(Event *event);
     bool move_fighter(Direction dir);
-    void handle_move_event(MoveEvent *event);
-    void handle_stop_event(StopMoveEvent *event);
-    void handle_move_finished_event(MoveFinishedEvent *event);
 };
 
 #endif /* FIGHTER_H */

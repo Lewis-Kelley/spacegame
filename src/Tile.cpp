@@ -1,10 +1,5 @@
 #include "Tile.hpp"
 
-std::vector<Entity *> Tile::get_occ_ents()
-{
-    return occ_ents;
-}
-
 /**
  * Create a new tile at the given coordinates.
  *

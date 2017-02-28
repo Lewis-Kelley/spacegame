@@ -4,6 +4,8 @@
 #include "Event.hpp"
 #include "Direction.hpp"
 
+#define CAMERA_SPEED 0.1
+
 /**
  * Handles the movement of the camera.
  */
@@ -18,6 +20,14 @@ public:
      */
     CameraMoveEvent(Direction dir) { this->dir = dir; }
     virtual Event_Type get_type() { return START_CAMERA_MOVE; }
+
+    /**
+     * @return The Direction this camera movement corresponds to.
+     */
+    Direction get_dir() { return dir; }
+
+    double get_dx();
+    double get_dy();
 };
 
 #endif /* CAMERAMOVEEVENT_H */

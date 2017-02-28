@@ -33,7 +33,7 @@ private:
 public:
     TileDrawable(double tile_width, Drawable *inner);
     void update(double delta);
-    void start_move(double speed, int num_tiles, Direction dir);
+    void start_tile_move(double speed, int num_tiles, Direction dir);
     void kill_move();
 
     /**

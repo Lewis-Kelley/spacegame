@@ -1,11 +1,16 @@
 #ifndef DRAWABLE_H
 #define DRAWABLE_H
 
+#include <stdio.h>
+
 /**
  * An abstract class representing anything that can be drawn onto the
  * screen.
  */
 class Drawable {
+private:
+    double dx;
+    double dy;
 public:
     virtual ~Drawable() {}
 
@@ -35,6 +40,13 @@ public:
 
     virtual void move(double dx, double dy);
 
+    virtual void start_move(double dx, double dy);
+
+    /**
+     * Stops the consistent movement of this Drawable.
+     */
+    virtual void end_move() { dx = dy = 0.0; }
+
     /**
      * Draws whatever this drawable represents to the screen.
      *
@@ -47,7 +59,7 @@ public:
      *
      * @param delta The time since the last update.
      */
-    virtual void update(double delta) { }
+    virtual void update(double delta);
 };
 
 #endif /* DRAWABLE_H */

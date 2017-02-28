@@ -1,5 +1,12 @@
 #include "TileMap.hpp"
 
+/**
+ * Create a new TileMap with the given dimensions and initialize all
+ * of the Tiles in it.
+ *
+ * @param width The width of the requested TileMap
+ * @param height The height of the requested TileMap
+ */
 TileMap::TileMap(short width, short height)
 {
     this->width = width;
@@ -35,6 +42,13 @@ TileMap::~TileMap()
     delete tiles;
 }
 
+/**
+ * Return the Tile stored at the given coordinates.
+ *
+ * @param row The row of the requested Tile.
+ * @param col The row of the requested Tile.
+ * @return The Tile at the given coordinates.
+ */
 Tile *TileMap::at(short row, short col)
 {
     if (in_bounds(row, col)) {
@@ -45,6 +59,13 @@ Tile *TileMap::at(short row, short col)
     throw ex;
 }
 
+/**
+ * Set the Tile at the given coordinates to the passed tile.
+ *
+ * @param tile The value to set the Tile to.
+ * @param row The row of the requested Tile.
+ * @param col The col of the requested Tile.
+ */
 void TileMap::set(Tile *tile, short row, short col)
 {
     if (in_bounds(row, col)) {
@@ -56,6 +77,14 @@ void TileMap::set(Tile *tile, short row, short col)
     throw ex;
 }
 
+/**
+ * Tests whether the given coordinates are within the bounds of the map.
+ *
+ * @param row
+ * @param col
+ * @return True if the coordinates are within bounds, false if they are
+ * out of bounds.
+ */
 bool TileMap::in_bounds(short row, short col)
 {
     return !(row >= height || col >= width || row < 0 || col < 0);

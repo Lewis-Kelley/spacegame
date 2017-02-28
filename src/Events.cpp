@@ -69,4 +69,13 @@ void events::fill_defaults()
                                create_dir_event<StopMoveEvent, WEST>));
     key_up_map.insert(key_pair(SDLK_DOWN,
                                create_dir_event<StopMoveEvent, SOUTH>));
+
+    key_up_map.insert(key_pair(SDLK_s,
+                               create_dir_event<StopCameraMoveEvent, EAST>));
+    key_up_map.insert(key_pair(SDLK_w,
+                               create_dir_event<StopCameraMoveEvent, NORTH>));
+    key_up_map.insert(key_pair(SDLK_a,
+                               create_dir_event<StopCameraMoveEvent, WEST>));
+    key_up_map.insert(key_pair(SDLK_r,
+                               create_dir_event<StopCameraMoveEvent, SOUTH>));
 }

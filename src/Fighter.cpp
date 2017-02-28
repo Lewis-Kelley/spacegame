@@ -9,7 +9,8 @@
 Fighter::Fighter(Tile *tile, Drawable *img)
     : Unit(tile, new TileDrawable(50, img))
 {
-    moving = NO_DIRECTION;
+    moving_dir = NO_DIRECTION;
+    camera_dir = NO_DIRECTION;
 }
 
 void Fighter::handle_attack(Attack *att)
@@ -30,7 +31,7 @@ bool Fighter::move_fighter(Direction dir)
         return false;
     }
 
-    img->start_move(MOVE_SPEED, 1, dir);
+    img->start_tile_move(MOVE_SPEED, 1, dir);
 
     if (!move_ent(dir)) {
         img->kill_move();
@@ -52,7 +53,7 @@ void Fighter::handle_move_event(MoveEvent *event)
     Direction dir = event->get_direction();
 
     if (move_fighter(dir)) {
-        moving = dir;
+        moving_dir = dir;
     }
 }
 
@@ -63,24 +64,50 @@ void Fighter::handle_move_event(MoveEvent *event)
  */
 void Fighter::handle_stop_event(StopMoveEvent *event)
 {
-    if (event->get_direction() == moving) {
-        moving = NO_DIRECTION;
+    if (event->get_direction() == moving_dir) {
+        moving_dir = NO_DIRECTION;
     }
 }
 
 /**
  * Handle a MoveFinishedEvent to continue moving in whatever direction
- * the Fighter is currently moving.
+ * the Fighter is currently moving_dir.
  *
  * @param event The MoveFinishedEvent to handle.
  */
 void Fighter::handle_move_finished_event(MoveFinishedEvent *event)
 {
-    if (moving == NO_DIRECTION) {
+    if (moving_dir == NO_DIRECTION) {
         return;
     }
 
-    move_fighter(moving);
+    move_fighter(moving_dir);
+}
+
+/**
+ * Handle a CameraMoveEvent by passing it through to the underlying
+ * Drawable image.
+ *
+ * @param event The CameraMoveEvent to handle.
+ */
+void Fighter::handle_camera_move_event(CameraMoveEvent *event)
+{
+    image->start_move(event->get_dx(), event->get_dy());
+    camera_dir = event->get_dir();
+}
+
+/**
+ * Handle a StopCameraMoveEvent by halting the underlying Drawable
+ * motion.
+ *
+ * @param event The StopCameraMoveEvent to handle.
+ */
+void Fighter::handle_camera_stop_move_event(StopCameraMoveEvent *event)
+{
+    if (event->get_dir() == camera_dir) {
+        image->end_move();
+        camera_dir = NO_DIRECTION;
+    }
 }
 
 void Fighter::catch_event(Event *event)
@@ -94,6 +121,12 @@ void Fighter::catch_event(Event *event)
         break;
     case Event::UNIT_MOVE_FINISHED:
         handle_move_finished_event((MoveFinishedEvent *)event);
+        break;
+    case Event::START_CAMERA_MOVE:
+        handle_camera_move_event((CameraMoveEvent *)event);
+        break;
+    case Event::STOP_CAMERA_MOVE:
+        handle_camera_stop_move_event((StopCameraMoveEvent *)event);
         break;
     default:
         break;

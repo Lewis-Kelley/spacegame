@@ -16,6 +16,7 @@ TileDrawable::TileDrawable(double tile_width, Drawable *inner)
  */
 void TileDrawable::update(double delta)
 {
+    DrawableDecorator::update(delta);
     Drawable::move(dx * delta, dy * delta);
 
     if (dx * (get_draw_x() - end_x) > 0) {
@@ -39,7 +40,7 @@ void TileDrawable::update(double delta)
  * direction or -1 if should continue endlessly.
  * @param dir The Direction in which to move.
  */
-void TileDrawable::start_move(double speed, int num_tiles, Direction dir)
+void TileDrawable::start_tile_move(double speed, int num_tiles, Direction dir)
 {
     double base_goal;
     double base_other;

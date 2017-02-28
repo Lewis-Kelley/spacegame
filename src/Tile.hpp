@@ -25,9 +25,16 @@ public:
     void add_entity(Entity *ent);
     bool remove_entity(Entity *ent);
     bool move_entity(Entity *ent, Direction dir);
+
+    /**
+     * @return The row this Tile currently occupies.
+     */
     short get_row() { return row; }
+
+    /**
+     * @return The column this Tile currently occupies.
+     */
     short get_col() { return col; }
-    std::vector<Entity *> get_occ_ents();
 };
 
 #endif /* TILE_H */
