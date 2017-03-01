@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include <vector>
+#include <queue>
 
 #include "TileMap.hpp"
 #include "QuitListener.hpp"
@@ -12,6 +13,7 @@
 #include "GameState.hpp"
 #include "Events.hpp"
 #include "QuitEvent.hpp"
+#include "SwitchListener.hpp"
 
 bool cont = true;
 
@@ -25,6 +27,7 @@ int main(int argc, char *argv[])
     Window *wind = Window::get_instance();
     EventHandler *handler = EventHandler::get_instance();
     std::vector<Drawable *> drawings;
+    std::queue<Unit *> units;
 
     TileMap tile_map(10, 10);
     Sprite *fighter_sprite = NULL;
@@ -51,13 +54,18 @@ int main(int argc, char *argv[])
         handler->add_listener(Event::START_CAMERA_MOVE, other_fighter);
         handler->add_listener(Event::STOP_CAMERA_MOVE, red_fighter);
         handler->add_listener(Event::STOP_CAMERA_MOVE, other_fighter);
+        handler->add_listener(Event::SWITCH_UNITS, red_fighter);
+        handler->add_listener(Event::SWITCH_UNITS, other_fighter);
         drawings.push_back(red_fighter);
         drawings.push_back(other_fighter);
+        units.push(red_fighter);
+        units.push(other_fighter);
     } catch (char const* err) {
         fprintf(stderr, "ERROR: %s\n", err);
     }
 
     handler->add_listener(Event::QUIT, new QuitListener());
+    handler->add_listener(Event::TRIGGER_SWITCH, new SwitchListener(&units));
 
     events::fill_defaults();
 

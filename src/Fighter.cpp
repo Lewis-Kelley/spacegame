@@ -110,6 +110,23 @@ void Fighter::handle_camera_stop_move_event(StopCameraMoveEvent *event)
     }
 }
 
+void Fighter::handle_switch_units_event(SwitchEvent *event)
+{
+    EventHandler *handler = EventHandler::get_instance();
+
+    if (event->get_from() == this) {
+        handler->remove_listener(Event::START_UNIT_MOVE, this);
+        handler->remove_listener(Event::END_UNIT_MOVE, this);
+        handler->remove_listener(Event::UNIT_MOVE_FINISHED, this);
+    }
+
+    if (event->get_to() == this) {
+        handler->add_listener(Event::START_UNIT_MOVE, this);
+        handler->add_listener(Event::END_UNIT_MOVE, this);
+        handler->add_listener(Event::UNIT_MOVE_FINISHED, this);
+    }
+}
+
 void Fighter::catch_event(Event *event)
 {
     switch (event->get_type()) {
@@ -127,6 +144,9 @@ void Fighter::catch_event(Event *event)
         break;
     case Event::STOP_CAMERA_MOVE:
         handle_camera_stop_move_event((StopCameraMoveEvent *)event);
+        break;
+    case Event::SWITCH_UNITS:
+        handle_switch_units_event((SwitchEvent *)event);
         break;
     default:
         break;

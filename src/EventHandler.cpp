@@ -63,5 +63,18 @@ void EventHandler::add_listener(Event::Event_Type type, Listener *obs)
  */
 void EventHandler::remove_listener(Event::Event_Type type, Listener *obs)
 {
-    // TODO Implement
+    std::vector<Listener *> *vec;
+
+    if (listeners.find(type) == listeners.end()) { // Key doesn't exist
+        return;
+    }
+
+    vec = listeners.at(type);
+
+    for (int i = 0; i < (int)vec->size(); i++) {
+        if (vec->at(i) == obs) {
+            vec->erase(vec->begin() + i);
+            i--;
+        }
+    }
 }

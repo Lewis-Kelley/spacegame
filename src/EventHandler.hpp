@@ -15,7 +15,7 @@
 class EventHandler {
 private:
     static EventHandler *self;
-    std::map<Event::Event_Type,  std::vector<Listener *>*> listeners;
+    std::map<Event::Event_Type, std::vector<Listener *>*> listeners;
     EventHandler();
 public:
     static EventHandler *get_instance();

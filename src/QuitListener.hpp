@@ -5,8 +5,7 @@
 #include "GameState.hpp"
 
 /**
- * Catches a keyboard event to see if it is the quit key, then quits
- * the game.
+ * Catches a QUIT Event and quits the game.
  */
 class QuitListener : public Listener {
 public:

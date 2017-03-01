@@ -91,21 +91,15 @@ directory filled with the documentation. It's basically just function
 and variable descriptors, but I hope to add a little more as I learn
 more about how to use it.
 * To Do's (In Rough Order Of Priority)
-** TODO Multiple Fighters [1/2]
-- [ ] Allow for the control of two Fighter's that can be toggled
+** DONE Multiple Fighters [2/2]
+- [X] Allow for the control of two Fighter's that can be toggled
   between by pressing space.
 - [X] Make it so that the two Fighter's cannot pass on top of each
   other.
 ** TODO Highlighting Available Tiles [0/2]
-:PROPERTIES:
-:Effort:   120
-:END:
 - [ ] Calculate available Tiles given a starting position
 - [ ] Change Tile colors or something to indicate this change
 ** TODO Limit Movement Range [0/1]
-:PROPERTIES:
-:Effort:   90
-:END:
 - [ ] Given the available Tiles, bound the motion of any Fighter to
   that range
 * Known Bugs

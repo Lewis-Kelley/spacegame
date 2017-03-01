@@ -12,6 +12,7 @@
 #include "StopMoveEvent.hpp"
 #include "CameraMoveEvent.hpp"
 #include "StopCameraMoveEvent.hpp"
+#include "TriggerSwitchEvent.hpp"
 
 namespace events {
     extern std::map<SDL_EventType, Event *(*)(SDL_Event *)> sdl_event_map;

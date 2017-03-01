@@ -9,10 +9,7 @@
 class QuitEvent : public Event {
 public:
     virtual ~QuitEvent() { }
-    virtual Event_Type get_type()
-    {
-        return Event::QUIT;
-    }
+    virtual Event_Type get_type() { return Event::QUIT; }
 };
 
 #endif /* QUITEVENT_H */

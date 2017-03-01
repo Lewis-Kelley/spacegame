@@ -47,6 +47,8 @@ void events::fill_defaults()
 
     key_dwn_map.insert(key_pair(SDLK_q, create_event<QuitEvent>));
 
+    key_dwn_map.insert(key_pair(SDLK_SPACE, create_event<TriggerSwitchEvent>));
+
     key_dwn_map.insert(key_pair(SDLK_RIGHT, create_dir_event<MoveEvent, EAST>));
     key_dwn_map.insert(key_pair(SDLK_UP, create_dir_event<MoveEvent, NORTH>));
     key_dwn_map.insert(key_pair(SDLK_LEFT, create_dir_event<MoveEvent, WEST>));

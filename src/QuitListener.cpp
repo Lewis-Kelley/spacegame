@@ -1,5 +1,7 @@
 #include "QuitListener.hpp"
 
 void QuitListener::catch_event(Event *event) {
-    gamestate::running = false;
+    if (event->get_type() == Event::QUIT) {
+        gamestate::running = false;
+    }
 }
