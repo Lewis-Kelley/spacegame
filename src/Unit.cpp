@@ -1,6 +1,45 @@
 #include "Unit.hpp"
 
 /**
+ * Instantiate a new Unit at the given location without any image.
+ *
+ * @param tilemap A reference to a TileMap that will be used to access
+ * the Tile this Unit will occupy.
+ * @param row The row this Unit will occupy.
+ * @param col The column this Unit will occupy.
+ */
+Unit::Unit(TileMap *tilemap, short row, short col)
+    : Entity(tilemap->at(row, col)) { }
+
+/**
+ * Instantiate a new Unit at the given location with the given image.
+ *
+ * @param tilemap A reference to a TileMap that will be used to access
+ * the Tile this Unit will occupy.
+ * @param row The row this Unit will occupy.
+ * @param col The column this Unit will occupy.
+ * @param img The TileDrawable that will be used to draw this Unit.
+ */
+Unit::Unit(TileMap *tilemap, short row, short col, TileDrawable *img)
+    : Entity(tilemap->at(row, col), img) { }
+
+/**
+ * Instantiate a new Unit at the given location with the given image.
+ *
+ * @param tile_width The width of a Tile in pixels.
+ * @param tilemap A reference to a TileMap that will be used to access
+ * the Tile this Unit will occupy.
+ * @param row The row this Unit will occupy.
+ * @param col The column this Unit will occupy.
+ * @param img The Drawable that will be used to draw this Unit. This will
+ * be wrapped in a new TileDrawable object.
+ */
+Unit::Unit(double tile_width, TileMap *tilemap, short row, short col,
+           Drawable *img)
+    : Entity(tilemap->at(row, col),
+             new TileDrawable(tile_width, img, row, col)) { }
+
+/**
  * Create a new Unit at the passed Tile.
  *
  * @param tile The Tile this Unit will be located at.

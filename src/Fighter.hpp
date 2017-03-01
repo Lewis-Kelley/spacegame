@@ -39,7 +39,10 @@ private:
     void handle_select_unit_event(SelectUnitEvent *event);
     void handle_deselect_unit_event(DeselectUnitEvent *event);
 public:
-    Fighter(Tile *tile, Drawable *img);
+    Fighter(TileMap *tilemap, short row, short col, TileDrawable *img);
+    Fighter(double tile_width, TileMap *tilemap, short row, short col,
+            Drawable *img);
+    Fighter(Tile *tile, TileDrawable *img);
     virtual short get_hull_health() { return hull_health; }
     virtual short get_shield_health() { return shield_health; }
     virtual short get_engine_health() { return engine_health; }

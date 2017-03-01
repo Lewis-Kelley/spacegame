@@ -37,6 +37,9 @@ public:
     bool move_entity(Entity *ent, Direction dir);
     bool accepts_entity(Entity *ent);
 
+    /**
+     * @return The vector of all Entity's occupying this Tile.
+     */
     std::vector<Entity *> get_occ_ents() { return occ_ents; }
 
     /**

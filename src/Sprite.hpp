@@ -22,8 +22,12 @@ private:
 protected:
     double get_draw_x();
     double get_draw_y();
+    double get_width();
+    double get_height();
     void set_draw_x(double x);
     void set_draw_y(double y);
+    void set_width(double width);
+    void set_height(double height);
 public:
     Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, SDL_Texture *tex);
     Sprite(SDL_Rect rect, SDL_Texture *tex, bool dest);

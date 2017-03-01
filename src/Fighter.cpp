@@ -1,13 +1,38 @@
 #include "Fighter.hpp"
 
 /**
+ * Instantiate a new Fighter at the given location with the given image.
+ *
+ * @param tilemap A reference to a TileMap that will be used to access
+ * the Tile this Fighter will occupy.
+ * @param row The row this Fighter will occupy.
+ * @param col The column this Fighter will occupy.
+ * @param img The TileDrawable that will be used to draw this Fighter.
+ */
+Fighter::Fighter(TileMap *tilemap, short row, short col, TileDrawable *img)
+    : Unit(tilemap, row, col, img) { }
+
+/**
+ * Instantiate a new Fighter at the given location with the given image.
+ *
+ * @param tile_width The width of a Tile in pixels.
+ * @param tilemap A reference to a TileMap that will be used to access
+ * the Tile this Fighter will occupy.
+ * @param row The row this Fighter will occupy.
+ * @param col The column this Fighter will occupy.
+ * @param img The Drawable that will be used to draw this Fighter. This will
+ * be wrapped in a new TileDrawable object.
+ */
+Fighter::Fighter(double tile_width, TileMap *tilemap, short row, short col,
+                 Drawable *img) : Unit(tile_width, tilemap, row, col, img) { }
+
+/**
  * Constructs a new Fighter by calling the Unit's constructor.
  *
  * @param tile The Tile this Fighter occupies.
  * @param img The image representing this Fighter.
  */
-Fighter::Fighter(Tile *tile, Drawable *img)
-    : Unit(tile, new TileDrawable(50, img))
+Fighter::Fighter(Tile *tile, TileDrawable *img) : Unit(tile, img)
 {
     moving_dir = NO_DIRECTION;
     camera_dir = NO_DIRECTION;

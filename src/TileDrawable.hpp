@@ -30,7 +30,7 @@ private:
     double rem_x;
     double rem_y;
 public:
-    TileDrawable(double tile_width, Drawable *inner);
+    TileDrawable(double tile_width, Drawable *inner, short row, short col);
     void update(double delta);
     void start_tile_move(double speed, int num_tiles, Direction dir);
     void kill_move();

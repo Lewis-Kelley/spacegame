@@ -8,6 +8,8 @@
 #include "Attack.hpp"
 #include "TileDrawable.hpp"
 
+class TileMap;
+
 /**
  * An entity that has stats and can be attacked
  */
@@ -15,6 +17,10 @@ class Unit : public Entity {
 private:
     std::string team_name;
 public:
+    Unit(TileMap *tilemap, short row, short col);
+    Unit(TileMap *tilemap, short row, short col, TileDrawable *img);
+    Unit(double tile_width, TileMap *tilemap, short row, short col,
+         Drawable *img);
     Unit(Tile *tile);
     Unit(Tile *tile, TileDrawable *img);
 
@@ -94,5 +100,7 @@ public:
 
     bool is_unit() { return true; }
 };
+
+#include "TileMap.hpp"
 
 #endif /* UNIT_H */

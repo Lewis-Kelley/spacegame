@@ -44,8 +44,12 @@ public:
 
     virtual double get_draw_x();
     virtual double get_draw_y();
+    virtual double get_width();
+    virtual double get_height();
     virtual void set_draw_x(double x);
     virtual void set_draw_y(double y);
+    virtual void set_width(double width);
+    virtual void set_height(double height);
 
     /**
      * Creates a new attack object with target as the target of the

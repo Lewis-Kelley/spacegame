@@ -19,8 +19,12 @@ public:
     DrawableDecorator(Drawable *inner) { this->inner = inner; }
     double get_draw_x() { return inner->get_draw_x(); }
     double get_draw_y() { return inner->get_draw_y(); }
+    double get_width() { return inner->get_width(); }
+    double get_height() { return inner->get_height(); }
     void set_draw_x(double x) { inner->set_draw_x(x); }
     void set_draw_y(double y) { inner->set_draw_y(y); }
+    void set_width(double width) { inner->set_width(width); }
+    void set_height(double height) { inner->set_height(height); }
     virtual void move(double dx, double dy) { inner->move(dx, dy); };
     virtual void move(Movement movement) { inner->move(movement); };
     virtual void start_move(double dx, double dy, MovementType type);

@@ -173,14 +173,56 @@ double Sprite::get_draw_y()
     return y;
 }
 
+double Sprite::get_width() {
+    if (dest_rect != NULL) {
+        return dest_rect->w;
+    }
+
+    return 0;
+}
+
+double Sprite::get_height() {
+    if (dest_rect != NULL) {
+        return dest_rect->h;
+    }
+
+    return 0;
+}
+
 void Sprite::set_draw_x(double x)
 {
+    if (dest_rect == NULL) {
+        dest_rect = new SDL_Rect;
+    }
+
     this->x = x;
 }
 
 void Sprite::set_draw_y(double y)
 {
+    if (dest_rect == NULL) {
+        dest_rect = new SDL_Rect;
+    }
+
     this->y = y;
+}
+
+void Sprite::set_width(double width)
+{
+    if (dest_rect == NULL) {
+        dest_rect = new SDL_Rect;
+    }
+
+    dest_rect->w = width;
+}
+
+void Sprite::set_height(double height)
+{
+    if (dest_rect == NULL) {
+        dest_rect = new SDL_Rect;
+    }
+
+    dest_rect->h = height;
 }
 
 /**
@@ -216,7 +258,10 @@ SDL_Texture *Sprite::load_texture(std::string filename) {
  * @return True if successfully renderer, false otherwise.
  */
 bool Sprite::draw() {
-    dest_rect->x = x;
-    dest_rect->y = y;
+    if (dest_rect != NULL) {
+        dest_rect->x = x;
+        dest_rect->y = y;
+    }
+
     return SDL_RenderCopy(wind->get_renderer(), tex, src_rect, dest_rect);
 }

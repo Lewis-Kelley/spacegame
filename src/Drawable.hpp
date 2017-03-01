@@ -28,6 +28,16 @@ public:
     virtual double get_draw_y() = 0;
 
     /**
+     * @return The width of this image.
+     */
+    virtual double get_width() = 0;
+
+    /**
+     * @return The height of this image.
+     */
+    virtual double get_height() = 0;
+
+    /**
      * Set the x coordinate of where the image is.
      *
      * @param x
@@ -40,6 +50,20 @@ public:
      * @param y
      */
     virtual void set_draw_y(double y) = 0;
+
+    /**
+     * Set the width of this image.
+     *
+     * @param width
+     */
+    virtual void set_width(double width) = 0;
+
+    /**
+     * Set the height of this image.
+     *
+     * @param height
+     */
+    virtual void set_height(double height) = 0;
 
     virtual void move(double dx, double dy);
     virtual void move(Movement movement);

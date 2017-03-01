@@ -5,9 +5,17 @@
  *
  * @param tile_width The onscreen width of a Tile
  * @param inner The inner Drawable
+ * @param row The row this TileDrawable will draw in.
+ * @param col The column this TileDrawable will draw in.
  */
-TileDrawable::TileDrawable(double tile_width, Drawable *inner)
-    : DrawableDecorator(inner), tile_width(tile_width) { }
+TileDrawable::TileDrawable(double tile_width, Drawable *inner,
+                           short row, short col)
+    : DrawableDecorator(inner), tile_width(tile_width) {
+    DrawableDecorator::set_draw_x(col * tile_width);
+    DrawableDecorator::set_draw_y(row * tile_width);
+    DrawableDecorator::set_width(tile_width);
+    DrawableDecorator::set_height(tile_width);
+}
 
 /**
  * Move the sprite according to its dx, dy, and the time passed.

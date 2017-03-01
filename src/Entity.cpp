@@ -46,6 +46,27 @@ double Entity::get_draw_y()
     NoDrawableException ex;
     throw ex;
 }
+
+double Entity::get_width()
+{
+    if (image != NULL) {
+        return image->get_width();
+    }
+
+    NoDrawableException ex;
+    throw ex;
+}
+
+double Entity::get_height()
+{
+    if (image != NULL) {
+        return image->get_height();
+    }
+
+    NoDrawableException ex;
+    throw ex;
+}
+
 void Entity::set_draw_x(double x)
 {
     if (image != NULL) {
@@ -60,6 +81,26 @@ void Entity::set_draw_y(double y)
 {
     if (image != NULL) {
         image->set_draw_y(y);
+    }
+
+    NoDrawableException ex;
+    throw ex;
+}
+
+void Entity::set_width(double width)
+{
+    if (image != NULL) {
+        image->set_width(width);
+    }
+
+    NoDrawableException ex;
+    throw ex;
+}
+
+void Entity::set_height(double height)
+{
+    if (image != NULL) {
+        image->set_height(height);
     }
 
     NoDrawableException ex;

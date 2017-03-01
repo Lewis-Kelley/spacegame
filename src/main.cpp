@@ -30,22 +30,15 @@ int main(int argc, char *argv[])
     std::queue<Unit *> units;
 
     TileMap tile_map(10, 10);
-    Sprite *fighter_sprite = NULL;
-    Sprite *other_sprite = NULL;
     Fighter *red_fighter = NULL;
     Fighter *other_fighter = NULL;
+    SDL_Texture *ship_tex
+        = Sprite::
+        load_texture("/home/lewis/programs/spacegame/assets/red_ship.png");
     try {
-        fighter_sprite
-            = new Sprite((SDL_Rect){0, 0, 50, 50},
-                         "/home/lewis/programs/spacegame/assets/red_ship.png",
-                         true);
-        other_sprite
-            = new Sprite((SDL_Rect){50, 100, 50, 50},
-                         "/home/lewis/programs/spacegame/assets/red_ship.png",
-                         true);
-        red_fighter = new Fighter(tile_map.at(0, 0), fighter_sprite);
+        red_fighter = new Fighter(50, &tile_map, 0, 0, new Sprite(ship_tex));
         red_fighter->set_team_name("Allies");
-        other_fighter = new Fighter(tile_map.at(2, 1), other_sprite);
+        other_fighter = new Fighter(50, &tile_map, 2, 1, new Sprite(ship_tex));
         other_fighter->set_team_name("Allies");
         handler->add_listener(Event::START_CAMERA_MOVE, red_fighter);
         handler->add_listener(Event::START_CAMERA_MOVE, other_fighter);
@@ -101,9 +94,7 @@ int main(int argc, char *argv[])
         delete red_fighter;
     }
 
-    if (fighter_sprite != NULL) {
-        delete fighter_sprite;
-    }
+    SDL_DestroyTexture(ship_tex);
 
     return 0;
 }
