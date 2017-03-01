@@ -25,6 +25,7 @@ public:
     void add_entity(Entity *ent);
     bool remove_entity(Entity *ent);
     bool move_entity(Entity *ent, Direction dir);
+    bool accepts_entity(Entity *ent);
 
     /**
      * @return The row this Tile currently occupies.

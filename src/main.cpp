@@ -37,11 +37,13 @@ int main(int argc, char *argv[])
                          "/home/lewis/programs/spacegame/assets/red_ship.png",
                          true);
         other_sprite
-            = new Sprite((SDL_Rect){100, 50, 50, 50},
+            = new Sprite((SDL_Rect){50, 100, 50, 50},
                          "/home/lewis/programs/spacegame/assets/red_ship.png",
                          true);
         red_fighter = new Fighter(tile_map.at(0, 0), fighter_sprite);
+        red_fighter->set_team_name("Allies");
         other_fighter = new Fighter(tile_map.at(2, 1), other_sprite);
+        other_fighter->set_team_name("Enemies");
         handler->add_listener(Event::START_UNIT_MOVE, red_fighter);
         handler->add_listener(Event::END_UNIT_MOVE, red_fighter);
         handler->add_listener(Event::UNIT_MOVE_FINISHED, red_fighter);

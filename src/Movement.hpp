@@ -18,6 +18,9 @@ struct Movement {
     Movement() : dx(0), dy(0) { }
 };
 
+/**
+ * Legal types of Movement's.
+ */
 enum MovementType {
     CAMERA,
     MOVEMENT

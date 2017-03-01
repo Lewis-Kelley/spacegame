@@ -97,10 +97,28 @@ bool Tile::remove_entity(Entity *ent)
 bool Tile::move_entity(Entity *ent, Direction dir)
 {
     Tile *neighbor = get_neighbor(dir);
-    if (neighbor != NULL && remove_entity(ent)) {
+    if (neighbor != NULL && neighbor->accepts_entity(ent) && remove_entity(ent)) {
         neighbor->add_entity(ent);
         return true;
     }
 
     return false;
+}
+
+/**
+ * Tests if the passed Entity is allowed to pass through this Tile
+ * with regards to the Entity's currently stationed here.
+ *
+ * @param ent The Entity that is trying to pass through.
+ * @return True if ent is allowed to pass through, false if it is stopped.
+ */
+bool Tile::accepts_entity(Entity *ent)
+{
+    for (int i = 0; i < (int)occ_ents.size(); i++) {
+        if (occ_ents.at(i)->stops_ent(ent)) {
+            return false;
+        }
+    }
+
+    return true;
 }

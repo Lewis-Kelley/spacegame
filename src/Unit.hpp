@@ -81,6 +81,13 @@ public:
     virtual bool blocks_ent(Entity *other) { return true; };
 
     /**
+     * Sets the team name for this Unit.
+     *
+     * @param name The std::string to set the team_name to.
+     */
+    virtual void set_team_name(std::string name) { team_name = name; }
+
+    /**
      * @return The name of the team this Unit is a member of.
      */
     virtual std::string get_team_name() { return team_name; }

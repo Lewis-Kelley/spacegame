@@ -5,9 +5,7 @@
  *
  * @param tile The Tile this Unit will be located at.
  */
-Unit::Unit(Tile *tile) : Entity(tile)
-{
-}
+Unit::Unit(Tile *tile) : Entity(tile), team_name("None") { }
 
 /**
  * Create a new Unit with the given image.
@@ -15,9 +13,8 @@ Unit::Unit(Tile *tile) : Entity(tile)
  * @param tile The Tile this Unit occupies.
  * @param img The Sprite that represents this Unit.
  */
-Unit::Unit(Tile *tile, TileDrawable *img) : Entity(tile, img)
-{
-}
+Unit::Unit(Tile *tile, TileDrawable *img) : Entity(tile, img), team_name("None")
+{ }
 
 bool Unit::stops_ent(Entity *other)
 {
