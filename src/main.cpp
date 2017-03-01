@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
         red_fighter = new Fighter(tile_map.at(0, 0), fighter_sprite);
         red_fighter->set_team_name("Allies");
         other_fighter = new Fighter(tile_map.at(2, 1), other_sprite);
-        other_fighter->set_team_name("Enemies");
+        other_fighter->set_team_name("Allies");
         handler->add_listener(Event::START_CAMERA_MOVE, red_fighter);
         handler->add_listener(Event::START_CAMERA_MOVE, other_fighter);
         handler->add_listener(Event::STOP_CAMERA_MOVE, red_fighter);

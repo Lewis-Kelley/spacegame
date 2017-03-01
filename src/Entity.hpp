@@ -83,6 +83,8 @@ public:
      * @return True if this Entity is a Unit, false otherwise.
      */
     virtual bool is_unit() { return false; }
+
+    virtual bool can_stop();
 };
 #include "Tile.hpp"
 #include "Unit.hpp"
