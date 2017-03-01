@@ -3,6 +3,7 @@
 
 #include <stdexcept>
 
+#include "EventHandler.hpp"
 #include "Tile.hpp"
 
 /**

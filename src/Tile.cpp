@@ -14,6 +14,8 @@ Tile::Tile(short row, short col)
     for (int i = 0; i < 4; i++) {
         neighbors[i] = NULL;
     }
+
+    in_range = false;
 }
 
 /**
@@ -120,5 +122,55 @@ bool Tile::accepts_entity(Entity *ent)
         }
     }
 
-    return true;
+    return in_range;
+}
+
+void Tile::handle_select_unit_event(SelectUnitEvent *event)
+{
+    for (int i = 0; i < (int)occ_ents.size(); i++) {
+        if (occ_ents.at(i) == event->get_selected()) {
+            // The 1+ is for the current Tile so it doesn't take any
+            // movement.
+            define_range(1 + event->get_selected()->get_move_range());
+            return;
+        }
+    }
+}
+
+void Tile::handle_deselect_unit_event(DeselectUnitEvent *event)
+{
+    in_range = false;
+}
+
+void Tile::catch_event(Event *event)
+{
+    switch (event->get_type()) {
+    case Event::SELECT_UNIT:
+        handle_select_unit_event((SelectUnitEvent *)event);
+        break;
+    case Event::DESELECT_UNIT:
+        handle_deselect_unit_event((DeselectUnitEvent *)event);
+        break;
+    default:
+        break;
+    }
+}
+
+/**
+ * Recursively define the range that the most recently selected Unit
+ * can travel through. Right now, this only subtracts 1 at each step.
+ *
+ * @param move_range The remaining distance the Unit can travel.
+ */
+void Tile::define_range(short move_range)
+{
+    in_range = true;
+
+    if (--move_range > 0) {
+        for (int i = 0; i < 4; i++) {
+            if (neighbors[i] != NULL) {
+                neighbors[i]->define_range(move_range);
+            }
+        }
+    }
 }

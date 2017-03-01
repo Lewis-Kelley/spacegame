@@ -12,6 +12,7 @@ void SwitchListener::catch_event(Event *event)
         Unit *temp = units->front();
         units->pop();
         units->push(temp);
-        events::event_queue.push(new SwitchEvent(temp, units->front()));
+        events::event_queue.push(new DeselectUnitEvent(temp));
+        events::event_queue.push(new SelectUnitEvent(units->front()));
     }
 }

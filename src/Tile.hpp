@@ -7,18 +7,28 @@
 
 #include "Direction.hpp"
 #include "Entity.hpp"
+#include "Listener.hpp"
+#include "Event.hpp"
+#include "SelectUnitEvent.hpp"
+#include "DeselectUnitEvent.hpp"
 
 /**
  * Represents a single tile on the game board.
  */
-class Tile {
+class Tile : public Listener {
 private:
     short row;
     short col;
     Tile *neighbors[4]; ///< The 4 tiles next to this tile ordered by direction
     std::vector<Entity *> occ_ents; ///< The Entity's in this Tile
+    bool in_range;
+
+    void handle_select_unit_event(SelectUnitEvent *event);
+    void handle_deselect_unit_event(DeselectUnitEvent *event);
+    void define_range(short move_range);
 public:
     Tile(short row, short col);
+    virtual ~Tile() { }
     void set_neighbor(Direction dir, Tile *neighbor);
     void add_neighbor(Direction dir, Tile *neighbor);
     Tile *get_neighbor(Direction dir);
@@ -36,6 +46,8 @@ public:
      * @return The column this Tile currently occupies.
      */
     short get_col() { return col; }
+
+    void catch_event(Event *event);
 };
 
 #endif /* TILE_H */

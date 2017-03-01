@@ -31,12 +31,12 @@ To compile, just =cd= into the =build= directory, run =cmake ..= and
 =./spacegame=.
 ** Controls
 Since I'm crazy and use Colemak, the camera keys are WARS instead of
-WASD. If you want to change this, just go to
-Events.cpp::fill_defaults and change the appropriate SDLK constants as
-you see fit. It's not hard to follow, so you should be able to figure
-it out.
+WASD. If you want to change this, just go to Events.cpp::fill_defaults
+and change the appropriate SDLK constants as you see fit. It's not
+hard to follow, so you should be able to figure it out.
 
-With regards to moving units, just use the arrow keys.
+With regards to moving units, just use the arrow keys. To switch to
+the next Unit under your control, press the space bar.
 * Software Design
 The general design of the system involves a few interfaces and what
 I'm calling an events system.
@@ -96,11 +96,11 @@ more about how to use it.
   between by pressing space.
 - [X] Make it so that the two Fighter's cannot pass on top of each
   other.
-** TODO Highlighting Available Tiles [0/2]
-- [ ] Calculate available Tiles given a starting position
+** TODO Highlighting Available Tiles [1/2]
+- [X] Calculate available Tiles given a starting position
 - [ ] Change Tile colors or something to indicate this change
-** TODO Limit Movement Range [0/1]
-- [ ] Given the available Tiles, bound the motion of any Fighter to
+** DONE Limit Movement Range [1/1]
+- [X] Given the available Tiles, bound the motion of any Fighter to
   that range
 * Known Bugs
 None at this time (Hooray!)

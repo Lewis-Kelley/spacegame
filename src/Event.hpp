@@ -26,7 +26,8 @@ public:
         UNIT_MOVE_FINISHED,
         START_CAMERA_MOVE,
         STOP_CAMERA_MOVE,
-        SWITCH_UNITS,
+        SELECT_UNIT,
+        DESELECT_UNIT,
         TRIGGER_SWITCH
     };
 

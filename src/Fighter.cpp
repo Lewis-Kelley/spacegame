@@ -110,20 +110,25 @@ void Fighter::handle_camera_stop_move_event(StopCameraMoveEvent *event)
     }
 }
 
-void Fighter::handle_switch_units_event(SwitchEvent *event)
+void Fighter::handle_select_unit_event(SelectUnitEvent *event)
 {
     EventHandler *handler = EventHandler::get_instance();
 
-    if (event->get_from() == this) {
-        handler->remove_listener(Event::START_UNIT_MOVE, this);
-        handler->remove_listener(Event::END_UNIT_MOVE, this);
-        handler->remove_listener(Event::UNIT_MOVE_FINISHED, this);
-    }
-
-    if (event->get_to() == this) {
+    if (event->get_selected() == this) {
         handler->add_listener(Event::START_UNIT_MOVE, this);
         handler->add_listener(Event::END_UNIT_MOVE, this);
         handler->add_listener(Event::UNIT_MOVE_FINISHED, this);
+    }
+}
+
+void Fighter::handle_deselect_unit_event(DeselectUnitEvent *event)
+{
+    EventHandler *handler = EventHandler::get_instance();
+
+    if (event->get_deselected() == this) {
+        handler->remove_listener(Event::START_UNIT_MOVE, this);
+        handler->remove_listener(Event::END_UNIT_MOVE, this);
+        handler->remove_listener(Event::UNIT_MOVE_FINISHED, this);
     }
 }
 
@@ -145,8 +150,11 @@ void Fighter::catch_event(Event *event)
     case Event::STOP_CAMERA_MOVE:
         handle_camera_stop_move_event((StopCameraMoveEvent *)event);
         break;
-    case Event::SWITCH_UNITS:
-        handle_switch_units_event((SwitchEvent *)event);
+    case Event::SELECT_UNIT:
+        handle_select_unit_event((SelectUnitEvent *)event);
+        break;
+    case Event::DESELECT_UNIT:
+        handle_deselect_unit_event((DeselectUnitEvent *)event);
         break;
     default:
         break;
@@ -160,5 +168,5 @@ Attack *Fighter::make_attack(Unit *target)
 
 short Fighter::get_move_range()
 {
-    return 0;
+    return 4;
 }

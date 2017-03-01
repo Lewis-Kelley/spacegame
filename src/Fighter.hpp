@@ -10,7 +10,8 @@
 #include "TileDrawable.hpp"
 #include "CameraMoveEvent.hpp"
 #include "StopCameraMoveEvent.hpp"
-#include "SwitchEvent.hpp"
+#include "SelectUnitEvent.hpp"
+#include "DeselectUnitEvent.hpp"
 
 #define MOVE_SPEED 0.25
 
@@ -35,7 +36,8 @@ private:
     void handle_move_finished_event(MoveFinishedEvent *event);
     void handle_camera_move_event(CameraMoveEvent *event);
     void handle_camera_stop_move_event(StopCameraMoveEvent *event);
-    void handle_switch_units_event(SwitchEvent *event);
+    void handle_select_unit_event(SelectUnitEvent *event);
+    void handle_deselect_unit_event(DeselectUnitEvent *event);
 public:
     Fighter(Tile *tile, Drawable *img);
     virtual short get_hull_health() { return hull_health; }

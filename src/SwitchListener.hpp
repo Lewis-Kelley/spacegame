@@ -6,7 +6,8 @@
 #include "Unit.hpp"
 #include "Listener.hpp"
 #include "Events.hpp"
-#include "SwitchEvent.hpp"
+#include "DeselectUnitEvent.hpp"
+#include "SelectUnitEvent.hpp"
 
 /**
  * Catches a SWITCH Event and switches control to the next Unit.
