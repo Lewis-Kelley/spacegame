@@ -92,7 +92,7 @@ void Fighter::handle_move_finished_event(MoveFinishedEvent *event)
  */
 void Fighter::handle_camera_move_event(CameraMoveEvent *event)
 {
-    image->start_move(event->get_dx(), event->get_dy());
+    image->start_move(event->get_dx(), event->get_dy(), CAMERA);
     camera_dir = event->get_dir();
 }
 
@@ -105,7 +105,7 @@ void Fighter::handle_camera_move_event(CameraMoveEvent *event)
 void Fighter::handle_camera_stop_move_event(StopCameraMoveEvent *event)
 {
     if (event->get_dir() == camera_dir) {
-        image->end_move();
+        image->end_move(CAMERA);
         camera_dir = NO_DIRECTION;
     }
 }

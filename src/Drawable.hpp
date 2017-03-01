@@ -2,6 +2,9 @@
 #define DRAWABLE_H
 
 #include <stdio.h>
+#include <map>
+
+#include "Movement.hpp"
 
 /**
  * An abstract class representing anything that can be drawn onto the
@@ -9,8 +12,8 @@
  */
 class Drawable {
 private:
-    double dx;
-    double dy;
+    std::map<MovementType, Movement *> movements;
+    typedef std::pair<MovementType, Movement *> movement_pair;
 public:
     virtual ~Drawable() {}
 
@@ -39,13 +42,11 @@ public:
     virtual void set_draw_y(double y) = 0;
 
     virtual void move(double dx, double dy);
+    virtual void move(Movement movement);
 
-    virtual void start_move(double dx, double dy);
-
-    /**
-     * Stops the consistent movement of this Drawable.
-     */
-    virtual void end_move() { dx = dy = 0.0; }
+    virtual void start_move(double dx, double dy, MovementType type);
+    virtual void start_move(Movement *movement, MovementType type);
+    virtual void end_move(MovementType type);
 
     /**
      * Draws whatever this drawable represents to the screen.

@@ -13,18 +13,54 @@ void Drawable::move(double dx, double dy)
 }
 
 /**
+ * Move this image's location by the given Movement.
+ *
+ * @param movement The one-time Movement to perform.
+ */
+void Drawable::move(Movement movement)
+{
+    move(movement.dx, movement.dy);
+}
+
+/**
  * Start a consistent move for this Drawable.
  *
  * @param dx The amount to move in the x direction per tick.
  * @param dy The amount to move in the y direction per tick.
+ * @param type The MovementType of this Movement.
  */
-void Drawable::start_move(double dx, double dy)
+void Drawable::start_move(double dx, double dy, MovementType type)
 {
-    this->dx = dx;
-    this->dy = dy;
+
+    movements.insert(movement_pair(type, new Movement(dx, dy)));
+}
+
+/**
+ * Start a consistent move for this Drawable.
+ *
+ * @param movement The Movement detailing how to move each tick.
+ * @param type The MovementType of this Movement.
+ */
+void Drawable::start_move(Movement *movement, MovementType type)
+{
+
+    movements.insert(movement_pair(type, movement));
+}
+
+/**
+ * Stop the Movement with the associated type.
+ *
+ * @param type The type of Movement to kill.
+ */
+void Drawable::end_move(MovementType type)
+{
+    movements.erase(type);
 }
 
 void Drawable::update(double delta)
 {
-    move(dx * delta, dy * delta);
+    for (std::map<MovementType, Movement *>::iterator iter = movements.begin();
+         iter != movements.end(); iter++) {
+        move(iter->second->dx * delta, iter->second->dy * delta);
+    }
 }

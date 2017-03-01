@@ -44,6 +44,16 @@ I'm calling an events system.
 *** Drawable
 All things that can be drawn to the screen, be that the units or the
 UI, will extend this class.
+*** Movement
+The Movement struct is used by Drawable's to handle multiple motions
+at once. Each Drawable has a map relating MovementType's to
+Movement's, implying that each Drawable can only have one of each type
+of Movement. This is primarily done for ease of removal.
+
+An example of this is a CAMERA Movement and an actual MOVEMENT
+Movement caused by moving a Unit around. This system allows the two to
+run simultaneously without messing with the other's logic at all, as
+well as preserve maximum detail about each Movement.
 *** Entity
 Anything that has a presence on the board is considered an
 Entity. Tile's (which make up the board) have a vector of Entity's

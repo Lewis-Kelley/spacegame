@@ -58,6 +58,31 @@ public:
     virtual Attack *make_attack(Unit *target) = 0;
 
     virtual bool move_ent(Direction dir);
+
+    /**
+     * Checks if the passed Entity should be allowed to pass through
+     * the Tile this Entity is occupying.
+     *
+     * @param other The Entity to check against.
+     * @return True if this Entity prevents other from passing
+     * through, false otherwise.
+     */
+    virtual bool stops_ent(Entity *other) = 0;
+
+    /**
+     * Checks if the passed Entity should be allowed to stop in
+     * the Tile this Entity is occupying.
+     *
+     * @param other The Entity to check against.
+     * @return True if this Entity prevents other from stopping in
+     * this Enity's Tile, false otherwise.
+     */
+    virtual bool blocks_ent(Entity *other) = 0;
+
+    /**
+     * @return True if this Entity is a Unit, false otherwise.
+     */
+    virtual bool is_unit() { return false; }
 };
 #include "Tile.hpp"
 #include "Unit.hpp"

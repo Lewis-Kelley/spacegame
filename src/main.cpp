@@ -28,19 +28,29 @@ int main(int argc, char *argv[])
 
     TileMap tile_map(10, 10);
     Sprite *fighter_sprite = NULL;
+    Sprite *other_sprite = NULL;
     Fighter *red_fighter = NULL;
+    Fighter *other_fighter = NULL;
     try {
         fighter_sprite
             = new Sprite((SDL_Rect){0, 0, 50, 50},
                          "/home/lewis/programs/spacegame/assets/red_ship.png",
                          true);
+        other_sprite
+            = new Sprite((SDL_Rect){100, 50, 50, 50},
+                         "/home/lewis/programs/spacegame/assets/red_ship.png",
+                         true);
         red_fighter = new Fighter(tile_map.at(0, 0), fighter_sprite);
+        other_fighter = new Fighter(tile_map.at(2, 1), other_sprite);
         handler->add_listener(Event::START_UNIT_MOVE, red_fighter);
         handler->add_listener(Event::END_UNIT_MOVE, red_fighter);
         handler->add_listener(Event::UNIT_MOVE_FINISHED, red_fighter);
         handler->add_listener(Event::START_CAMERA_MOVE, red_fighter);
+        handler->add_listener(Event::START_CAMERA_MOVE, other_fighter);
         handler->add_listener(Event::STOP_CAMERA_MOVE, red_fighter);
+        handler->add_listener(Event::STOP_CAMERA_MOVE, other_fighter);
         drawings.push_back(red_fighter);
+        drawings.push_back(other_fighter);
     } catch (char const* err) {
         fprintf(stderr, "ERROR: %s\n", err);
     }

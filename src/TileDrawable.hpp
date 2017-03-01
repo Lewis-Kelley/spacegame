@@ -25,11 +25,10 @@ private:
             return "This Drawable is already moving perpendicularly!\n";
         }
     };
+    Movement curr_movement;
     double tile_width; ///< The width of an onscreen Tile
-    double dx; ///< The shift in the x direction each tick.
-    double dy; ///< The shift in the y direction each tick.
-    double end_x; ///< The target x location for a move.
-    double end_y; ///< The target y location for a move.
+    double rem_x;
+    double rem_y;
 public:
     TileDrawable(double tile_width, Drawable *inner);
     void update(double delta);
@@ -40,7 +39,8 @@ public:
      * @return True if this is still animating a motion, false
      * otherwise.
      */
-    bool is_moving() { return !NEAR_ZERO(dx) || !NEAR_ZERO(dy); }
+    bool is_moving() { return !NEAR_ZERO(curr_movement.dx)
+            || !NEAR_ZERO(curr_movement.dy); }
 };
 
 #endif /* TILEDRAWABLE_H */

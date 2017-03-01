@@ -1,6 +1,8 @@
 #ifndef UNIT_H
 #define UNIT_H
 
+#include <string>
+
 #include "Drawable.hpp"
 #include "Entity.hpp"
 #include "Attack.hpp"
@@ -10,6 +12,8 @@
  * An entity that has stats and can be attacked
  */
 class Unit : public Entity {
+private:
+    std::string team_name;
 public:
     Unit(Tile *tile);
     Unit(Tile *tile, TileDrawable *img);
@@ -72,6 +76,16 @@ public:
      * whatever way is appropriate.
      */
     virtual void handle_attack(Attack *att) = 0;
+
+    virtual bool stops_ent(Entity *other);
+    virtual bool blocks_ent(Entity *other) { return true; };
+
+    /**
+     * @return The name of the team this Unit is a member of.
+     */
+    virtual std::string get_team_name() { return team_name; }
+
+    bool is_unit() { return true; }
 };
 
 #endif /* UNIT_H */
