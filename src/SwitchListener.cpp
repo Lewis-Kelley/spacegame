@@ -4,7 +4,10 @@
  * Creates a new SwitchListener with a reference to some std::queue of
  * Unit's to use.
  */
-SwitchListener::SwitchListener(std::queue<Unit *> *units) : units(units) { }
+SwitchListener::SwitchListener(std::queue<Unit *> *units) : units(units)
+{
+    event_handler::add_listener(Event::TRIGGER_SWITCH, this);
+}
 
 void SwitchListener::catch_event(Event *event)
 {

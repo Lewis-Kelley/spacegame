@@ -1,30 +1,17 @@
 #include "Window.hpp"
 
-Window *Window::self;
-
-Window::Window()
-{
-    init();
-}
-
-/**
- * @return A pointer to the global Window instance.
- */
-Window *Window::get_instance()
-{
-    if (Window::self == NULL) {
-        Window::self = new Window();
-    }
-
-    return Window::self;
-}
+double window::prev_time;
+SDL_Window *window::wind;
+SDL_Renderer *window::rend;
+short window::width;
+short window::height;
 
 /**
  * Initializes SDL using the default values for width and height.
  *
  * @return true if success, false if there was an error.
  */
-bool Window::init()
+bool window::init()
 {
     return init(INIT_WIDTH, INIT_HEIGHT);
 }
@@ -36,7 +23,7 @@ bool Window::init()
  * @param height The initial height of the Window.
  * @return true if success, false if there was an error.
  */
-bool Window::init(short width, short height)
+bool window::init(short width, short height)
 {
     free();
 
@@ -71,10 +58,35 @@ bool Window::init(short width, short height)
  * Free all the memory used by the SDL Window and renderer, as well as
  * quit all the SDL processes.
  */
-void Window::free()
+void window::free()
 {
     SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(wind);
     IMG_Quit();
     SDL_Quit();
+}
+
+/**
+ * Clears the renderer for a new buffer to be drawn.
+ */
+void window::clear_render()
+{
+    SDL_RenderClear(rend);
+}
+
+/**
+ * Draws whatever has been held in the renderer to the screen.
+ */
+void window::present_render()
+{
+    prev_time = SDL_GetTicks();
+    SDL_RenderPresent(rend);
+}
+
+/**
+ * Return the delta time since last the previous render.
+ */
+double window::get_delta()
+{
+    return SDL_GetTicks() - prev_time;
 }

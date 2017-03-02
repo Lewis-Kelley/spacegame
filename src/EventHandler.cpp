@@ -1,30 +1,13 @@
 #include "EventHandler.hpp"
 
-EventHandler *EventHandler::self;
-
-EventHandler::EventHandler()
-{
-    // Do nothing
-}
-
-/**
- * @return A pointer to the global EventHandler instance.
- */
-EventHandler *EventHandler::get_instance()
-{
-    if (EventHandler::self == NULL) {
-        EventHandler::self = new EventHandler();
-    }
-
-    return EventHandler::self;
-}
+std::map<Event::Event_Type, std::vector<Listener *>*> event_handler::listeners;
 
 /**
  * Calls any listeners that are waiting for the passed event.
  *
  * @param event The SDL_Event to handle.
  */
-void EventHandler::handle_event(Event *event)
+void event_handler::handle_event(Event *event)
 {
     try {
         std::vector<Listener *>* values = listeners.at(event->get_type());
@@ -43,7 +26,7 @@ void EventHandler::handle_event(Event *event)
  * @param type The type of the event this Listener should listen for.
  * @param obs The Listener to add to the observer list.
  */
-void EventHandler::add_listener(Event::Event_Type type, Listener *obs)
+void event_handler::add_listener(Event::Event_Type type, Listener *obs)
 {
     if (listeners.find(type) == listeners.end()) { // Key doesn't exist
         std::vector<Listener *> *vec = new std::vector<Listener *>();
@@ -61,7 +44,7 @@ void EventHandler::add_listener(Event::Event_Type type, Listener *obs)
  * @param type The type of Event from which to remove obs.
  * @param obs The Listener to remove.
  */
-void EventHandler::remove_listener(Event::Event_Type type, Listener *obs)
+void event_handler::remove_listener(Event::Event_Type type, Listener *obs)
 {
     std::vector<Listener *> *vec;
 

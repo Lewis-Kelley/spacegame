@@ -14,6 +14,7 @@
 #include "Events.hpp"
 #include "QuitEvent.hpp"
 #include "SwitchListener.hpp"
+#include "MovementListener.hpp"
 
 void add_unit(std::vector<Drawable *> *drawings, std::queue<Unit *> *units,
               Unit *unit)
@@ -24,9 +25,9 @@ void add_unit(std::vector<Drawable *> *drawings, std::queue<Unit *> *units,
 
 int main(int argc, char *argv[])
 {
-    Window *wind = Window::get_instance();
-    EventHandler *handler = EventHandler::get_instance();
+    window::init();
     std::queue<Unit *> units;
+    MovementListener movProx;
 
     TileMap tile_map(10, 10);
     Fighter *red_fighter = NULL;
@@ -48,8 +49,8 @@ int main(int argc, char *argv[])
         fprintf(stderr, "ERROR: %s\n", err);
     }
 
-    handler->add_listener(Event::QUIT, new QuitListener());
-    handler->add_listener(Event::TRIGGER_SWITCH, new SwitchListener(&units));
+    QuitListener ql;
+    SwitchListener sl(&units);
 
     events::fill_defaults();
     events::event_queue.push(new TriggerSwitchEvent()); // Select the first Unit
@@ -60,7 +61,7 @@ int main(int argc, char *argv[])
 
     gamestate::running = true;
     while (gamestate::running) {
-        wind->clear_render();
+        window::clear_render();
 
         while (SDL_PollEvent(&sdl_event) != 0) {
             event = events::convert_SDL_Event(&sdl_event);
@@ -70,13 +71,13 @@ int main(int argc, char *argv[])
         }
 
         while (events::event_queue.size() > 0) {
-            handler->handle_event(events::event_queue.front());
+            event_handler::handle_event(events::event_queue.front());
             events::event_queue.pop();
         }
 
-        delta = wind->get_delta();
+        delta = window::get_delta();
         gamestate::draw_all(delta);
-        wind->present_render();
+        window::present_render();
     }
 
     if (red_fighter != NULL) {
@@ -85,6 +86,7 @@ int main(int argc, char *argv[])
 
     SDL_DestroyTexture(red_ship_tex);
     SDL_DestroyTexture(blue_ship_tex);
+    window::free();
 
     return 0;
 }

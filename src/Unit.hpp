@@ -8,6 +8,8 @@
 #include "Attack.hpp"
 #include "TileDrawable.hpp"
 
+#define MOVE_SPEED 0.25
+
 class TileMap;
 
 /**
@@ -78,6 +80,12 @@ public:
     virtual short get_move_range() = 0;
 
     /**
+     * @return A pair of radii from the current Unit, where the first
+     * value is the minimum radius and the second the maximum radius.
+     */
+    virtual std::pair<short, short> get_attack_range() = 0;
+
+    /**
      * Accepts an attack targeted at this unit and handles it in
      * whatever way is appropriate.
      */
@@ -97,6 +105,8 @@ public:
      * @return The name of the team this Unit is a member of.
      */
     virtual std::string get_team_name() { return team_name; }
+
+    virtual bool move_unit(Direction dir);
 
     bool is_unit() { return true; }
 };

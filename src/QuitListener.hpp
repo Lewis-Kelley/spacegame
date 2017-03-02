@@ -3,12 +3,14 @@
 
 #include "Listener.hpp"
 #include "GameState.hpp"
+#include "EventHandler.hpp"
 
 /**
  * Catches a QUIT Event and quits the game.
  */
 class QuitListener : public Listener {
 public:
+    QuitListener();
     void catch_event(Event *event);
 };
 

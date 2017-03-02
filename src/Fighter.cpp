@@ -2,11 +2,10 @@
 
 void Fighter::init()
 {
-    EventHandler *handler = EventHandler::get_instance();
-    handler->add_listener(Event::START_CAMERA_MOVE, this);
-    handler->add_listener(Event::STOP_CAMERA_MOVE, this);
-    handler->add_listener(Event::SELECT_UNIT, this);
-    handler->add_listener(Event::DESELECT_UNIT, this);
+    event_handler::add_listener(Event::START_CAMERA_MOVE, this);
+    event_handler::add_listener(Event::STOP_CAMERA_MOVE, this);
+    event_handler::add_listener(Event::SELECT_UNIT, this);
+    event_handler::add_listener(Event::DESELECT_UNIT, this);
     moving_dir = NO_DIRECTION;
     camera_dir = NO_DIRECTION;
     queued_dir = NO_DIRECTION;
@@ -60,81 +59,6 @@ void Fighter::handle_attack(Attack *att)
 }
 
 /**
- * Attempts to move this Fighter in the given Direction.
- *
- * @param dir The Direction in which to move this Fighter.
- * @return True if successful, false if there was a problem.
- */
-bool Fighter::move_fighter(Direction dir)
-{
-    if (image->is_moving()) {
-        return false;
-    }
-
-    image->start_tile_move(MOVE_SPEED, 1, dir);
-
-    if (!move_ent(dir)) {
-        image->kill_move();
-        return false;
-    }
-
-    occ_tile = occ_tile->get_neighbor(dir);
-    return true;
-}
-
-/**
- * Handles a given MoveEvent, starting an animation to move the ship
- * and updating which Tile the Fighter currently occupies.
- *
- * @param event The MoveEvent to handle
- */
-void Fighter::handle_move_event(MoveEvent *event)
-{
-    Direction dir = event->get_direction();
-
-    if (move_fighter(dir)) {
-        moving_dir = dir;
-    } else {
-        queued_dir = dir;
-    }
-}
-
-/**
- * Handle a StopMoveEvent to stop the Fighter from continuing to move.
- *
- * @param event The StopMoveEvent to handle.
- */
-void Fighter::handle_stop_event(StopMoveEvent *event)
-{
-    if (event->get_direction() == queued_dir) {
-        queued_dir = NO_DIRECTION;
-    }
-
-    if (event->get_direction() == moving_dir) {
-        moving_dir = queued_dir;
-    }
-}
-
-/**
- * Handle a MoveFinishedEvent to continue moving in whatever direction
- * the Fighter is currently moving_dir.
- *
- * @param event The MoveFinishedEvent to handle.
- */
-void Fighter::handle_move_finished_event(MoveFinishedEvent *event)
-{
-    if (moving_dir == NO_DIRECTION) {
-        if (queued_dir == NO_DIRECTION) {
-            return;
-        }
-
-        moving_dir = queued_dir;
-    }
-
-    move_fighter(moving_dir);
-}
-
-/**
  * Handle a CameraMoveEvent by passing it through to the underlying
  * Drawable image.
  *
@@ -171,51 +95,14 @@ void Fighter::handle_camera_stop_move_event(StopCameraMoveEvent *event)
     camera_dir = (Direction)(camera_dir & ~event->get_dir());
 }
 
-void Fighter::handle_select_unit_event(SelectUnitEvent *event)
-{
-    EventHandler *handler = EventHandler::get_instance();
-
-    if (event->get_selected() == this) {
-        handler->add_listener(Event::START_UNIT_MOVE, this);
-        handler->add_listener(Event::END_UNIT_MOVE, this);
-        handler->add_listener(Event::UNIT_MOVE_FINISHED, this);
-    }
-}
-
-void Fighter::handle_deselect_unit_event(DeselectUnitEvent *event)
-{
-    EventHandler *handler = EventHandler::get_instance();
-
-    if (event->get_deselected() == this) {
-        handler->remove_listener(Event::START_UNIT_MOVE, this);
-        handler->remove_listener(Event::END_UNIT_MOVE, this);
-        handler->remove_listener(Event::UNIT_MOVE_FINISHED, this);
-    }
-}
-
 void Fighter::catch_event(Event *event)
 {
     switch (event->get_type()) {
-    case Event::START_UNIT_MOVE:
-        handle_move_event((MoveEvent *)event);
-        break;
-    case Event::END_UNIT_MOVE:
-        handle_stop_event((StopMoveEvent *)event);
-        break;
-    case Event::UNIT_MOVE_FINISHED:
-        handle_move_finished_event((MoveFinishedEvent *)event);
-        break;
     case Event::START_CAMERA_MOVE:
         handle_camera_move_event((CameraMoveEvent *)event);
         break;
     case Event::STOP_CAMERA_MOVE:
         handle_camera_stop_move_event((StopCameraMoveEvent *)event);
-        break;
-    case Event::SELECT_UNIT:
-        handle_select_unit_event((SelectUnitEvent *)event);
-        break;
-    case Event::DESELECT_UNIT:
-        handle_deselect_unit_event((DeselectUnitEvent *)event);
         break;
     default:
         break;
@@ -224,10 +111,19 @@ void Fighter::catch_event(Event *event)
 
 Attack *Fighter::make_attack(Unit *target)
 {
+    // TODO Implement
     return NULL;
 }
 
 short Fighter::get_move_range()
 {
+    // TODO Replace with some proportional value.
     return 4;
+}
+
+std::pair<short, short> Fighter::get_attack_range()
+{
+    // TODO Replace with some proportional value.
+    std::pair<short, short> pair(1, 2);
+    return pair;
 }

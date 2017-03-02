@@ -59,3 +59,26 @@ bool Unit::stops_ent(Entity *other)
 {
     return other->is_unit() && ((Unit *)other)->get_team_name() != team_name;
 }
+
+/**
+ * Attempts to move this Unit in the given Direction.
+ *
+ * @param dir The Direction in which to move this Unit.
+ * @return True if successful, false if there was a problem.
+ */
+bool Unit::move_unit(Direction dir)
+{
+    if (image->is_moving()) {
+        return false;
+    }
+
+    image->start_tile_move(MOVE_SPEED, 1, dir);
+
+    if (!move_ent(dir)) {
+        image->kill_move();
+        return false;
+    }
+
+    occ_tile = occ_tile->get_neighbor(dir);
+    return true;
+}

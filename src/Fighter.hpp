@@ -13,8 +13,6 @@
 #include "SelectUnitEvent.hpp"
 #include "DeselectUnitEvent.hpp"
 
-#define MOVE_SPEED 0.25
-
 /**
  * The standard Fighter Unit that will be the primary game board Unit.
  */
@@ -33,13 +31,8 @@ private:
     short weapon_power;
 
     void init();
-    void handle_move_event(MoveEvent *event);
-    void handle_stop_event(StopMoveEvent *event);
-    void handle_move_finished_event(MoveFinishedEvent *event);
     void handle_camera_move_event(CameraMoveEvent *event);
     void handle_camera_stop_move_event(StopCameraMoveEvent *event);
-    void handle_select_unit_event(SelectUnitEvent *event);
-    void handle_deselect_unit_event(DeselectUnitEvent *event);
 public:
     Fighter(TileMap *tilemap, short row, short col, TileDrawable *img);
     Fighter(double tile_width, TileMap *tilemap, short row, short col,
@@ -55,9 +48,9 @@ public:
     short get_weapon_power() { return weapon_power; }
     Attack *make_attack(Unit *target);
     short get_move_range();
+    std::pair<short, short> get_attack_range();
     void handle_attack(Attack *att);
     void catch_event(Event *event);
-    bool move_fighter(Direction dir);
 };
 
 #endif /* FIGHTER_H */

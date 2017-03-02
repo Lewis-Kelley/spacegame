@@ -8,7 +8,6 @@
  * @param tex A pointer to an SDL_Texture holding the image data to draw.
  */
 Sprite::Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, SDL_Texture *tex) {
-    wind = Window::get_instance();
     this->tex = tex;
     this->src_rect = new SDL_Rect();
     *this->src_rect = src_rect;
@@ -31,7 +30,6 @@ Sprite::Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, SDL_Texture *tex) {
  * if it shows where the Sprite comes from.
  */
 Sprite::Sprite(SDL_Rect rect, SDL_Texture *tex, bool dest) {
-    wind = Window::get_instance();
     SDL_Rect **target_rect;
     SDL_Rect **other_rect;
 
@@ -62,7 +60,6 @@ Sprite::Sprite(SDL_Rect rect, SDL_Texture *tex, bool dest) {
  * @param tex A pointer to an SDL_Texture holding the image data to draw.
  */
 Sprite::Sprite(SDL_Texture *tex) {
-    wind = Window::get_instance();
     this->tex = tex;
     src_rect = NULL;
     dest_rect = NULL;
@@ -79,7 +76,6 @@ Sprite::Sprite(SDL_Texture *tex) {
  * @param filename The name of the image file to load this Sprite from.
  */
 Sprite::Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, std::string filename) {
-    wind = Window::get_instance();
     this->tex = load_texture(filename);
     this->src_rect = new SDL_Rect();
     *this->src_rect = src_rect;
@@ -102,7 +98,6 @@ Sprite::Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, std::string filename) {
  * if it shows where the Sprite comes from.
  */
 Sprite::Sprite(SDL_Rect rect, std::string filename, bool dest) {
-    wind = Window::get_instance();
     SDL_Rect **target_rect;
     SDL_Rect **other_rect;
 
@@ -133,7 +128,6 @@ Sprite::Sprite(SDL_Rect rect, std::string filename, bool dest) {
  * @param filename The name of the image file to load this Sprite from.
  */
 Sprite::Sprite(std::string filename) {
-    wind = Window::get_instance();
     this->tex = load_texture(filename);
     src_rect = NULL;
     dest_rect = NULL;
@@ -234,7 +228,6 @@ void Sprite::set_height(double height)
 SDL_Texture *Sprite::load_texture(std::string filename) {
     SDL_Texture *tex = NULL;
     SDL_Surface *img = IMG_Load(filename.c_str());
-    Window *wind = Window::get_instance();
 
     if (img == NULL) {
         throw IMG_GetError();
@@ -243,7 +236,7 @@ SDL_Texture *Sprite::load_texture(std::string filename) {
     // Set invisible color
     SDL_SetColorKey(img, SDL_TRUE, SDL_MapRGB(img->format, 0xFF, 0x00, 0xFF));
     // Create texture from the surface
-    tex = SDL_CreateTextureFromSurface(wind->get_renderer(), img);
+    tex = SDL_CreateTextureFromSurface(window::rend, img);
 
     if (tex == NULL) {
         throw IMG_GetError();
@@ -263,5 +256,5 @@ bool Sprite::draw() {
         dest_rect->y = y;
     }
 
-    return SDL_RenderCopy(wind->get_renderer(), tex, src_rect, dest_rect);
+    return SDL_RenderCopy(window::rend, tex, src_rect, dest_rect);
 }
