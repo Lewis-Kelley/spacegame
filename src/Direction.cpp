@@ -9,18 +9,8 @@
  */
 Direction opp_dir(Direction dir)
 {
-    switch (dir) {
-    case EAST:
-        return WEST;
-    case NORTH:
-        return SOUTH;
-    case WEST:
-        return EAST;
-    case SOUTH:
-        return NORTH;
-    }
-
-    return (Direction)(((int)dir + 2) % 4);
+    int shifted = dir << 2;
+    return (Direction)((shifted & 0b1100) + (shifted >> 4));
 }
 
 int index_value(Direction dir)
@@ -37,4 +27,9 @@ int index_value(Direction dir)
     default:
         return -1;
     }
+}
+
+bool is_cardinal_dir(Direction dir)
+{
+    return dir == EAST || dir == NORTH || dir == WEST || dir == SOUTH;
 }

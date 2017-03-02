@@ -6,11 +6,11 @@
 double CameraMoveEvent::get_dx()
 {
     if (dir & EAST) {
-        return -CAMERA_SPEED;
+        return -speed;
     }
 
     if (dir & WEST) {
-        return CAMERA_SPEED;
+        return speed;
     }
 
     return 0.0;
@@ -22,11 +22,11 @@ double CameraMoveEvent::get_dx()
 double CameraMoveEvent::get_dy()
 {
     if (dir & NORTH) {
-        return CAMERA_SPEED;
+        return speed;
     }
 
     if (dir & SOUTH) {
-        return -CAMERA_SPEED;
+        return -speed;
     }
 
     return 0.0;

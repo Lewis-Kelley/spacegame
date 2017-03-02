@@ -31,8 +31,12 @@ void Drawable::move(Movement movement)
  */
 void Drawable::start_move(double dx, double dy, MovementType type)
 {
-
-    movements.insert(movement_pair(type, new Movement(dx, dy)));
+    if (movements.find(type) == movements.end()) {
+        movements.insert(movement_pair(type, new Movement(dx, dy)));
+    } else {
+        movements.at(type)->dx = dx;
+        movements.at(type)->dy = dy;
+    }
 }
 
 /**
@@ -43,7 +47,6 @@ void Drawable::start_move(double dx, double dy, MovementType type)
  */
 void Drawable::start_move(Movement *movement, MovementType type)
 {
-
     movements.insert(movement_pair(type, movement));
 }
 

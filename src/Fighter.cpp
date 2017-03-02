@@ -10,7 +10,11 @@
  * @param img The TileDrawable that will be used to draw this Fighter.
  */
 Fighter::Fighter(TileMap *tilemap, short row, short col, TileDrawable *img)
-    : Unit(tilemap, row, col, img) { }
+    : Unit(tilemap, row, col, img)
+{
+    moving_dir = NO_DIRECTION;
+    camera_dir = NO_DIRECTION;
+}
 
 /**
  * Instantiate a new Fighter at the given location with the given image.
@@ -24,7 +28,11 @@ Fighter::Fighter(TileMap *tilemap, short row, short col, TileDrawable *img)
  * be wrapped in a new TileDrawable object.
  */
 Fighter::Fighter(double tile_width, TileMap *tilemap, short row, short col,
-                 Drawable *img) : Unit(tile_width, tilemap, row, col, img) { }
+                 Drawable *img) : Unit(tile_width, tilemap, row, col, img)
+{
+    moving_dir = NO_DIRECTION;
+    camera_dir = NO_DIRECTION;
+}
 
 /**
  * Constructs a new Fighter by calling the Unit's constructor.
@@ -117,8 +125,14 @@ void Fighter::handle_move_finished_event(MoveFinishedEvent *event)
  */
 void Fighter::handle_camera_move_event(CameraMoveEvent *event)
 {
-    image->start_move(event->get_dx(), event->get_dy(), CAMERA);
-    camera_dir = event->get_dir();
+    Direction event_dir = event->get_dir();
+    MovementType type = (event_dir & (EAST | WEST)) != 0
+        ? CAMERA_X : CAMERA_Y;
+    if (camera_dir == NO_DIRECTION
+        || (is_cardinal_dir(camera_dir) && event_dir != opp_dir(camera_dir))) {
+        camera_dir = (Direction)(camera_dir | event_dir);
+        image->start_move(event->get_dx(), event->get_dy(), type);
+    }
 }
 
 /**
@@ -129,10 +143,15 @@ void Fighter::handle_camera_move_event(CameraMoveEvent *event)
  */
 void Fighter::handle_camera_stop_move_event(StopCameraMoveEvent *event)
 {
-    if (event->get_dir() == camera_dir) {
-        image->end_move(CAMERA);
-        camera_dir = NO_DIRECTION;
+    if ((event->get_dir() | camera_dir) == 0) {
+        return;
     }
+
+    MovementType type = (event->get_dir() & (EAST | WEST)) != 0
+        ? CAMERA_X : CAMERA_Y;
+
+    image->end_move(type);
+    camera_dir = (Direction)(camera_dir & ~event->get_dir());
 }
 
 void Fighter::handle_select_unit_event(SelectUnitEvent *event)

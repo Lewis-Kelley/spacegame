@@ -17,5 +17,6 @@ enum Direction {
 
 Direction opp_dir(Direction dir);
 int index_value(Direction dir);
+bool is_cardinal_dir(Direction dir);
 
 #endif /* DIRECTION_H */
