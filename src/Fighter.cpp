@@ -1,5 +1,17 @@
 #include "Fighter.hpp"
 
+void Fighter::init()
+{
+    EventHandler *handler = EventHandler::get_instance();
+    handler->add_listener(Event::START_CAMERA_MOVE, this);
+    handler->add_listener(Event::STOP_CAMERA_MOVE, this);
+    handler->add_listener(Event::SELECT_UNIT, this);
+    handler->add_listener(Event::DESELECT_UNIT, this);
+    moving_dir = NO_DIRECTION;
+    camera_dir = NO_DIRECTION;
+    queued_dir = NO_DIRECTION;
+}
+
 /**
  * Instantiate a new Fighter at the given location with the given image.
  *
@@ -12,8 +24,7 @@
 Fighter::Fighter(TileMap *tilemap, short row, short col, TileDrawable *img)
     : Unit(tilemap, row, col, img)
 {
-    moving_dir = NO_DIRECTION;
-    camera_dir = NO_DIRECTION;
+    init();
 }
 
 /**
@@ -30,8 +41,7 @@ Fighter::Fighter(TileMap *tilemap, short row, short col, TileDrawable *img)
 Fighter::Fighter(double tile_width, TileMap *tilemap, short row, short col,
                  Drawable *img) : Unit(tile_width, tilemap, row, col, img)
 {
-    moving_dir = NO_DIRECTION;
-    camera_dir = NO_DIRECTION;
+    init();
 }
 
 /**
@@ -42,8 +52,7 @@ Fighter::Fighter(double tile_width, TileMap *tilemap, short row, short col,
  */
 Fighter::Fighter(Tile *tile, TileDrawable *img) : Unit(tile, img)
 {
-    moving_dir = NO_DIRECTION;
-    camera_dir = NO_DIRECTION;
+    init();
 }
 
 void Fighter::handle_attack(Attack *att)
@@ -58,16 +67,14 @@ void Fighter::handle_attack(Attack *att)
  */
 bool Fighter::move_fighter(Direction dir)
 {
-    TileDrawable *img = (TileDrawable *)Entity::image;
-
-    if (img->is_moving()) {
+    if (image->is_moving()) {
         return false;
     }
 
-    img->start_tile_move(MOVE_SPEED, 1, dir);
+    image->start_tile_move(MOVE_SPEED, 1, dir);
 
     if (!move_ent(dir)) {
-        img->kill_move();
+        image->kill_move();
         return false;
     }
 
@@ -87,6 +94,8 @@ void Fighter::handle_move_event(MoveEvent *event)
 
     if (move_fighter(dir)) {
         moving_dir = dir;
+    } else {
+        queued_dir = dir;
     }
 }
 
@@ -97,8 +106,12 @@ void Fighter::handle_move_event(MoveEvent *event)
  */
 void Fighter::handle_stop_event(StopMoveEvent *event)
 {
+    if (event->get_direction() == queued_dir) {
+        queued_dir = NO_DIRECTION;
+    }
+
     if (event->get_direction() == moving_dir) {
-        moving_dir = NO_DIRECTION;
+        moving_dir = queued_dir;
     }
 }
 
@@ -111,7 +124,11 @@ void Fighter::handle_stop_event(StopMoveEvent *event)
 void Fighter::handle_move_finished_event(MoveFinishedEvent *event)
 {
     if (moving_dir == NO_DIRECTION) {
-        return;
+        if (queued_dir == NO_DIRECTION) {
+            return;
+        }
+
+        moving_dir = queued_dir;
     }
 
     move_fighter(moving_dir);

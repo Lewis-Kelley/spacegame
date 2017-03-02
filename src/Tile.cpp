@@ -16,6 +16,7 @@ Tile::Tile(short row, short col)
     }
 
     in_range = false;
+    // image = NULL;
 }
 
 /**
@@ -39,10 +40,6 @@ void Tile::set_neighbor(Direction dir, Tile *neighbor)
 void Tile::add_neighbor(Direction dir, Tile *neighbor)
 {
     set_neighbor(dir, neighbor);
-    // print_dir(dir);
-    // printf("V\n");
-    // print_dir(opp_dir(dir));
-    // printf("\n");
     neighbor->set_neighbor(opp_dir(dir), this);
 }
 
@@ -140,6 +137,15 @@ void Tile::handle_select_unit_event(SelectUnitEvent *event)
 void Tile::handle_deselect_unit_event(DeselectUnitEvent *event)
 {
     in_range = false;
+
+    // for (int i = 0; i < (int)gamestate::drawings.size(); i++) {
+    //     if (gamestate::drawings.at(i) == image) {
+    //         gamestate::drawings.erase(gamestate::drawings.begin() + i);
+    //         break;
+    //     }
+    // }
+
+    // image = NULL;
 }
 
 void Tile::catch_event(Event *event)
@@ -165,6 +171,9 @@ void Tile::catch_event(Event *event)
 void Tile::define_range(short move_range)
 {
     in_range = true;
+
+    // image = new Rectangle((SDL_Rect){0, 0, 50, 50}, (SDL_Color){255, 255, 255, 255});
+    // gamestate::drawings.push_back(image);
 
     if (--move_range > 0) {
         for (int i = 0; i < 4; i++) {

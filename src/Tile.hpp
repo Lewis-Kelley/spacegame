@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <stdexcept>
 
+#include "Rectangle.hpp"
+#include "GameState.hpp"
+#include "Drawable.hpp"
 #include "Direction.hpp"
 #include "Entity.hpp"
 #include "Listener.hpp"
@@ -22,6 +25,7 @@ private:
     Tile *neighbors[4]; ///< The 4 tiles next to this tile ordered by direction
     std::vector<Entity *> occ_ents; ///< The Entity's in this Tile
     bool in_range;
+    // Drawable *image;
 
     void handle_select_unit_event(SelectUnitEvent *event);
     void handle_deselect_unit_event(DeselectUnitEvent *event);

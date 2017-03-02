@@ -15,43 +15,35 @@
 #include "QuitEvent.hpp"
 #include "SwitchListener.hpp"
 
-bool cont = true;
-
-Event *create_quit_event()
+void add_unit(std::vector<Drawable *> *drawings, std::queue<Unit *> *units,
+              Unit *unit)
 {
-    return new QuitEvent();
+    drawings->push_back(unit);
+    units->push(unit);
 }
 
 int main(int argc, char *argv[])
 {
     Window *wind = Window::get_instance();
     EventHandler *handler = EventHandler::get_instance();
-    std::vector<Drawable *> drawings;
     std::queue<Unit *> units;
 
     TileMap tile_map(10, 10);
     Fighter *red_fighter = NULL;
     Fighter *other_fighter = NULL;
-    SDL_Texture *ship_tex
+    SDL_Texture *red_ship_tex
         = Sprite::
         load_texture("/home/lewis/programs/spacegame/assets/red_ship.png");
+    SDL_Texture *blue_ship_tex
+        = Sprite::
+        load_texture("/home/lewis/programs/spacegame/assets/blue_ship.png");
     try {
-        red_fighter = new Fighter(50, &tile_map, 0, 0, new Sprite(ship_tex));
+        red_fighter = new Fighter(50, &tile_map, 0, 0, new Sprite(red_ship_tex));
         red_fighter->set_team_name("Allies");
-        other_fighter = new Fighter(50, &tile_map, 2, 1, new Sprite(ship_tex));
+        other_fighter = new Fighter(50, &tile_map, 2, 1, new Sprite(blue_ship_tex));
         other_fighter->set_team_name("Allies");
-        handler->add_listener(Event::START_CAMERA_MOVE, red_fighter);
-        handler->add_listener(Event::START_CAMERA_MOVE, other_fighter);
-        handler->add_listener(Event::STOP_CAMERA_MOVE, red_fighter);
-        handler->add_listener(Event::STOP_CAMERA_MOVE, other_fighter);
-        handler->add_listener(Event::SELECT_UNIT, red_fighter);
-        handler->add_listener(Event::DESELECT_UNIT, red_fighter);
-        handler->add_listener(Event::SELECT_UNIT, other_fighter);
-        handler->add_listener(Event::DESELECT_UNIT, other_fighter);
-        drawings.push_back(red_fighter);
-        drawings.push_back(other_fighter);
-        units.push(red_fighter);
-        units.push(other_fighter);
+        add_unit(&gamestate::drawings, &units, red_fighter);
+        add_unit(&gamestate::drawings, &units, other_fighter);
     } catch (char const* err) {
         fprintf(stderr, "ERROR: %s\n", err);
     }
@@ -83,10 +75,7 @@ int main(int argc, char *argv[])
         }
 
         delta = wind->get_delta();
-        for (int i = 0; i < (int)drawings.size(); i++) {
-            drawings.at(i)->update(delta);
-            drawings.at(i)->draw();
-        }
+        gamestate::draw_all(delta);
         wind->present_render();
     }
 
@@ -94,7 +83,8 @@ int main(int argc, char *argv[])
         delete red_fighter;
     }
 
-    SDL_DestroyTexture(ship_tex);
+    SDL_DestroyTexture(red_ship_tex);
+    SDL_DestroyTexture(blue_ship_tex);
 
     return 0;
 }
