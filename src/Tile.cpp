@@ -117,20 +117,22 @@ bool Tile::accepts_entity(Entity *ent)
 {
     for (int i = 0; i < (int)occ_ents.size(); i++) {
         if (occ_ents.at(i)->stops_ent(ent)) {
+            printf("Found entity %p blocking %p\n", occ_ents.at(i), ent);
             return false;
         }
     }
 
-    return in_range;
+    return true;
 }
 
 void Tile::handle_select_unit_event(SelectUnitEvent *event)
 {
+    Unit *unit = event->get_selected();
     for (int i = 0; i < (int)occ_ents.size(); i++) {
-        if (occ_ents.at(i) == event->get_selected()) {
+        if (occ_ents.at(i) == unit) {
             // The 1+ is for the current Tile so it doesn't take any
             // movement.
-            define_range(1 + event->get_selected()->get_move_range());
+            define_range(unit, 1 + unit->get_move_range());
             return;
         }
     }
@@ -158,11 +160,12 @@ void Tile::catch_event(Event *event)
 
 /**
  * Recursively define the range that the most recently selected Unit
- * can travel through. Right now, this only subtracts 1 at each step.
+ * can travel through.
  *
+ * @param ent The Entity that is attempting to pass through.
  * @param move_range The remaining distance the Unit can travel.
  */
-void Tile::define_range(short move_range)
+void Tile::define_range(Entity *ent, short move_range)
 {
     in_range = true;
 
@@ -170,8 +173,8 @@ void Tile::define_range(short move_range)
 
     if (--move_range > 0) {
         for (int i = 0; i < 4; i++) {
-            if (neighbors[i] != NULL) {
-                neighbors[i]->define_range(move_range);
+            if (neighbors[i] != NULL && neighbors[i]->accepts_entity(ent)) {
+                neighbors[i]->define_range(ent, move_range);
             }
         }
     }

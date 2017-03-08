@@ -30,7 +30,7 @@ private:
 
     void handle_select_unit_event(SelectUnitEvent *event);
     void handle_deselect_unit_event(DeselectUnitEvent *event);
-    void define_range(short move_range);
+    void define_range(Entity *ent, short move_range);
 public:
     Tile(short row, short col);
     virtual ~Tile() { }

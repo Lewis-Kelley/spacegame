@@ -17,7 +17,7 @@ about making a big project like this from the ground up.
 
 I also just really want this game to be made. It sounds so good in my
 head, it just takes a lot to actually implement it.
-* Current Status: WORKING / NOT PLAYABLE
+* Current Status: STABLE / NOT PLAYABLE
 Unit movement is running, as is 4-directional camera motion. I kind of
 want to smooth out the controls, but for now, it's fine.
 * Instructions
@@ -96,10 +96,10 @@ more about how to use it.
   between by pressing space.
 - [X] Make it so that the two Fighter's cannot pass on top of each
   other.
-** TODO Highlighting Available Tiles [2/3]
+** DONE Highlighting Available Tiles [3/3]
 - [X] Calculate available Tiles given a starting position
 - [X] Change Tile colors or something to indicate this change
-- [ ] Change Tile colors if the Tile is blocked by an enemy Unit.
+- [X] Change Tile colors if the Tile is blocked by an enemy Unit.
 ** DONE Limit Movement Range [1/1]
 - [X] Given the available Tiles, bound the motion of any Fighter to
   that range
@@ -121,5 +121,6 @@ more about how to use it.
 ** TODO Camera Tracking [0/2]
 - [ ] Camera centers on the selected Unit
 - [ ] Camera moves smoothly to a new Unit when it is selected
-* Known Bugs
-None at this time (Hooray!)
+* [0/1] Known Bugs
+1. [ ] When moving the camera, Tile's (and likely even the sprites)
+   bump off the real value by about a pixel, forming black lines.
