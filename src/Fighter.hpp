@@ -18,9 +18,6 @@
  */
 class Fighter : public Unit, public Listener {
 private:
-    Direction moving_dir;
-    Direction queued_dir;
-    Direction camera_dir;
     short hull_health;
     short shield_health;
     short engine_health;
@@ -31,8 +28,6 @@ private:
     short weapon_power;
 
     void init();
-    void handle_camera_move_event(CameraMoveEvent *event);
-    void handle_camera_stop_move_event(StopCameraMoveEvent *event);
 public:
     Fighter(TileMap *tilemap, short row, short col, TileDrawable *img);
     Fighter(double tile_width, TileMap *tilemap, short row, short col,

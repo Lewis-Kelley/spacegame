@@ -9,11 +9,6 @@
 #include "Events.hpp"
 #include "MoveFinishedEvent.hpp"
 
-#define ABS(x) (x > 0 ? x : -x)
-#define MAX_TILES 500
-#define ROUNDOFF 0.0001
-#define NEAR_ZERO(x) (ABS(x) < ROUNDOFF)
-
 /**
  * A decorator that handles drawings that are bound to tiles.
  */
@@ -34,13 +29,6 @@ public:
     void update(double delta);
     void start_tile_move(double speed, int num_tiles, Direction dir);
     void kill_move();
-
-    /**
-     * @return True if this is still animating a motion, false
-     * otherwise.
-     */
-    bool is_moving() { return !NEAR_ZERO(curr_movement.dx)
-            || !NEAR_ZERO(curr_movement.dy); }
 };
 
 #endif /* TILEDRAWABLE_H */

@@ -68,14 +68,14 @@ bool Unit::stops_ent(Entity *other)
  */
 bool Unit::move_unit(Direction dir)
 {
-    if (image->is_moving()) {
+    if (is_moving()) {
         return false;
     }
 
-    image->start_tile_move(MOVE_SPEED, 1, dir);
+    ((TileDrawable *)get_inner())->start_tile_move(MOVE_SPEED, 1, dir);
 
     if (!move_ent(dir)) {
-        image->kill_move();
+        ((TileDrawable *)get_inner())->kill_move();
         return false;
     }
 

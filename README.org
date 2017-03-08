@@ -102,6 +102,21 @@ more about how to use it.
 ** DONE Limit Movement Range [1/1]
 - [X] Given the available Tiles, bound the motion of any Fighter to
   that range
+** TODO Actions Menu [0/3]
+- [ ] Pop up actions menu upon stopping a Unit.
+- [ ] Allow for arrow keys to select an action from the menu rather
+  than move the selected Unit.
+- [ ] Once an action is selected, switch to the next Unit.
+** TODO Energy Allocation [0/5]
+- [ ] After an action is selected from the menu, show the energy
+  allocation menu.
+- [ ] After some close action is taken, hide the menu and switch to
+  the next Unit.
+- [ ] The user can select different energy types and adjust how much
+  is allocated to each using the arrow keys.
+- [ ] The energy levels are loaded and stored from and to the selected
+  Unit.
+- [ ] The energy levels are capped by the stats of the selected Unit.
 ** TODO Camera Tracking [0/2]
 - [ ] Camera centers on the selected Unit
 - [ ] Camera moves smoothly to a new Unit when it is selected

@@ -32,6 +32,12 @@ public:
     virtual void end_move(MovementType type) { inner->end_move(type); }
     virtual bool draw() { return inner->draw(); }
     virtual void update(double delta) { inner->update(delta); }
+    virtual bool is_moving() { return inner->is_moving(); }
+
+    /**
+     * @return The Drawable this decorator wraps.
+     */
+    Drawable *get_inner() { return inner; }
 };
 
 #endif /* DRAWABLEDECORATOR_H */

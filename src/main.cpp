@@ -4,6 +4,7 @@
 #include <vector>
 #include <queue>
 
+#include "CameraListener.hpp"
 #include "TileMap.hpp"
 #include "QuitListener.hpp"
 #include "Window.hpp"
@@ -51,6 +52,7 @@ int main(int argc, char *argv[])
 
     QuitListener ql;
     SwitchListener sl(&units);
+    CameraListener cl(&gamestate::drawings);
 
     events::fill_defaults();
     events::event_queue.push(new TriggerSwitchEvent()); // Select the first Unit

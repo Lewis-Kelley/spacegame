@@ -6,6 +6,11 @@
 
 #include "Movement.hpp"
 
+#define ABS(x) (x > 0 ? x : -x)
+#define MAX_TILES 500
+#define ROUNDOFF 0.0001
+#define NEAR_ZERO(x) (ABS(x) < ROUNDOFF)
+
 /**
  * An abstract class representing anything that can be drawn onto the
  * screen.
@@ -85,6 +90,8 @@ public:
      * @param delta The time since the last update.
      */
     virtual void update(double delta);
+
+    virtual bool is_moving();
 };
 
 #endif /* DRAWABLE_H */

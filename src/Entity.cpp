@@ -6,10 +6,9 @@
  *
  * @param tile The tile this Entity occupies.
  */
-Entity::Entity(Tile *tile)
+Entity::Entity(Tile *tile) : DrawableDecorator(NULL)
 {
     occ_tile = tile;
-    image = NULL;
     occ_tile->add_entity(this);
 }
 
@@ -20,91 +19,10 @@ Entity::Entity(Tile *tile)
  * @param tile The tile this Entity occupies.
  * @param img The drawable that will represent this entity.
  */
-Entity::Entity(Tile *tile, TileDrawable *img)
+Entity::Entity(Tile *tile, TileDrawable *img) : DrawableDecorator(img)
 {
     occ_tile = tile;
-    image = img;
     occ_tile->add_entity(this);
-}
-
-double Entity::get_draw_x()
-{
-    if (image != NULL) {
-        return image->get_draw_x();
-    }
-
-    NoDrawableException ex;
-    throw ex;
-}
-
-double Entity::get_draw_y()
-{
-    if (image != NULL) {
-        return image->get_draw_y();
-    }
-
-    NoDrawableException ex;
-    throw ex;
-}
-
-double Entity::get_width()
-{
-    if (image != NULL) {
-        return image->get_width();
-    }
-
-    NoDrawableException ex;
-    throw ex;
-}
-
-double Entity::get_height()
-{
-    if (image != NULL) {
-        return image->get_height();
-    }
-
-    NoDrawableException ex;
-    throw ex;
-}
-
-void Entity::set_draw_x(double x)
-{
-    if (image != NULL) {
-        image->set_draw_x(x);
-    }
-
-    NoDrawableException ex;
-    throw ex;
-}
-
-void Entity::set_draw_y(double y)
-{
-    if (image != NULL) {
-        image->set_draw_y(y);
-    }
-
-    NoDrawableException ex;
-    throw ex;
-}
-
-void Entity::set_width(double width)
-{
-    if (image != NULL) {
-        image->set_width(width);
-    }
-
-    NoDrawableException ex;
-    throw ex;
-}
-
-void Entity::set_height(double height)
-{
-    if (image != NULL) {
-        image->set_height(height);
-    }
-
-    NoDrawableException ex;
-    throw ex;
 }
 
 /**

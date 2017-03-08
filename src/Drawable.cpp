@@ -60,10 +60,32 @@ void Drawable::end_move(MovementType type)
     movements.erase(type);
 }
 
+#include <stdexcept>
+
 void Drawable::update(double delta)
 {
     for (std::map<MovementType, Movement *>::iterator iter = movements.begin();
          iter != movements.end(); iter++) {
         move(iter->second->dx * delta, iter->second->dy * delta);
     }
+}
+
+/**
+ * Checks if there are any ongoing movements, and if so, if they are
+ * all near zero in their motion.
+ *
+ * @return True if this Drawable isn't moving.
+ */
+bool Drawable::is_moving()
+{
+    if (movements.size() != 0) {
+        for (std::map<MovementType, Movement *>::iterator iter = movements.begin();
+             iter != movements.end(); iter++) {
+            if (!NEAR_ZERO(iter->second->dx) || !NEAR_ZERO(iter->second->dy)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
