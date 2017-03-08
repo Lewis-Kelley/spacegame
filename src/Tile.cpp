@@ -98,7 +98,8 @@ bool Tile::remove_entity(Entity *ent)
 bool Tile::move_entity(Entity *ent, Direction dir)
 {
     Tile *neighbor = get_neighbor(dir);
-    if (neighbor != NULL && neighbor->accepts_entity(ent) && remove_entity(ent)) {
+    if (neighbor != NULL && neighbor->accepts_entity(ent)
+        && remove_entity(ent)) {
         neighbor->add_entity(ent);
         return true;
     }

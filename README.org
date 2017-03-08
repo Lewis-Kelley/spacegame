@@ -124,3 +124,4 @@ more about how to use it.
 * [1/1] Known Bugs
 1. [X] When moving the camera, Tile's (and likely even the sprites)
    bump off the real value by about a pixel, forming black lines.
+2. [ ] Fighter's movements are no longer bounded

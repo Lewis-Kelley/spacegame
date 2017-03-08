@@ -2,10 +2,6 @@
 
 void Fighter::init()
 {
-    event_handler::add_listener(Event::START_CAMERA_MOVE, this);
-    event_handler::add_listener(Event::STOP_CAMERA_MOVE, this);
-    event_handler::add_listener(Event::SELECT_UNIT, this);
-    event_handler::add_listener(Event::DESELECT_UNIT, this);
 }
 
 /**
