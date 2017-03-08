@@ -63,10 +63,19 @@ void Rectangle::set_height(double height)
     dest_rect->h = height;
 }
 
+int my_round(double num)
+{
+    if (num - (int)num < 0.5 - ROUNDOFF) {
+        return (int)num;
+    } else {
+        return (int)num + 1;
+    }
+}
+
 bool Rectangle::draw()
 {
-    dest_rect->x = x;
-    dest_rect->y = y;
+    dest_rect->x = my_round(x);
+    dest_rect->y = my_round(y);
 
     uint8_t r, g, b, a;
     SDL_GetRenderDrawColor(window::rend, &r, &g, &b, &a);

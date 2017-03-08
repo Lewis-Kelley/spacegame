@@ -121,6 +121,6 @@ more about how to use it.
 ** TODO Camera Tracking [0/2]
 - [ ] Camera centers on the selected Unit
 - [ ] Camera moves smoothly to a new Unit when it is selected
-* [0/1] Known Bugs
-1. [ ] When moving the camera, Tile's (and likely even the sprites)
+* [1/1] Known Bugs
+1. [X] When moving the camera, Tile's (and likely even the sprites)
    bump off the real value by about a pixel, forming black lines.

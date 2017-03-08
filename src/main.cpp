@@ -33,6 +33,14 @@ void add_tile_rects(std::vector<Rectangle *> rects)
     }
 }
 
+Fighter *init_fighter(TileMap *tile_map, int row, int col, SDL_Texture *tex, std::string team_name)
+{
+    Fighter *fighter = new Fighter(gamestate::tile_size, tile_map, row, col, new Sprite(tex));
+    fighter->set_team_name(team_name);
+
+    return fighter;
+}
+
 int main(int argc, char *argv[])
 {
     window::init();
@@ -42,7 +50,7 @@ int main(int argc, char *argv[])
     TileMap tile_map(10, 10);
     add_tile_rects(tile_map.get_tile_rects());
     Fighter *red_fighter = NULL;
-    Fighter *other_fighter = NULL;
+    Fighter *blue_fighter = NULL;
     SDL_Texture *red_ship_tex
         = Sprite::
         load_texture("/home/lewis/programs/spacegame/assets/red_ship.png");
@@ -50,12 +58,10 @@ int main(int argc, char *argv[])
         = Sprite::
         load_texture("/home/lewis/programs/spacegame/assets/blue_ship.png");
     try {
-        red_fighter = new Fighter(50, &tile_map, 0, 0, new Sprite(red_ship_tex));
-        red_fighter->set_team_name("Enemies");
-        other_fighter = new Fighter(50, &tile_map, 2, 1, new Sprite(blue_ship_tex));
-        other_fighter->set_team_name("Allies");
+        red_fighter = init_fighter(&tile_map, 0, 0, red_ship_tex, "Enemies");
+        blue_fighter = init_fighter(&tile_map, 2, 1, blue_ship_tex, "Allies");
         add_unit(&gamestate::drawings, &units, red_fighter);
-        add_unit(&gamestate::drawings, &units, other_fighter);
+        add_unit(&gamestate::drawings, &units, blue_fighter);
     } catch (char const* err) {
         fprintf(stderr, "ERROR: %s\n", err);
     }

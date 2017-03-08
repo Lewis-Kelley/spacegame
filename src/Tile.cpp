@@ -117,7 +117,6 @@ bool Tile::accepts_entity(Entity *ent)
 {
     for (int i = 0; i < (int)occ_ents.size(); i++) {
         if (occ_ents.at(i)->stops_ent(ent)) {
-            printf("Found entity %p blocking %p\n", occ_ents.at(i), ent);
             return false;
         }
     }
