@@ -2,9 +2,11 @@
 #define TILEMAP_H
 
 #include <stdexcept>
+#include <vector>
 
 #include "EventHandler.hpp"
 #include "Tile.hpp"
+#include "Rectangle.hpp"
 
 /**
  * Holds a full grid of Tile's.
@@ -28,6 +30,7 @@ public:
     ~TileMap();
     Tile *at(short row, short col);
     void set(Tile *tile, short row, short col);
+    std::vector<Rectangle *> get_tile_rects();
 };
 
 #endif /* TILEMAP_H */

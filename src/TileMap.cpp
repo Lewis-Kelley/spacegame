@@ -104,3 +104,23 @@ bool TileMap::in_bounds(short row, short col)
 {
     return !(row >= height || col >= width || row < 0 || col < 0);
 }
+
+/**
+ * TODO This is really only used to add all the Tile's Rectangle's to the
+ * drawable list. Maybe a cleaner solution exists?
+ *
+ * @return A list of all the Rectangle's used by all the Tile's in
+ * this map.
+ */
+std::vector<Rectangle *> TileMap::get_tile_rects()
+{
+    std::vector<Rectangle *> rects;
+
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            rects.push_back(at(i, j)->get_rect());
+        }
+    }
+
+    return rects;
+}

@@ -7,16 +7,18 @@
  * @param col The column this Tile occupies
  */
 Tile::Tile(short row, short col)
+    : color((SDL_Color){0, 255, 255, 255}),
+      rect((SDL_Rect){col * gamestate::tile_size,
+                  row * gamestate::tile_size,
+                  gamestate::tile_size, gamestate::tile_size}, &color),
+      row(row),
+      col(col)
 {
-    this->row = row;
-    this->col = col;
-
     for (int i = 0; i < 4; i++) {
         neighbors[i] = NULL;
     }
 
     in_range = false;
-    // image = NULL;
 }
 
 /**
@@ -137,15 +139,7 @@ void Tile::handle_select_unit_event(SelectUnitEvent *event)
 void Tile::handle_deselect_unit_event(DeselectUnitEvent *event)
 {
     in_range = false;
-
-    // for (int i = 0; i < (int)gamestate::drawings.size(); i++) {
-    //     if (gamestate::drawings.at(i) == image) {
-    //         gamestate::drawings.erase(gamestate::drawings.begin() + i);
-    //         break;
-    //     }
-    // }
-
-    // image = NULL;
+    color.r = 0;
 }
 
 void Tile::catch_event(Event *event)
@@ -172,8 +166,7 @@ void Tile::define_range(short move_range)
 {
     in_range = true;
 
-    // image = new Rectangle((SDL_Rect){0, 0, 50, 50}, (SDL_Color){255, 255, 255, 255});
-    // gamestate::drawings.push_back(image);
+    color.r = 255;
 
     if (--move_range > 0) {
         for (int i = 0; i < 4; i++) {

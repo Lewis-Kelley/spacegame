@@ -96,9 +96,10 @@ more about how to use it.
   between by pressing space.
 - [X] Make it so that the two Fighter's cannot pass on top of each
   other.
-** TODO Highlighting Available Tiles [1/2]
+** TODO Highlighting Available Tiles [2/3]
 - [X] Calculate available Tiles given a starting position
-- [ ] Change Tile colors or something to indicate this change
+- [X] Change Tile colors or something to indicate this change
+- [ ] Change Tile colors if the Tile is blocked by an enemy Unit.
 ** DONE Limit Movement Range [1/1]
 - [X] Given the available Tiles, bound the motion of any Fighter to
   that range

@@ -6,8 +6,9 @@
 #include "Drawable.hpp"
 
 namespace gamestate {
-    extern bool running;
     extern std::vector<Drawable *> drawings;
+    extern int tile_size;
+    extern bool running;
 
     void draw_all(double delta);
 }

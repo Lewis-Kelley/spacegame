@@ -1,7 +1,8 @@
 #include "GameState.hpp"
 
-bool gamestate::running;
 std::vector<Drawable *> gamestate::drawings;
+int gamestate::tile_size = 50;
+bool gamestate::running = false;
 
 void gamestate::draw_all(double delta)
 {

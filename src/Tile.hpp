@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <stdexcept>
 
-#include "Rectangle.hpp"
 #include "GameState.hpp"
 #include "Drawable.hpp"
 #include "Direction.hpp"
@@ -14,18 +13,20 @@
 #include "Event.hpp"
 #include "SelectUnitEvent.hpp"
 #include "DeselectUnitEvent.hpp"
+#include "Rectangle.hpp"
 
 /**
  * Represents a single tile on the game board.
  */
 class Tile : public Listener {
 private:
+    SDL_Color color;
+    Rectangle rect;
     short row;
     short col;
     Tile *neighbors[4]; ///< The 4 tiles next to this tile ordered by direction
     std::vector<Entity *> occ_ents; ///< The Entity's in this Tile
     bool in_range;
-    // Drawable *image;
 
     void handle_select_unit_event(SelectUnitEvent *event);
     void handle_deselect_unit_event(DeselectUnitEvent *event);
@@ -55,6 +56,11 @@ public:
      * @return The column this Tile currently occupies.
      */
     short get_col() { return col; }
+
+    /**
+     * @return The Rectangle held by this Tile.
+     */
+    Rectangle *get_rect() { return &rect; }
 
     void catch_event(Event *event);
 };

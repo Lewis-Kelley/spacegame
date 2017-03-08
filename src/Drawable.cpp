@@ -60,8 +60,6 @@ void Drawable::end_move(MovementType type)
     movements.erase(type);
 }
 
-#include <stdexcept>
-
 void Drawable::update(double delta)
 {
     for (std::map<MovementType, Movement *>::iterator iter = movements.begin();
