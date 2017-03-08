@@ -41,6 +41,7 @@ public:
     bool remove_entity(Entity *ent);
     bool move_entity(Entity *ent, Direction dir);
     bool accepts_entity(Entity *ent);
+    bool stops_entity(Entity *ent);
 
     /**
      * @return The vector of all Entity's occupying this Tile.

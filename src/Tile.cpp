@@ -108,6 +108,23 @@ bool Tile::move_entity(Entity *ent, Direction dir)
 }
 
 /**
+ * Checks if the passed Entity is blocked from entering this Tile.
+ *
+ * @param ent The Entity to check if blocked.
+ * @return True if this Tile blocks ent, false otherwise.
+ */
+bool Tile::stops_entity(Entity *ent)
+{
+    for (int i = 0; i < (int)occ_ents.size(); i++) {
+        if (occ_ents.at(i)->stops_ent(ent)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
  * Tests if the passed Entity is allowed to pass through this Tile
  * with regards to the Entity's currently stationed here.
  *
@@ -116,13 +133,7 @@ bool Tile::move_entity(Entity *ent, Direction dir)
  */
 bool Tile::accepts_entity(Entity *ent)
 {
-    for (int i = 0; i < (int)occ_ents.size(); i++) {
-        if (occ_ents.at(i)->stops_ent(ent)) {
-            return false;
-        }
-    }
-
-    return true;
+    return in_range && !stops_entity(ent);
 }
 
 void Tile::handle_select_unit_event(SelectUnitEvent *event)
@@ -130,7 +141,7 @@ void Tile::handle_select_unit_event(SelectUnitEvent *event)
     Unit *unit = event->get_selected();
     for (int i = 0; i < (int)occ_ents.size(); i++) {
         if (occ_ents.at(i) == unit) {
-            // The 1+ is for the current Tile so it doesn't take any
+            // The 1+ is for the current Tile since it doesn't take any
             // movement.
             define_range(unit, 1 + unit->get_move_range());
             return;
@@ -173,7 +184,7 @@ void Tile::define_range(Entity *ent, short move_range)
 
     if (--move_range > 0) {
         for (int i = 0; i < 4; i++) {
-            if (neighbors[i] != NULL && neighbors[i]->accepts_entity(ent)) {
+            if (neighbors[i] != NULL && !neighbors[i]->stops_entity(ent)) {
                 neighbors[i]->define_range(ent, move_range);
             }
         }
