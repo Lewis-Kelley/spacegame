@@ -17,6 +17,10 @@ enum Direction {
 
 Direction opp_dir(Direction dir);
 int index_value(Direction dir);
+bool has_direction(Direction checked_dir, Direction goal_dir);
 bool is_cardinal_dir(Direction dir);
+bool is_horiz_dir(Direction dir);
+Direction merge_directions(Direction dirA, Direction dirB);
+Direction remove_direction(Direction base_dir, Direction dir_to_rem);
 
 #endif /* DIRECTION_H */

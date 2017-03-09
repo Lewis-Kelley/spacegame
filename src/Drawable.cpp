@@ -62,9 +62,8 @@ void Drawable::end_move(MovementType type)
 
 void Drawable::update(double delta)
 {
-    for (std::map<MovementType, Movement *>::iterator iter = movements.begin();
-         iter != movements.end(); iter++) {
-        move(iter->second->dx * delta, iter->second->dy * delta);
+    for (movement_pair move_pair : movements) {
+        move(move_pair.second->dx * delta, move_pair.second->dy * delta);
     }
 }
 
@@ -77,9 +76,9 @@ void Drawable::update(double delta)
 bool Drawable::is_moving()
 {
     if (movements.size() != 0) {
-        for (std::map<MovementType, Movement *>::iterator iter = movements.begin();
-             iter != movements.end(); iter++) {
-            if (!NEAR_ZERO(iter->second->dx) || !NEAR_ZERO(iter->second->dy)) {
+        for (movement_pair move_pair : movements) {
+            if (!NEAR_ZERO(move_pair.second->dx)
+                || !NEAR_ZERO(move_pair.second->dy)) {
                 return true;
             }
         }

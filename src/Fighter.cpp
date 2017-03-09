@@ -1,9 +1,5 @@
 #include "Fighter.hpp"
 
-void Fighter::init()
-{
-}
-
 /**
  * Instantiate a new Fighter at the given location with the given image.
  *
@@ -14,10 +10,7 @@ void Fighter::init()
  * @param img The TileDrawable that will be used to draw this Fighter.
  */
 Fighter::Fighter(TileMap *tilemap, short row, short col, TileDrawable *img)
-    : Unit(tilemap, row, col, img)
-{
-    init();
-}
+    : Unit(tilemap, row, col, img) {}
 
 /**
  * Instantiate a new Fighter at the given location with the given image.
@@ -31,10 +24,7 @@ Fighter::Fighter(TileMap *tilemap, short row, short col, TileDrawable *img)
  * be wrapped in a new TileDrawable object.
  */
 Fighter::Fighter(double tile_width, TileMap *tilemap, short row, short col,
-                 Drawable *img) : Unit(tile_width, tilemap, row, col, img)
-{
-    init();
-}
+                 Drawable *img) : Unit(tile_width, tilemap, row, col, img) {}
 
 /**
  * Constructs a new Fighter by calling the Unit's constructor.
@@ -42,13 +32,11 @@ Fighter::Fighter(double tile_width, TileMap *tilemap, short row, short col,
  * @param tile The Tile this Fighter occupies.
  * @param img The image representing this Fighter.
  */
-Fighter::Fighter(Tile *tile, TileDrawable *img) : Unit(tile, img)
-{
-    init();
-}
+Fighter::Fighter(Tile *tile, TileDrawable *img) : Unit(tile, img) {}
 
 void Fighter::handle_attack(Attack *att)
 {
+    // TODO
 }
 
 void Fighter::catch_event(Event *event)

@@ -40,13 +40,16 @@ CameraListener::CameraListener(std::vector<Drawable *> *images)
 void CameraListener::handle_camera_move_event(CameraMoveEvent *event)
 {
     Direction event_dir = event->get_dir();
-    MovementType type = (event_dir & (EAST | WEST)) != 0 ? CAMERA_X : CAMERA_Y;
+    MovementType type = is_horiz_dir(event_dir) ? CAMERA_X : CAMERA_Y;
 
+    // Check if either the camera isn't moving OR that it wasn't
+    // moving in the opposite direction to this new move
     if (camera_dir == NO_DIRECTION
         || (is_cardinal_dir(camera_dir) && event_dir != opp_dir(camera_dir))) {
-        camera_dir = (Direction)(camera_dir | event_dir);
-        for (int i = 0; i < (int)images->size(); i++) {
-            images->at(i)->start_move(event->get_dx(), event->get_dy(), type);
+        camera_dir = merge_directions(camera_dir, event_dir);
+
+        for (Drawable *image : *images) {
+            image->start_move(event->get_dx(), event->get_dy(), type);
         }
     }
 }
@@ -59,18 +62,24 @@ void CameraListener::handle_camera_move_event(CameraMoveEvent *event)
  */
 void CameraListener::handle_camera_stop_move_event(StopCameraMoveEvent *event)
 {
-    if ((event->get_dir() | camera_dir) == 0) {
+    if (!has_direction(event->get_dir(), camera_dir)) {
         return;
     }
 
-    MovementType type = (event->get_dir() & (EAST | WEST)) != 0
-        ? CAMERA_X : CAMERA_Y;
+    MovementType type;
 
-    for (int i = 0; i < (int)images->size(); i++) {
-            images->at(i)->end_move(type);
+    if (has_direction(event->get_dir(), EAST)
+        || has_direction(event->get_dir(), WEST)) {
+        type = CAMERA_X;
+    } else {
+        type = CAMERA_Y;
     }
 
-    camera_dir = (Direction)(camera_dir & ~event->get_dir());
+    for (Drawable *image : *images) {
+        image->end_move(type);
+    }
+
+    camera_dir = remove_direction(camera_dir, event->get_dir());
 }
 void CameraListener::catch_event(Event *event)
 {

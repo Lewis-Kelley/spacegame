@@ -43,10 +43,8 @@ bool Entity::move_ent(Direction dir)
  */
 bool Entity::can_stop()
 {
-    std::vector<Entity *> neighbors = occ_tile->get_occ_ents();
-
-    for (int i = 0; i < (int)neighbors.size(); i++) {
-        if (neighbors.at(i) != this && neighbors.at(i)->blocks_ent(this)) {
+    for (Entity *other_ent : occ_tile->get_occ_ents()) {
+        if (other_ent != this && other_ent->blocks_ent(this)) {
             return false;
         }
     }

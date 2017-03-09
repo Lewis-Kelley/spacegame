@@ -5,11 +5,11 @@
  */
 double CameraMoveEvent::get_dx()
 {
-    if (dir & EAST) {
+    if (has_direction(dir, EAST)) {
         return -speed;
     }
 
-    if (dir & WEST) {
+    if (has_direction(dir, WEST)) {
         return speed;
     }
 
@@ -21,11 +21,11 @@ double CameraMoveEvent::get_dx()
  */
 double CameraMoveEvent::get_dy()
 {
-    if (dir & NORTH) {
+    if (has_direction(dir, NORTH)) {
         return speed;
     }
 
-    if (dir & SOUTH) {
+    if (has_direction(dir, SOUTH)) {
         return -speed;
     }
 

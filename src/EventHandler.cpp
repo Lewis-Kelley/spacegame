@@ -9,14 +9,10 @@ std::map<Event::Event_Type, std::vector<Listener *>*> event_handler::listeners;
  */
 void event_handler::handle_event(Event *event)
 {
-    try {
-        std::vector<Listener *>* values = listeners.at(event->get_type());
-        for (int i = 0; i < (int)values->size(); i++) {
-            values->at(i)->catch_event(event);
+    if (listeners.find(event->get_type()) != listeners.end()) {
+        for (Listener *listener : *listeners.at(event->get_type())) {
+            listener->catch_event(event);
         }
-    } catch (std::out_of_range err) {
-        fprintf(stderr, "No available listeners for event type %d.\n",
-                event->get_type());
     }
 }
 
@@ -28,10 +24,12 @@ void event_handler::handle_event(Event *event)
  */
 void event_handler::add_listener(Event::Event_Type type, Listener *obs)
 {
+    typedef std::pair<Event::Event_Type, std::vector<Listener *> *>
+        type_listeners_pair;
+
     if (listeners.find(type) == listeners.end()) { // Key doesn't exist
         std::vector<Listener *> *vec = new std::vector<Listener *>();
-        listeners.insert(std::pair<Event::Event_Type,
-                         std::vector<Listener *>*>(type, vec));
+        listeners.insert(type_listeners_pair(type, vec));
     }
 
     listeners.at(type)->push_back(obs);
