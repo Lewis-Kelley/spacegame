@@ -2,7 +2,7 @@
 #define STOPCAMERAMOVEEVENT_H
 
 #include "Event.hpp"
-#include "Direction.hpp"
+#include "../util/Direction.hpp"
 
 /**
  * Handles the ending of moving the camera.

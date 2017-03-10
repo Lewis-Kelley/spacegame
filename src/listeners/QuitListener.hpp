@@ -2,8 +2,8 @@
 #define QUIT_LISTENER_H
 
 #include "Listener.hpp"
-#include "GameState.hpp"
-#include "EventHandler.hpp"
+#include "../util/GameState.hpp"
+#include "../events/EventHandler.hpp"
 
 /**
  * Catches a QUIT Event and quits the game.

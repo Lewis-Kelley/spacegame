@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 #include "Event.hpp"
-#include "Direction.hpp"
+#include "../util/Direction.hpp"
 
 /**
  * Event dealing with moving units.

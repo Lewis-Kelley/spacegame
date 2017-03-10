@@ -3,12 +3,12 @@
 
 #include <queue>
 
-#include "Unit.hpp"
+#include "../entities/Unit.hpp"
 #include "Listener.hpp"
-#include "Events.hpp"
-#include "DeselectUnitEvent.hpp"
-#include "SelectUnitEvent.hpp"
-#include "EventHandler.hpp"
+#include "../events/Events.hpp"
+#include "../events/DeselectUnitEvent.hpp"
+#include "../events/SelectUnitEvent.hpp"
+#include "../events/EventHandler.hpp"
 
 /**
  * Catches a SWITCH Event and switches control to the next Unit.

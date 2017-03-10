@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "Drawable.hpp"
+#include "../drawables/Drawable.hpp"
 
 namespace gamestate {
     extern std::vector<Drawable *> drawings;

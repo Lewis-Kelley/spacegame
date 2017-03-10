@@ -5,15 +5,15 @@
 #include <stdio.h>
 #include <stdexcept>
 
-#include "GameState.hpp"
-#include "Drawable.hpp"
-#include "Direction.hpp"
-#include "Entity.hpp"
-#include "Listener.hpp"
-#include "Event.hpp"
-#include "SelectUnitEvent.hpp"
-#include "DeselectUnitEvent.hpp"
-#include "Rectangle.hpp"
+#include "../util/GameState.hpp"
+#include "../drawables/Drawable.hpp"
+#include "../util/Direction.hpp"
+#include "../entities/Entity.hpp"
+#include "../listeners/Listener.hpp"
+#include "../events/Event.hpp"
+#include "../events/SelectUnitEvent.hpp"
+#include "../events/DeselectUnitEvent.hpp"
+#include "../drawables/Rectangle.hpp"
 
 /**
  * Represents a single tile on the game board.

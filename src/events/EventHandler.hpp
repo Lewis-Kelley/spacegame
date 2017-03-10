@@ -7,7 +7,7 @@
 #include <stdexcept>
 
 #include "Event.hpp"
-#include "Listener.hpp"
+#include "../listeners/Listener.hpp"
 
 namespace event_handler {
     extern std::map<Event::Event_Type, std::vector<Listener *>*> listeners;

@@ -3,10 +3,10 @@
 
 #include <string>
 
-#include "Drawable.hpp"
+#include "../drawables/Drawable.hpp"
 #include "Entity.hpp"
-#include "Attack.hpp"
-#include "TileDrawable.hpp"
+#include "../attacks/Attack.hpp"
+#include "../drawables/TileDrawable.hpp"
 
 #define MOVE_SPEED 0.25
 
@@ -111,6 +111,6 @@ public:
     bool is_unit() { return true; }
 };
 
-#include "TileMap.hpp"
+#include "../tiles/TileMap.hpp"
 
 #endif /* UNIT_H */

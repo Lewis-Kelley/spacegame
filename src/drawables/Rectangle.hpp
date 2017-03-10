@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "Window.hpp"
+#include "../util/Window.hpp"
 #include "Drawable.hpp"
 
 /**

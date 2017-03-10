@@ -1,14 +1,14 @@
 #ifndef MOVEMENTLISTENER_H
 #define MOVEMENTLISTENER_H
 
-#include "EventHandler.hpp"
-#include "Unit.hpp"
+#include "../events/EventHandler.hpp"
+#include "../entities/Unit.hpp"
 #include "Listener.hpp"
-#include "MoveEvent.hpp"
-#include "StopMoveEvent.hpp"
-#include "MoveFinishedEvent.hpp"
-#include "SelectUnitEvent.hpp"
-#include "DeselectUnitEvent.hpp"
+#include "../events/MoveEvent.hpp"
+#include "../events/StopMoveEvent.hpp"
+#include "../events/MoveFinishedEvent.hpp"
+#include "../events/SelectUnitEvent.hpp"
+#include "../events/DeselectUnitEvent.hpp"
 
 /**
  * Listenes for movement Event's, keeps track of the selected Unit,

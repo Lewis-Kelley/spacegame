@@ -4,11 +4,11 @@
 #include <stdlib.h>
 #include <exception>
 
-#include "Drawable.hpp"
-#include "DrawableDecorator.hpp"
-#include "TileDrawable.hpp"
-#include "Attack.hpp"
-#include "Direction.hpp"
+#include "../drawables/Drawable.hpp"
+#include "../drawables/DrawableDecorator.hpp"
+#include "../drawables/TileDrawable.hpp"
+#include "../attacks/Attack.hpp"
+#include "../util/Direction.hpp"
 
 class Tile;
 class Unit;
@@ -64,7 +64,7 @@ public:
 
     virtual bool can_stop();
 };
-#include "Tile.hpp"
+#include "../tiles/Tile.hpp"
 #include "Unit.hpp"
 
 #endif /* ENTITY_H */

@@ -4,19 +4,19 @@
 #include <vector>
 #include <queue>
 
-#include "CameraListener.hpp"
-#include "EventHandler.hpp"
-#include "Events.hpp"
-#include "Fighter.hpp"
-#include "GameState.hpp"
-#include "MovementListener.hpp"
-#include "QuitEvent.hpp"
-#include "QuitListener.hpp"
-#include "Rectangle.hpp"
-#include "Sprite.hpp"
-#include "SwitchListener.hpp"
-#include "TileMap.hpp"
-#include "Window.hpp"
+#include "listeners/CameraListener.hpp"
+#include "events/EventHandler.hpp"
+#include "events/Events.hpp"
+#include "entities/Fighter.hpp"
+#include "util/GameState.hpp"
+#include "listeners/MovementListener.hpp"
+#include "events/QuitEvent.hpp"
+#include "listeners/QuitListener.hpp"
+#include "drawables/Rectangle.hpp"
+#include "drawables/Sprite.hpp"
+#include "listeners/SwitchListener.hpp"
+#include "tiles/TileMap.hpp"
+#include "util/Window.hpp"
 
 void add_unit(std::vector<Drawable *> *drawings, std::queue<Unit *> *units,
               Unit *unit)

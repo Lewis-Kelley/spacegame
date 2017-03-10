@@ -5,9 +5,9 @@
 #include <exception>
 
 #include "DrawableDecorator.hpp"
-#include "Direction.hpp"
-#include "Events.hpp"
-#include "MoveFinishedEvent.hpp"
+#include "../util/Direction.hpp"
+#include "../events/Events.hpp"
+#include "../events/MoveFinishedEvent.hpp"
 
 /**
  * A decorator that handles drawings that are bound to tiles.

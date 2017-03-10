@@ -2,7 +2,7 @@
 #define CAMERAMOVEEVENT_H
 
 #include "Event.hpp"
-#include "Direction.hpp"
+#include "../util/Direction.hpp"
 
 #define CAMERA_SPEED 0.1
 

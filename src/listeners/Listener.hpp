@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "Event.hpp"
+#include "../events/Event.hpp"
 
 /**
  * Abstract class representing all things that want to be triggered

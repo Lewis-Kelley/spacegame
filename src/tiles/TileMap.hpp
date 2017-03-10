@@ -4,9 +4,9 @@
 #include <stdexcept>
 #include <vector>
 
-#include "EventHandler.hpp"
+#include "../events/EventHandler.hpp"
 #include "Tile.hpp"
-#include "Rectangle.hpp"
+#include "../drawables/Rectangle.hpp"
 
 /**
  * Holds a full grid of Tile's.

@@ -1,17 +1,17 @@
 #ifndef FIGHTER_H
 #define FIGHTER_H
 
-#include "EventHandler.hpp"
-#include "StopMoveEvent.hpp"
-#include "MoveEvent.hpp"
+#include "../events/EventHandler.hpp"
+#include "../events/StopMoveEvent.hpp"
+#include "../events/MoveEvent.hpp"
 #include "Unit.hpp"
-#include "Listener.hpp"
-#include "Sprite.hpp"
-#include "TileDrawable.hpp"
-#include "CameraMoveEvent.hpp"
-#include "StopCameraMoveEvent.hpp"
-#include "SelectUnitEvent.hpp"
-#include "DeselectUnitEvent.hpp"
+#include "../listeners/Listener.hpp"
+#include "../drawables/Sprite.hpp"
+#include "../drawables/TileDrawable.hpp"
+#include "../events/CameraMoveEvent.hpp"
+#include "../events/StopCameraMoveEvent.hpp"
+#include "../events/SelectUnitEvent.hpp"
+#include "../events/DeselectUnitEvent.hpp"
 
 /**
  * The standard Fighter Unit that will be the primary game board Unit.

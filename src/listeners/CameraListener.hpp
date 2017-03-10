@@ -4,12 +4,12 @@
 #include <vector>
 
 #include "Listener.hpp"
-#include "Event.hpp"
-#include "Drawable.hpp"
-#include "Direction.hpp"
-#include "EventHandler.hpp"
-#include "CameraMoveEvent.hpp"
-#include "StopCameraMoveEvent.hpp"
+#include "../events/Event.hpp"
+#include "../drawables/Drawable.hpp"
+#include "../util/Direction.hpp"
+#include "../events/EventHandler.hpp"
+#include "../events/CameraMoveEvent.hpp"
+#include "../events/StopCameraMoveEvent.hpp"
 
 /**
  * Listener for camera events that updates all it's held images

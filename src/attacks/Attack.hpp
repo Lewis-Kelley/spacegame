@@ -1,7 +1,7 @@
 #ifndef ATTACK_H
 #define ATTACK_H
 
-#include "Component.hpp"
+#include "../entities/Component.hpp"
 
 /**
  * Holds all the pertinant information about an attack in a packet

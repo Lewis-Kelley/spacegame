@@ -1,7 +1,7 @@
 #ifndef SELECTUNITEVENT_H
 #define SELECTUNITEVENT_H
 
-#include "Unit.hpp"
+#include "../entities/Unit.hpp"
 #include "Event.hpp"
 
 /**
