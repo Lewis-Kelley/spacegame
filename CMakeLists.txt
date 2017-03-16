@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.2)
 
-set(CMAKE_CXX_COMPILER "g++-4.9.3")
+set(CMAKE_CXX_COMPILER "g++")
 set(CMAKE_CXX_FLAGS "-g -O0 -Wall -std=c++11")
 
 project(spacegame)

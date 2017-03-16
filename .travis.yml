@@ -1,6 +1,8 @@
 language: cpp
-compiler: g++-4.9.3
+compiler: g++-4.9
 before_install:
+- sudo update-alternatives --remove-all gcc
+- sudo update-alternatives --remove-all g++
 - wget http://libsdl.org/release/SDL2-2.0.5.tar.gz
 - tar -xvf SDL2-2.0.5.tar.gz
 - cd SDL2-2.0.5
@@ -16,7 +18,7 @@ before_install:
 - mkdir build
 - cmake .. && make && sudo make install
 install:
-- if [ "$CXX" = "g++" ]; then export CXX="g++-4.9.3" CC="gcc-4.9.3"; fi
+- if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
 - mkdir build
 - cd build
 - cmake .. && make
@@ -29,5 +31,5 @@ addons:
         sources:
         - ubuntu-toolchain-r-test
         packages:
-        - gcc-4.9.3
-        - g++-4.9.3
+        - gcc-4.9
+        - g++-4.9
