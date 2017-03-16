@@ -1,4 +1,5 @@
 language: cpp
+-
 before_install:
 - wget http://libsdl.org/release/SDL2-2.0.5.tar.gz
 - tar -xvf SDL2-2.0.5.tar.gz
@@ -10,7 +11,11 @@ before_install:
 - cd SDL2_image-2.0.1
 - ./configure && make && sudo make install
 - cd ..
-script:
+install
 - mkdir build
 - cd build
-- cmake .. && make && make test
+- cmake .. && make
+- cd ..
+script:
+- cd build
+- make test
