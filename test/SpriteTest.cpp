@@ -1,4 +1,4 @@
-#include <gtest/gtest.h>
+#include "gtest/gtest.h"
 
 #include "MockRenderer.hpp"
 #include "../src/drawables/Sprite.hpp"
