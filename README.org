@@ -1,3 +1,4 @@
+https://travis-ci.org/Lewis-Kelley/spacegame.svg?branch=master
 * Spacegame
 Well, if you've payed any attention to my repos before, you should be
 thinking "here we go again" to yourself, and rightly so. This is my

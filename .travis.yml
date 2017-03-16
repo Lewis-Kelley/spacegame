@@ -1,4 +1,6 @@
-install: true
+before_install:
+- sudo apt-get -qq update
+- sudo apt-get install sdl2
 script:
 - mkdir build
 - cd build
