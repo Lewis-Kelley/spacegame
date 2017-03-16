@@ -1,6 +1,6 @@
-before_install:
+install:
 - sudo apt-get -qq update
-- sudo apt-get install libsdl2
+- sudo apt-get install -qq libsdl2-dev
 script:
 - mkdir build
 - cd build
