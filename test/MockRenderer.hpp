@@ -1,4 +1,4 @@
-#include <gmock/gmock.h>
+#include "gmock/gmock.h"
 #include "../src/drawables/Renderer.hpp"
 
 class MockRenderer : public Renderer {
