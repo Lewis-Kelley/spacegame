@@ -1,2 +1,5 @@
 install: true
-script: make -C build && make test
+script:
+- mkdir build
+- cd build
+- cmake .. && make && make test
