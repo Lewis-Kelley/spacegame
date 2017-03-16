@@ -32,6 +32,7 @@ TEST(MySpriteTest, ConstructorFilename) {
     ExposedSprite tested("/home/lewis/programs/spacegame/assets/red_ship.png");
 
     EXPECT_EQ(0, tested.get_draw_x());
+    EXPECT_EQ(0, tested.get_draw_y());
 }
 
 
