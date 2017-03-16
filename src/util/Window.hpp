@@ -7,10 +7,12 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#include "../drawables/Renderer.hpp"
+
 namespace window {
     extern double prev_time;
     extern SDL_Window *wind;
-    extern SDL_Renderer *rend;
+    extern Renderer *rend;
     extern short width;
     extern short height;
 

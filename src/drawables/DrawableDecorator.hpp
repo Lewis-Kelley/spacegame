@@ -30,7 +30,7 @@ public:
     virtual void start_move(double dx, double dy, MovementType type);
     virtual void start_move(Movement *movement, MovementType type);
     virtual void end_move(MovementType type) { inner->end_move(type); }
-    virtual bool draw() { return inner->draw(); }
+    virtual bool draw(Renderer *rend) { return inner->draw(rend); }
     virtual void update(double delta) { inner->update(delta); }
     virtual bool is_moving() { return inner->is_moving(); }
 

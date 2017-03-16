@@ -1,4 +1,6 @@
 #include <gtest/gtest.h>
+
+#include "MockRenderer.hpp"
 #include "../src/drawables/Sprite.hpp"
 
 class ExposedSprite : public Sprite {
@@ -10,12 +12,6 @@ public:
         : Sprite(rect, tex, dest) { }
     ExposedSprite(SDL_Texture *tex)
         : Sprite(tex) { }
-    ExposedSprite(SDL_Rect src_rect, SDL_Rect dest_rect,
-                  std::string filename)
-        : Sprite(src_rect, dest_rect, filename) { }
-    ExposedSprite(SDL_Rect rect, std::string filename, bool dest)
-        : Sprite(rect, filename, dest) { }
-    ExposedSprite(std::string filename) : Sprite(filename) { }
 
     double get_draw_x() { return Sprite::get_draw_x(); }
     double get_draw_y() { return Sprite::get_draw_y(); }
@@ -27,12 +23,24 @@ public:
     void set_height(double height) { Sprite::set_height(height); }
 };
 
-TEST(MySpriteTest, ConstructorFilename) {
+TEST(SpriteTest, ConstructorTexture) {
     window::init(0, 0);
-    ExposedSprite tested("/home/lewis/programs/spacegame/assets/red_ship.png");
+    SDL_Texture *tex = window::rend
+        ->load_texture("/home/lewis/programs/spacegame/assets/red_ship.png");
+    ExposedSprite tested(tex);
 
-    EXPECT_EQ(0, tested.get_draw_x());
-    EXPECT_EQ(0, tested.get_draw_y());
+    ASSERT_EQ(0, tested.get_draw_x());
+    ASSERT_EQ(0, tested.get_draw_y());
+    ASSERT_EQ(0, tested.get_width());
+    ASSERT_EQ(0, tested.get_height());
+}
+
+TEST(SpriteTest, DrawNullTexture) {
+    MockRenderer rend;
+    ExposedSprite tested(NULL);
+
+    EXPECT_CALL(rend, render_copy(testing::_, testing::_, testing::_));
+    ASSERT_FALSE(tested.draw(&rend));
 }
 
 

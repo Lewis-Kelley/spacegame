@@ -28,7 +28,7 @@ protected:
 public:
     Rectangle(SDL_Rect dest_rect, SDL_Color *color);
     ~Rectangle();
-    bool draw();
+    virtual bool draw(Renderer *rend);
 };
 
 #endif /* RECTANGLE_H */

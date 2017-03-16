@@ -3,8 +3,10 @@
 
 #include <stdio.h>
 #include <map>
+#include <SDL2/SDL.h>
 
 #include "Movement.hpp"
+#include "Renderer.hpp"
 
 #define ABS(x) (x > 0 ? x : -x)
 #define MAX_TILES 500
@@ -82,7 +84,7 @@ public:
      *
      * @return True if successfully drawn, false if there was an error.
      */
-    virtual bool draw() = 0;
+    virtual bool draw(Renderer *rend) = 0;
 
     /**
      * To be used for any updates that need to happen upon a tick.

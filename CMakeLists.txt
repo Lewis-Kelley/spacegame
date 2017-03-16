@@ -52,7 +52,7 @@ add_executable(spacegame ${sources})
 target_link_libraries(spacegame ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
 
 add_executable(SpriteTest "test/SpriteTest.cpp" ${sources})
-target_link_libraries(SpriteTest gtest_main)
+target_link_libraries(SpriteTest gtest_main gmock_main)
 target_link_libraries(SpriteTest ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
 target_compile_definitions(SpriteTest PRIVATE TESTING=1)
 add_test(NAME sprite_test COMMAND SpriteTest)

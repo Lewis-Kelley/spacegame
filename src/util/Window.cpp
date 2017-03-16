@@ -2,7 +2,7 @@
 
 double window::prev_time;
 SDL_Window *window::wind;
-SDL_Renderer *window::rend;
+Renderer *window::rend;
 short window::width;
 short window::height;
 
@@ -38,18 +38,21 @@ bool window::init(short width, short height)
         throw SDL_GetError();
     }
 
-    rend = SDL_CreateRenderer(wind, -1, SDL_RENDERER_ACCELERATED
-                              | SDL_RENDERER_PRESENTVSYNC);
+    SDL_Renderer *sdl_rend
+        = SDL_CreateRenderer(wind, -1, SDL_RENDERER_ACCELERATED
+                             | SDL_RENDERER_PRESENTVSYNC);
 
-    if (rend == NULL) {
+    if (sdl_rend == NULL) {
         throw SDL_GetError();
     }
 
     // Set default color
-    SDL_SetRenderDrawColor(rend, 0x00, 0x00, 0x00, 0xFF);
+    SDL_SetRenderDrawColor(sdl_rend, 0x00, 0x00, 0x00, 0xFF);
     if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
         throw SDL_GetError();
     }
+
+    rend = new Renderer(sdl_rend);
 
     return true;
 }
@@ -60,7 +63,10 @@ bool window::init(short width, short height)
  */
 void window::free()
 {
-    SDL_DestroyRenderer(rend);
+    if (rend != NULL) {
+        delete rend;
+    }
+
     SDL_DestroyWindow(wind);
     IMG_Quit();
     SDL_Quit();
@@ -71,7 +77,7 @@ void window::free()
  */
 void window::clear_render()
 {
-    SDL_RenderClear(rend);
+    rend->clear();
 }
 
 /**
@@ -80,7 +86,7 @@ void window::clear_render()
 void window::present_render()
 {
     prev_time = SDL_GetTicks();
-    SDL_RenderPresent(rend);
+    rend->present();
 }
 
 /**

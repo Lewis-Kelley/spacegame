@@ -72,17 +72,12 @@ int my_round(double num)
     }
 }
 
-bool Rectangle::draw()
+bool Rectangle::draw(Renderer *rend)
 {
     dest_rect->x = my_round(x);
     dest_rect->y = my_round(y);
 
-    uint8_t r, g, b, a;
-    SDL_GetRenderDrawColor(window::rend, &r, &g, &b, &a);
-    SDL_SetRenderDrawColor(window::rend, color->r, color->g, color->b,
-                           color->a);
-    SDL_RenderFillRect(window::rend, dest_rect);
-    SDL_SetRenderDrawColor(window::rend, r, g, b, a);
+    rend->fill_rect(dest_rect, color);
 
     return true;
 }

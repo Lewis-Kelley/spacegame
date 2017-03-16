@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include "Window.hpp"
 #include "../drawables/Drawable.hpp"
 
 namespace gamestate {

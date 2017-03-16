@@ -31,12 +31,8 @@ public:
     Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, SDL_Texture *tex);
     Sprite(SDL_Rect rect, SDL_Texture *tex, bool dest);
     Sprite(SDL_Texture *tex);
-    Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, std::string filename);
-    Sprite(SDL_Rect rect, std::string filename, bool dest);
-    Sprite(std::string filename);
     ~Sprite();
-    static SDL_Texture *load_texture(std::string filename);
-    bool draw();
+    virtual bool draw(Renderer *rend);
 };
 
 #endif /* SPRITE_H */

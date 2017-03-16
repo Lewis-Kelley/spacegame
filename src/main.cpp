@@ -55,10 +55,10 @@ int main(int argc, char *argv[])
     Fighter *red_fighter = NULL;
     Fighter *blue_fighter = NULL;
     SDL_Texture *red_ship_tex
-        = Sprite::
+        = window::rend->
         load_texture("/home/lewis/programs/spacegame/assets/red_ship.png");
     SDL_Texture *blue_ship_tex
-        = Sprite::
+        = window::rend->
         load_texture("/home/lewis/programs/spacegame/assets/blue_ship.png");
     try {
         red_fighter = init_fighter(&tile_map, 0, 0, red_ship_tex, "Enemies");
