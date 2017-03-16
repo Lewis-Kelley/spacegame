@@ -11,10 +11,6 @@ before_install:
 - cd SDL2_image-2.0.1
 - ./configure && make && sudo make install
 - cd ..
-- git clone https://github.com/google/googletest.git
-- cd googletest
-- mkdir build
-- cmake .. && make && sudo make install
 install:
 - mkdir build
 - cd build
@@ -30,3 +26,5 @@ addons:
         packages:
         - gcc-4.9
         - g++-4.9
+        - libgtest0
+        - libgtest-dev
