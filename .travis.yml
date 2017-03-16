@@ -1,8 +1,10 @@
+language: c++
 before_install:
 - wget http://libsdl.org/release/SDL2-2.0.5.tar.gz
 - tar -xvf SDL2-2.0.5.tar.gz
 - cd SDL2-2.0.5
 - ./configure && make && sudo make install
+- cd ..
 script:
 - mkdir build
 - cd build
