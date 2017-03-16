@@ -31,7 +31,7 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
   include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
-set(CMAKE_CXX_COMPILER "g++")
+set(CMAKE_CXX_COMPILER "g++-4.9")
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
 if (COMPILER_SUPPORTS_CXX11)
