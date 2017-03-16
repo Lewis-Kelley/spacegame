@@ -33,14 +33,17 @@ void add_tile_rects(std::vector<Rectangle *> rects)
     }
 }
 
-Fighter *init_fighter(TileMap *tile_map, int row, int col, SDL_Texture *tex, std::string team_name)
+Fighter *init_fighter(TileMap *tile_map, int row, int col, SDL_Texture *tex,
+                      std::string team_name)
 {
-    Fighter *fighter = new Fighter(gamestate::tile_size, tile_map, row, col, new Sprite(tex));
+    Fighter *fighter = new Fighter(gamestate::tile_size, tile_map, row, col,
+                                   new Sprite(tex));
     fighter->set_team_name(team_name);
 
     return fighter;
 }
 
+#ifndef TESTING
 int main(int argc, char *argv[])
 {
     window::init();
@@ -108,3 +111,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+#endif
