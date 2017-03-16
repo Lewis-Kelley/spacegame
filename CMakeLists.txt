@@ -31,6 +31,15 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
   include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
+set(CMAKE_CXX_COMPILER "g++")
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+if (COMPILER_SUPPORTS_CXX11)
+  set(CMAKE_CXX_FLAGS "-g -O0 -Wall -std=c++11")
+else()
+  message(FATAL "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support.\n")
+endif()
+
 project(spacegame)
 include(FindPkgConfig)
 
@@ -42,9 +51,6 @@ pkg_search_module(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
 include_directories(${SDL2_INCLUDE_DIRS}
   ${SDL2IMAGE_INCLUDE_DIRS}
   ${CMAKE_CURRENT_SOURCE_DIR})
-
-set(CMAKE_CXX_COMPILER "g++")
-set(CMAKE_CXX_FLAGS "-g -O0 -Wall -std=c++11")
 
 file(GLOB sources "src/*/*.cpp")
 file(GLOB_RECURSE headers "src/*.hpp")
