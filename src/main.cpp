@@ -43,7 +43,6 @@ Fighter *init_fighter(TileMap *tile_map, int row, int col, SDL_Texture *tex,
     return fighter;
 }
 
-#ifndef TESTING
 int main(int argc, char *argv[])
 {
     window::init();
@@ -111,4 +110,3 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-#endif
