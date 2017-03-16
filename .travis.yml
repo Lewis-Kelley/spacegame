@@ -5,6 +5,11 @@ before_install:
 - cd SDL2-2.0.5
 - ./configure && make && sudo make install
 - cd ..
+- wget https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.1.tar.gz
+- tar -xvf SDL2_image-2.0.1.tar.gz
+- cd -xvf SDL2_image-2.0.1
+- ./configure && make && sudo make install
+- cd ..
 script:
 - mkdir build
 - cd build
