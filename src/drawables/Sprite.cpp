@@ -149,6 +149,10 @@ void Sprite::set_height(double height)
  * @return True if successfully renderer, false otherwise.
  */
 bool Sprite::draw(Renderer *rend) {
+    if (rend == NULL) {
+        return false;
+    }
+
     if (dest_rect != NULL) {
         dest_rect->x = x;
         dest_rect->y = y;

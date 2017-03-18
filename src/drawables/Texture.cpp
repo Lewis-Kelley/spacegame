@@ -1,17 +1,23 @@
 #include "Texture.hpp"
 
-Texture::Texture() : tex(NULL) { }
-
-Texture::Texture(Texture *tex)
+bool operator==(const SDL_Rect &lhs, const SDL_Rect &rhs)
 {
-    if (tex != NULL) {
-        this->tex = tex->tex;
+    return lhs.x == rhs.x && lhs.y == rhs.y && lhs.w == rhs.w && lhs.h == rhs.h;
+}
+
+Texture::Texture(Texture *other)
+{
+    if (other != NULL) {
+        tex = other->get_sdl_tex();
     } else {
-        this->tex = NULL;
+        throw "Trying to clone a NULL Texture.";
     }
 }
 
 Texture::Texture(SDL_Texture *tex) : tex(tex) { }
 
 Texture::Texture(Renderer *rend, std::string filename)
-    : Texture(rend->load_texture(filename)) { }
+{
+    Texture *other = rend->load_texture(filename);
+    tex = other->get_sdl_tex();
+}

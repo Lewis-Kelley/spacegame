@@ -18,7 +18,12 @@ private:
     Texture *tex; ///< The SDL_Texture that actually holds the Sprite.
     SDL_Rect *src_rect; ///< The source rectangle of the Sprite.
     SDL_Rect *dest_rect; ///< The rectangle of where the Sprite will be drawn.
-protected:
+public:
+    Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, Texture *tex);
+    Sprite(SDL_Rect rect, Texture *tex, bool dest);
+    Sprite(Texture *tex);
+    ~Sprite();
+
     double get_draw_x();
     double get_draw_y();
     double get_width();
@@ -27,11 +32,7 @@ protected:
     void set_draw_y(double y);
     void set_width(double width);
     void set_height(double height);
-public:
-    Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, Texture *tex);
-    Sprite(SDL_Rect rect, Texture *tex, bool dest);
-    Sprite(Texture *tex);
-    ~Sprite();
+
     virtual bool draw(Renderer *rend);
 };
 

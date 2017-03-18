@@ -3,8 +3,7 @@
 
 class MockTexture : public Texture {
 public:
-    MockTexture() : Texture() { }
-    MockTexture(Texture *tex) : Texture(tex) { }
+    MockTexture() : Texture((SDL_Texture *)NULL) { }
     MockTexture(SDL_Texture *tex) : Texture(tex) { }
     MockTexture(Renderer *rend, std::string filename)
         : Texture(rend, filename) { }

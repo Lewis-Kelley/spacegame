@@ -45,7 +45,9 @@ file(GLOB_RECURSE headers "src/*.hpp")
 add_executable(spacegame ${sources} "src/main.cpp")
 target_link_libraries(spacegame ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
 
-add_executable(SpriteTest "test/SpriteTest.cpp" ${sources})
+add_executable(SpriteTest "test/SpriteTest.cpp"
+  "src/drawables/Drawable.cpp" "src/drawables/Sprite.cpp"
+  "src/drawables/Texture.cpp" "src/drawables/Renderer.cpp")
 target_link_libraries(SpriteTest gtest gtest_main gmock gmock_main "-pthread")
 target_link_libraries(SpriteTest ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
 add_test(NAME sprite_test COMMAND SpriteTest)

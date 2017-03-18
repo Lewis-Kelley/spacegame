@@ -18,7 +18,8 @@ Renderer::~Renderer()
 bool Renderer::render_copy(Texture *tex, SDL_Rect *src_rect,
                            SDL_Rect *dest_rect)
 {
-    return SDL_RenderCopy(rend, tex->get_sdl_tex(), src_rect, dest_rect);
+    return tex != NULL && tex->get_sdl_tex() != NULL
+        && SDL_RenderCopy(rend, tex->get_sdl_tex(), src_rect, dest_rect);
 }
 
 /**

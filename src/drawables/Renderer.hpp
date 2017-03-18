@@ -25,17 +25,17 @@ public:
     /**
      * Clears the render in preparation for a new frame.
      */
-    void clear() { SDL_RenderClear(rend); }
+    virtual void clear() { SDL_RenderClear(rend); }
 
     /**
      * Presents the loaded frame to the screen.
      */
-    void present() { SDL_RenderPresent(rend); }
+    virtual void present() { SDL_RenderPresent(rend); }
 
-    bool render_copy(Texture *tex, SDL_Rect *src_rect,
+    virtual bool render_copy(Texture *tex, SDL_Rect *src_rect,
                              SDL_Rect *dest_rect);
-    bool fill_rect(SDL_Rect *dest_rect, SDL_Color *color);
-    Texture *load_texture(std::string filename);
+    virtual bool fill_rect(SDL_Rect *dest_rect, SDL_Color *color);
+    virtual Texture *load_texture(std::string filename);
 };
 
 #endif /* RENDERER_H */
