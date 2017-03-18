@@ -5,15 +5,14 @@
  * as this Sprite.
  * @param dest_rect The SDL_Rect defining where to draw the Sprite
  * onscreen.
- * @param tex A pointer to an SDL_Texture holding the image data to draw.
+ * @param tex A pointer to an Texture holding the image data to draw.
  */
-Sprite::Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, SDL_Texture *tex) {
+Sprite::Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, Texture *tex) {
     this->tex = tex;
     this->src_rect = new SDL_Rect();
     *this->src_rect = src_rect;
     this->dest_rect = new SDL_Rect();
     *this->dest_rect = dest_rect;
-    given_tex = true;
     x = dest_rect.x;
     y = dest_rect.y;
 }
@@ -25,11 +24,11 @@ Sprite::Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, SDL_Texture *tex) {
  * @param rect The SDL_Rect either defining what subsection of tex to
  * use as this Sprite or where to draw the Sprite onscreen, depending
  * on dest.
- * @param tex A pointer to an SDL_Texture holding the image data to draw.
+ * @param tex A pointer to an Texture holding the image data to draw.
  * @param dest True if the passed rect shows where to draw the Sprite, false
  * if it shows where the Sprite comes from.
  */
-Sprite::Sprite(SDL_Rect rect, SDL_Texture *tex, bool dest) {
+Sprite::Sprite(SDL_Rect rect, Texture *tex, bool dest) {
     SDL_Rect **target_rect;
     SDL_Rect **other_rect;
 
@@ -50,20 +49,18 @@ Sprite::Sprite(SDL_Rect rect, SDL_Texture *tex, bool dest) {
     *target_rect = new SDL_Rect();
     **target_rect = rect;
     *other_rect = NULL;
-    given_tex = true;
 }
 
 /**
  * This constructor should be used when the whole image file should be used,
  * and the Sprite should take up the whole screen.
  *
- * @param tex A pointer to an SDL_Texture holding the image data to draw.
+ * @param tex A pointer to an Texture holding the image data to draw.
  */
-Sprite::Sprite(SDL_Texture *tex) {
+Sprite::Sprite(Texture *tex) {
     this->tex = tex;
     src_rect = NULL;
     dest_rect = NULL;
-    given_tex = true;
     x = 0;
     y = 0;
 }
@@ -81,11 +78,6 @@ Sprite::~Sprite() {
     if (dest_rect != NULL) {
         delete dest_rect;
         dest_rect = NULL;
-    }
-
-    if (!given_tex && tex != NULL) {
-        SDL_DestroyTexture(tex);
-        tex = NULL;
     }
 }
 
@@ -162,5 +154,5 @@ bool Sprite::draw(Renderer *rend) {
         dest_rect->y = y;
     }
 
-    return rend->render_copy(tex, src_rect, dest_rect);
+    return tex != NULL && rend->render_copy(tex, src_rect, dest_rect);
 }

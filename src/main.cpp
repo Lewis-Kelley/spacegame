@@ -33,7 +33,7 @@ void add_tile_rects(std::vector<Rectangle *> rects)
     }
 }
 
-Fighter *init_fighter(TileMap *tile_map, int row, int col, SDL_Texture *tex,
+Fighter *init_fighter(TileMap *tile_map, int row, int col, Texture *tex,
                       std::string team_name)
 {
     Fighter *fighter = new Fighter(gamestate::tile_size, tile_map, row, col,
@@ -53,11 +53,9 @@ int main(int argc, char *argv[])
     add_tile_rects(tile_map.get_tile_rects());
     Fighter *red_fighter = NULL;
     Fighter *blue_fighter = NULL;
-    SDL_Texture *red_ship_tex
-        = window::rend->
+    Texture *red_ship_tex = window::rend->
         load_texture("/home/lewis/programs/spacegame/assets/red_ship.png");
-    SDL_Texture *blue_ship_tex
-        = window::rend->
+    Texture *blue_ship_tex = window::rend->
         load_texture("/home/lewis/programs/spacegame/assets/blue_ship.png");
     try {
         red_fighter = init_fighter(&tile_map, 0, 0, red_ship_tex, "Enemies");
@@ -104,8 +102,9 @@ int main(int argc, char *argv[])
         delete red_fighter;
     }
 
-    SDL_DestroyTexture(red_ship_tex);
-    SDL_DestroyTexture(blue_ship_tex);
+    delete red_ship_tex;
+    delete blue_ship_tex;
+
     window::free();
 
     return 0;

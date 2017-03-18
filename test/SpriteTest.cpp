@@ -3,14 +3,16 @@
 #include "MockRenderer.hpp"
 #include "../src/drawables/Sprite.hpp"
 
+using namespace testing;
+
 class ExposedSprite : public Sprite {
 public:
     ExposedSprite(SDL_Rect src_rect, SDL_Rect dest_rect,
-                  SDL_Texture *tex)
+                  Texture *tex)
         : Sprite(src_rect, dest_rect, tex) { }
-    ExposedSprite(SDL_Rect rect, SDL_Texture *tex, bool dest)
+    ExposedSprite(SDL_Rect rect, Texture *tex, bool dest)
         : Sprite(rect, tex, dest) { }
-    ExposedSprite(SDL_Texture *tex)
+    ExposedSprite(Texture *tex)
         : Sprite(tex) { }
 
     double get_draw_x() { return Sprite::get_draw_x(); }
@@ -23,9 +25,10 @@ public:
     void set_height(double height) { Sprite::set_height(height); }
 };
 
-TEST(SpriteTest, ConstructorTexture) {
+TEST(SpriteTest, ConstructorTexture)
+{
     window::init(0, 0);
-    SDL_Texture *tex = window::rend
+    Texture *tex = window::rend
         ->load_texture("/home/lewis/programs/spacegame/assets/red_ship.png");
     ExposedSprite tested(tex);
 
@@ -35,16 +38,16 @@ TEST(SpriteTest, ConstructorTexture) {
     ASSERT_EQ(0, tested.get_height());
 }
 
-TEST(SpriteTest, DrawNullTexture) {
+TEST(SpriteTest, DrawNullTexture)
+{
     MockRenderer rend;
     ExposedSprite tested(NULL);
 
-    EXPECT_CALL(rend, render_copy(testing::_, testing::_, testing::_));
     ASSERT_FALSE(tested.draw(&rend));
 }
 
 int main(int argc, char *argv[])
 {
-    ::testing::InitGoogleTest(&argc, argv);
+    InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

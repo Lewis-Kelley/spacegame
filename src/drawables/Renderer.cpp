@@ -8,17 +8,17 @@ Renderer::~Renderer()
 /**
  * Draws the passed texture to the frame.
  *
- * @param tex The SDL_Texture to draw.
+ * @param tex The Texture to draw.
  * @param src_rect The rectangle defining what portion of tex to draw.
  * NULL means to draw the whole texture.
  * @param dest_rect The rectangle defining where to draw text on the frame.
  * NULL means to fill the whole frame.
  * @return True if successful, false otherwise.
  */
-bool Renderer::render_copy(SDL_Texture *tex, SDL_Rect *src_rect,
+bool Renderer::render_copy(Texture *tex, SDL_Rect *src_rect,
                            SDL_Rect *dest_rect)
 {
-    return SDL_RenderCopy(rend, tex, src_rect, dest_rect);
+    return SDL_RenderCopy(rend, tex->get_sdl_tex(), src_rect, dest_rect);
 }
 
 /**
@@ -45,9 +45,9 @@ bool Renderer::fill_rect(SDL_Rect *dest_rect, SDL_Color *color)
  * Load the texture in the file located at the filename.
  *
  * @param filename The path to the image file.
- * @return A new SDL_Texture based of the image file.
+ * @return A new Texture based of the image file.
  */
-SDL_Texture *Renderer::load_texture(std::string filename) {
+Texture *Renderer::load_texture(std::string filename) {
     SDL_Texture *tex = NULL;
     SDL_Surface *surf = IMG_Load(filename.c_str());
 
@@ -64,5 +64,5 @@ SDL_Texture *Renderer::load_texture(std::string filename) {
         throw IMG_GetError();
     }
 
-    return tex;
+    return new Texture(tex);
 }

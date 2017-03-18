@@ -1,9 +1,11 @@
+#ifndef RENDERER_H
+#define RENDERER_H
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <string>
 
-#ifndef RENDERER_H
-#define RENDERER_H
+#include "Texture.hpp"
 
 /**
  * Wrapper class for SDL_Renderer.
@@ -30,10 +32,10 @@ public:
      */
     virtual void present() { SDL_RenderPresent(rend); }
 
-    virtual bool render_copy(SDL_Texture *tex, SDL_Rect *src_rect,
+    virtual bool render_copy(Texture *tex, SDL_Rect *src_rect,
                              SDL_Rect *dest_rect);
     virtual bool fill_rect(SDL_Rect *dest_rect, SDL_Color *color);
-    virtual SDL_Texture *load_texture(std::string filename);
+    virtual Texture *load_texture(std::string filename);
 };
 
 #endif /* RENDERER_H */
