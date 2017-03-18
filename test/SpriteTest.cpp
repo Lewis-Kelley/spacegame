@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "MockRenderer.hpp"
+#include "MockTexture.hpp"
 #include "../src/drawables/Sprite.hpp"
 
 using namespace testing;
@@ -27,10 +28,8 @@ public:
 
 TEST(SpriteTest, ConstructorTexture)
 {
-    window::init(0, 0);
-    Texture *tex = window::rend
-        ->load_texture("/home/lewis/programs/spacegame/assets/red_ship.png");
-    ExposedSprite tested(tex);
+    MockTexture tex;
+    ExposedSprite tested(&tex);
 
     ASSERT_EQ(0, tested.get_draw_x());
     ASSERT_EQ(0, tested.get_draw_y());
