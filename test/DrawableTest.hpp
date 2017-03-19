@@ -42,4 +42,35 @@ void ASSERT_SET_GET_DIM(Drawable *tested, double (Drawable::*get_func)(),
     ASSERT_DOUBLE_EQ(val, (tested->*get_func)());
 }
 
+static void test_movement(Drawable *tested, Movement move)
+{
+    double tracked_x = tested->get_draw_x();
+    double tracked_y = tested->get_draw_y();
+
+    tested->move(move.dx, move.dy);
+
+    tracked_x += move.dx;
+    tracked_y += move.dy;
+
+    ASSERT_EQ(tracked_x, tested->get_draw_x());
+    ASSERT_EQ(tracked_y, tested->get_draw_y());
+}
+
+void ASSERT_MOVE(Drawable *tested)
+{
+    Movement move;
+
+    move.dx = 1.5;
+    move.dy = 2.5;
+    test_movement(tested, move);
+
+    move.dx = 0.0;
+    move.dy = 0.0;
+    test_movement(tested, move);
+
+    move.dx = -1.5;
+    move.dy = -2.5;
+    test_movement(tested, move);
+}
+
 #endif /* DRAWABLETEST_H */

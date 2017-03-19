@@ -145,6 +145,13 @@ TEST(SpriteTest, UpdateDimensionsAndDraw)
     tested.draw(&rend);
 }
 
+TEST(SpriteTest, Move)
+{
+    MockTexture tex;
+    Sprite tested(&tex);
+    ASSERT_MOVE(&tested);
+}
+
 int main(int argc, char *argv[])
 {
     InitGoogleMock(&argc, argv);
