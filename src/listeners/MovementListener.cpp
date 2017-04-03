@@ -2,11 +2,13 @@
 
 MovementListener::MovementListener() : controlled(NULL)
 {
-    event_handler::add_listener(Event::START_UNIT_MOVE, this);
-    event_handler::add_listener(Event::END_UNIT_MOVE, this);
-    event_handler::add_listener(Event::UNIT_MOVE_FINISHED, this);
-    event_handler::add_listener(Event::SELECT_UNIT, this);
-    event_handler::add_listener(Event::DESELECT_UNIT, this);
+    auto handler = EventHandler::get_instance();
+
+    handler->add_listener(Event::START_UNIT_MOVE, this);
+    handler->add_listener(Event::END_UNIT_MOVE, this);
+    handler->add_listener(Event::UNIT_MOVE_FINISHED, this);
+    handler->add_listener(Event::SELECT_UNIT, this);
+    handler->add_listener(Event::DESELECT_UNIT, this);
 }
 
 void MovementListener::catch_event(Event *event)

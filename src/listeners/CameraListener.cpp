@@ -2,8 +2,9 @@
 
 void CameraListener::add_as_listener()
 {
-    event_handler::add_listener(Event::START_CAMERA_MOVE, this);
-    event_handler::add_listener(Event::STOP_CAMERA_MOVE, this);
+    auto handler = EventHandler::get_instance();
+    handler->add_listener(Event::START_CAMERA_MOVE, this);
+    handler->add_listener(Event::STOP_CAMERA_MOVE, this);
 }
 
 /**

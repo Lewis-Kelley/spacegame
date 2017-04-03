@@ -76,6 +76,7 @@ int main(int argc, char *argv[])
     SDL_Event sdl_event;
     Event *event;
     double delta;
+    auto handler = EventHandler::get_instance();
 
     gamestate::running = true;
     while (gamestate::running) {
@@ -89,7 +90,7 @@ int main(int argc, char *argv[])
         }
 
         while (events::event_queue.size() > 0) {
-            event_handler::handle_event(events::event_queue.front());
+            handler->handle_event(events::event_queue.front());
             events::event_queue.pop();
         }
 

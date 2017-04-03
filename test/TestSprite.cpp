@@ -1,11 +1,11 @@
 #include <gtest/gtest.h>
 
 #include "../src/drawables/Sprite.hpp"
-#include "DrawableTest.hpp"
+#include "TestDrawable.hpp"
 #include "MockRenderer.hpp"
 #include "MockTexture.hpp"
 
-TEST(SpriteTest, ConstructorTexture)
+TEST(TestSprite, ConstructorTexture)
 {
     MockTexture tex;
     Sprite tested(&tex);
@@ -13,7 +13,7 @@ TEST(SpriteTest, ConstructorTexture)
     ASSERT_DIMENSIONS(&tested, 0, 0, 0, 0);
 }
 
-TEST(SpriteTest, ConstructorSrcAndDestZeros)
+TEST(TestSprite, ConstructorSrcAndDestZeros)
 {
     MockTexture tex;
     SDL_Rect src = (SDL_Rect){0, 0, 0, 0};
@@ -23,7 +23,7 @@ TEST(SpriteTest, ConstructorSrcAndDestZeros)
     ASSERT_DIMENSIONS(&tested, 0, 0, 0, 0);
 }
 
-TEST(SpriteTest, ConstructorSrcAndDestVals)
+TEST(TestSprite, ConstructorSrcAndDestVals)
 {
     MockTexture tex;
     SDL_Rect src = (SDL_Rect){5, 10, 2, 5};
@@ -33,7 +33,7 @@ TEST(SpriteTest, ConstructorSrcAndDestVals)
     ASSERT_DIMENSIONS(&tested, dest);
 }
 
-TEST(SpriteTest, SetDrawX)
+TEST(TestSprite, SetDrawX)
 {
     MockTexture tex;
     Sprite tested(&tex);
@@ -44,7 +44,7 @@ TEST(SpriteTest, SetDrawX)
                        false);
 }
 
-TEST(SpriteTest, SetDrawY)
+TEST(TestSprite, SetDrawY)
 {
     MockTexture tex;
     Sprite tested(&tex);
@@ -55,7 +55,7 @@ TEST(SpriteTest, SetDrawY)
                        false);
 }
 
-TEST(SpriteTest, SetWidth)
+TEST(TestSprite, SetWidth)
 {
     MockTexture tex;
     Sprite tested(&tex);
@@ -66,7 +66,7 @@ TEST(SpriteTest, SetWidth)
                        true);
 }
 
-TEST(SpriteTest, SetHeight)
+TEST(TestSprite, SetHeight)
 {
     MockTexture tex;
     Sprite tested(&tex);
@@ -77,7 +77,7 @@ TEST(SpriteTest, SetHeight)
                        true);
 }
 
-TEST(SpriteTest, DrawNullRenderer)
+TEST(TestSprite, DrawNullRenderer)
 {
     MockTexture tex;
     Sprite tested(&tex);
@@ -85,7 +85,7 @@ TEST(SpriteTest, DrawNullRenderer)
     ASSERT_FALSE(tested.draw(NULL));
 }
 
-TEST(SpriteTest, DrawNullTexture)
+TEST(TestSprite, DrawNullTexture)
 {
     MockRenderer rend;
     Sprite tested(NULL);
@@ -93,7 +93,7 @@ TEST(SpriteTest, DrawNullTexture)
     ASSERT_FALSE(tested.draw(&rend));
 }
 
-TEST(SpriteTest, DrawZeroTexture)
+TEST(TestSprite, DrawZeroTexture)
 {
     MockTexture tex;
     MockRenderer rend;
@@ -105,7 +105,7 @@ TEST(SpriteTest, DrawZeroTexture)
     ASSERT_TRUE(tested.draw(&rend));
 }
 
-TEST(SpriteTest, DrawActualTexture)
+TEST(TestSprite, DrawActualTexture)
 {
     MockTexture tex;
     MockRenderer rend;
@@ -119,7 +119,7 @@ TEST(SpriteTest, DrawActualTexture)
     tested.draw(&rend);
 }
 
-TEST(SpriteTest, UpdateDimensionsAndDraw)
+TEST(TestSprite, UpdateDimensionsAndDraw)
 {
     MockTexture tex;
     MockRenderer rend;
@@ -147,7 +147,7 @@ TEST(SpriteTest, UpdateDimensionsAndDraw)
     tested.draw(&rend);
 }
 
-TEST(SpriteTest, Move)
+TEST(TestSprite, Move)
 {
     MockTexture tex;
     Sprite tested(&tex);

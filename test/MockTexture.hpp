@@ -1,6 +1,6 @@
 #include <string>
 
-#include "gmock/gmock.h"
+#include <gmock/gmock.h>
 #include "../src/drawables/Texture.hpp"
 
 class MockTexture : public Texture {

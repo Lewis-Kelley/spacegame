@@ -45,9 +45,16 @@ file(GLOB_RECURSE headers "src/*.hpp")
 add_executable(spacegame ${sources} "src/main.cpp")
 target_link_libraries(spacegame ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
 
-add_executable(SpriteTest "test/SpriteTest.cpp"
-  "src/drawables/Drawable.cpp" "src/drawables/Sprite.cpp"
-  "src/drawables/Texture.cpp" "src/drawables/Renderer.cpp")
-target_link_libraries(SpriteTest gtest gtest_main gmock gmock_main "-pthread")
-target_link_libraries(SpriteTest ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
-add_test(NAME sprite_test COMMAND SpriteTest)
+add_executable(TestSprite "test/TestSprite.cpp"
+  "src/drawables/Sprite.cpp" "src/drawables/Renderer.cpp"
+  "src/drawables/Drawable.cpp" "src/drawables/Texture.cpp")
+target_link_libraries(TestSprite gtest gtest_main gmock gmock_main "-pthread")
+target_link_libraries(TestSprite ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
+add_test(NAME sprite_test COMMAND TestSprite)
+
+add_executable(TestEventHandler "test/TestEventHandler.cpp"
+  "src/events/EventHandler.cpp")
+
+target_link_libraries(TestEventHandler gtest gtest_main gmock gmock_main "-pthread")
+target_link_libraries(TestEventHandler ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
+add_test(NAME test_event_handler COMMAND TestEventHandler)

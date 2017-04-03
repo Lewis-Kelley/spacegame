@@ -2,7 +2,9 @@
 
 QuitListener::QuitListener()
 {
-    event_handler::add_listener(Event::QUIT, this);
+    auto handler = EventHandler::get_instance();
+
+    handler->add_listener(Event::QUIT, this);
 }
 
 void QuitListener::catch_event(Event *event)

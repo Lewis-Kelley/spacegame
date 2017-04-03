@@ -6,7 +6,8 @@
  */
 SwitchListener::SwitchListener(std::queue<Unit *> *units) : units(units)
 {
-    event_handler::add_listener(Event::TRIGGER_SWITCH, this);
+    auto handler = EventHandler::get_instance();
+    handler->add_listener(Event::TRIGGER_SWITCH, this);
 }
 
 void SwitchListener::catch_event(Event *event)
