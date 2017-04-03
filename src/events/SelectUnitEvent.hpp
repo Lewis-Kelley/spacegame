@@ -8,16 +8,17 @@
  * Event signalling that a Unit has been selected.
  */
 class SelectUnitEvent : public Event {
-private:
+ private:
     Unit *selected;
-public:
+
+ public:
     /**
      * Initialize a new SselectUnitEvent with the given Unit as the
      * one that has been selected.
      *
      * @param selected The Unit that has been selected.
      */
-    SelectUnitEvent(Unit *selected) : selected(selected) { }
+    explicit SelectUnitEvent(Unit *selected) : selected(selected) { }
     Event_Type get_type() { return SELECT_UNIT; }
 
     /**

@@ -3,8 +3,8 @@
 double window::prev_time;
 SDL_Window *window::wind;
 Renderer *window::rend;
-short window::width;
-short window::height;
+uint16_t window::width;
+uint16_t window::height;
 
 /**
  * Initializes SDL using the default values for width and height.
@@ -23,7 +23,7 @@ bool window::init()
  * @param height The initial height of the Window.
  * @return true if success, false if there was an error.
  */
-bool window::init(short width, short height)
+bool window::init(uint16_t width, uint16_t height)
 {
     free();
 

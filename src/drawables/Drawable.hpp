@@ -1,9 +1,10 @@
 #ifndef DRAWABLE_H
 #define DRAWABLE_H
 
+#include <SDL2/SDL.h>
 #include <stdio.h>
 #include <map>
-#include <SDL2/SDL.h>
+#include <utility>
 
 #include "Movement.hpp"
 #include "Renderer.hpp"
@@ -18,10 +19,11 @@
  * screen.
  */
 class Drawable {
-private:
+ private:
     std::map<MovementType, Movement *> movements;
     typedef std::pair<MovementType, Movement *> movement_pair;
-public:
+
+ public:
     virtual ~Drawable() {}
 
     /**

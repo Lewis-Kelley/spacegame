@@ -7,7 +7,7 @@
  * @param width The width of the requested TileMap
  * @param height The height of the requested TileMap
  */
-TileMap::TileMap(short width, short height)
+TileMap::TileMap(uint16_t width, uint16_t height)
 {
     Tile *tile;
 
@@ -20,7 +20,7 @@ TileMap::TileMap(short width, short height)
     event_handler::add_listener(Event::SELECT_UNIT, tile);
     event_handler::add_listener(Event::DESELECT_UNIT, tile);
 
-    for (short col = 1; col < width; col++) {
+    for (uint16_t col = 1; col < width; col++) {
         tile = new Tile(0, col);
         set(tile, 0, col);
         tile->add_neighbor(WEST, at(0, col - 1));
@@ -28,14 +28,14 @@ TileMap::TileMap(short width, short height)
         event_handler::add_listener(Event::DESELECT_UNIT, tile);
     }
 
-    for (short row = 1; row < height; row++) {
+    for (uint16_t row = 1; row < height; row++) {
         tile = new Tile(row, 0);
         set(tile, row, 0);
         tile->add_neighbor(NORTH, at(row - 1, 0));
         event_handler::add_listener(Event::SELECT_UNIT, tile);
         event_handler::add_listener(Event::DESELECT_UNIT, tile);
 
-        for (short col = 1; col < width; col++) {
+        for (uint16_t col = 1; col < width; col++) {
             tile = new Tile(row, col);
             set(tile, row, col);
             tile->add_neighbor(NORTH, at(row - 1, col));
@@ -48,8 +48,8 @@ TileMap::TileMap(short width, short height)
 
 TileMap::~TileMap()
 {
-    for (short row = 0; row < height; row++) {
-        for (short col = 0; col < width; col++) {
+    for (uint16_t row = 0; row < height; row++) {
+        for (uint16_t col = 0; col < width; col++) {
             delete at(row, col);
         }
     }
@@ -64,7 +64,7 @@ TileMap::~TileMap()
  * @param col The row of the requested Tile.
  * @return The Tile at the given coordinates.
  */
-Tile *TileMap::at(short row, short col)
+Tile *TileMap::at(uint16_t row, uint16_t col)
 {
     if (in_bounds(row, col)) {
         return tiles[row * width + col];
@@ -81,7 +81,7 @@ Tile *TileMap::at(short row, short col)
  * @param row The row of the requested Tile.
  * @param col The col of the requested Tile.
  */
-void TileMap::set(Tile *tile, short row, short col)
+void TileMap::set(Tile *tile, uint16_t row, uint16_t col)
 {
     if (in_bounds(row, col)) {
         tiles[row * width + col] = tile;
@@ -100,7 +100,7 @@ void TileMap::set(Tile *tile, short row, short col)
  * @return True if the coordinates are within bounds, false if they are
  * out of bounds.
  */
-bool TileMap::in_bounds(short row, short col)
+bool TileMap::in_bounds(uint16_t row, uint16_t col)
 {
     return !(row >= height || col >= width || row < 0 || col < 0);
 }

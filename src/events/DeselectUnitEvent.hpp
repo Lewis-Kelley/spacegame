@@ -8,16 +8,17 @@
  * Event signalling that a Unit has been deselected.
  */
 class DeselectUnitEvent : public Event {
-private:
+ private:
     Unit *deselected;
-public:
+
+ public:
     /**
      * Initialize a new DeselectUnitEvent with the given Unit as the
      * one that has been deselected.
      *
      * @param deselected The Unit that has been deselected.
      */
-    DeselectUnitEvent(Unit *deselected) : deselected(deselected) { }
+    explicit DeselectUnitEvent(Unit *deselected) : deselected(deselected) { }
     Event_Type get_type() { return DESELECT_UNIT; }
 
     /**

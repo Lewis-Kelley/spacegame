@@ -5,8 +5,8 @@
  * Holds information about a 2D movement.
  */
 struct Movement {
-    double dx; ///< The amount to move in the x direction.
-    double dy; ///< The amount to move in the y direction.
+    double dx;  ///< The amount to move in the x direction.
+    double dy;  ///< The amount to move in the y direction.
 
     /**
      * Initialize a new Movement struct with the given parameters.

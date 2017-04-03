@@ -6,7 +6,7 @@
  * @param row The row this Tile occupies
  * @param col The column this Tile occupies
  */
-Tile::Tile(short row, short col)
+Tile::Tile(uint16_t row, uint16_t col)
     : color((SDL_Color){0, 255, 255, 255}),
       rect((SDL_Rect){col * gamestate::tile_size,
                   row * gamestate::tile_size,
@@ -76,7 +76,7 @@ void Tile::add_entity(Entity *ent)
  */
 bool Tile::remove_entity(Entity *ent)
 {
-    for (int i = 0; i < (int)occ_ents.size(); i++) {
+    for (int i = 0; static_cast<int>(occ_ents.size()) > i; i++) {
         if (occ_ents.at(i) == ent) {
             occ_ents.erase(occ_ents.begin() + i);
             return true;
@@ -115,7 +115,7 @@ bool Tile::move_entity(Entity *ent, Direction dir)
  */
 bool Tile::stops_entity(Entity *ent)
 {
-    for (int i = 0; i < (int)occ_ents.size(); i++) {
+    for (int i = 0; i < static_cast<int>(occ_ents.size()); i++) {
         if (occ_ents.at(i)->stops_ent(ent)) {
             return true;
         }
@@ -139,7 +139,7 @@ bool Tile::accepts_entity(Entity *ent)
 void Tile::handle_select_unit_event(SelectUnitEvent *event)
 {
     Unit *unit = event->get_selected();
-    for (int i = 0; i < (int)occ_ents.size(); i++) {
+    for (int i = 0; i < static_cast<int>(occ_ents.size()); i++) {
         if (occ_ents.at(i) == unit) {
             // The 1+ is for the current Tile since it doesn't take any
             // movement.
@@ -159,10 +159,11 @@ void Tile::catch_event(Event *event)
 {
     switch (event->get_type()) {
     case Event::SELECT_UNIT:
-        handle_select_unit_event((SelectUnitEvent *)event);
+        handle_select_unit_event(reinterpret_cast<SelectUnitEvent *>(event));
         break;
     case Event::DESELECT_UNIT:
-        handle_deselect_unit_event((DeselectUnitEvent *)event);
+        handle_deselect_unit_event(reinterpret_cast<DeselectUnitEvent *>
+                                   (event));
         break;
     default:
         break;
@@ -176,7 +177,7 @@ void Tile::catch_event(Event *event)
  * @param ent The Entity that is attempting to pass through.
  * @param move_range The remaining distance the Unit can travel.
  */
-void Tile::define_range(Entity *ent, short move_range)
+void Tile::define_range(Entity *ent, uint16_t move_range)
 {
     in_range = true;
 

@@ -12,16 +12,17 @@
  * Convinence class that basically just wraps an SDL_Texture.
  */
 class Sprite : public Drawable {
-private:
-    double x; ///< The full-detail x position.
-    double y; ///< The full-detail y position.
-    Texture *tex; ///< The SDL_Texture that actually holds the Sprite.
-    SDL_Rect *src_rect; ///< The source rectangle of the Sprite.
-    SDL_Rect *dest_rect; ///< The rectangle of where the Sprite will be drawn.
-public:
+ private:
+    double x;  ///< The full-detail x position.
+    double y;  ///< The full-detail y position.
+    Texture *tex;  ///< The SDL_Texture that actually holds the Sprite.
+    SDL_Rect *src_rect;  ///< The source rectangle of the Sprite.
+    SDL_Rect *dest_rect;  ///< The rectangle of where the Sprite will be drawn.
+
+ public:
     Sprite(SDL_Rect src_rect, SDL_Rect dest_rect, Texture *tex);
     Sprite(SDL_Rect rect, Texture *tex, bool dest);
-    Sprite(Texture *tex);
+    explicit Sprite(Texture *tex);
     ~Sprite();
 
     double get_draw_x();

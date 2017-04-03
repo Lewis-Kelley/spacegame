@@ -15,7 +15,7 @@
  * and moves the Unit as necessary.
  */
 class MovementListener : public Listener {
-private:
+ private:
     Unit *controlled;
     Direction move_dir;
     Direction queue_dir;
@@ -25,7 +25,7 @@ private:
     void handle_move_finished_event(MoveFinishedEvent *event);
     void handle_select_unit_event(SelectUnitEvent *event);
     void handle_deselect_unit_event(DeselectUnitEvent *event);
-public:
+ public:
     MovementListener();
     void catch_event(Event *event);
 };

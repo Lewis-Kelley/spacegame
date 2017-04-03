@@ -6,7 +6,7 @@
  * entities to handle.
  */
 class Event {
-public:
+ public:
     /**
      * Kind of klunky, but the list of the different types of events
      * an abstract event can be.

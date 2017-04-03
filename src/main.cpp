@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
     CameraListener cl(&gamestate::drawings);
 
     events::fill_defaults();
-    events::event_queue.push(new TriggerSwitchEvent()); // Select the first Unit
+    events::event_queue.push(new TriggerSwitchEvent());  // Select first Unit
 
     SDL_Event sdl_event;
     Event *event;

@@ -1,6 +1,8 @@
 #ifndef FIGHTER_H
 #define FIGHTER_H
 
+#include <utility>
+
 #include "../events/EventHandler.hpp"
 #include "../events/StopMoveEvent.hpp"
 #include "../events/MoveEvent.hpp"
@@ -17,33 +19,34 @@
  * The standard Fighter Unit that will be the primary game board Unit.
  */
 class Fighter : public Unit, public Listener {
-private:
-    short hull_health;
-    short shield_health;
-    short engine_health;
-    short weapon_health;
-    short total_power;
-    short shield_power;
-    short engine_power;
-    short weapon_power;
+ private:
+    int16_t hull_health;
+    int16_t shield_health;
+    int16_t engine_health;
+    int16_t weapon_health;
+    int16_t total_power;
+    int16_t shield_power;
+    int16_t engine_power;
+    int16_t weapon_power;
 
     void init();
-public:
-    Fighter(TileMap *tilemap, short row, short col, TileDrawable *img);
-    Fighter(double tile_width, TileMap *tilemap, short row, short col,
+
+ public:
+    Fighter(TileMap *tilemap, int16_t row, int16_t col, TileDrawable *img);
+    Fighter(double tile_width, TileMap *tilemap, int16_t row, int16_t col,
             Drawable *img);
     Fighter(Tile *tile, TileDrawable *img);
-    short get_hull_health() { return hull_health; }
-    short get_shield_health() { return shield_health; }
-    short get_engine_health() { return engine_health; }
-    short get_weapon_health() { return weapon_health; }
-    short get_total_power() { return total_power; }
-    short get_shield_power() { return shield_power; }
-    short get_engine_power() { return engine_power; }
-    short get_weapon_power() { return weapon_power; }
+    int16_t get_hull_health() { return hull_health; }
+    int16_t get_shield_health() { return shield_health; }
+    int16_t get_engine_health() { return engine_health; }
+    int16_t get_weapon_health() { return weapon_health; }
+    int16_t get_total_power() { return total_power; }
+    int16_t get_shield_power() { return shield_power; }
+    int16_t get_engine_power() { return engine_power; }
+    int16_t get_weapon_power() { return weapon_power; }
     Attack *make_attack(Unit *target);
-    short get_move_range();
-    std::pair<short, short> get_attack_range();
+    int16_t get_move_range();
+    std::pair<int16_t, int16_t> get_attack_range();
     void handle_attack(Attack *att);
     void catch_event(Event *event);
 };

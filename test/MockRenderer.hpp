@@ -2,7 +2,7 @@
 #include "../src/drawables/Renderer.hpp"
 
 class MockRenderer : public Renderer {
-public:
+ public:
     MockRenderer() : Renderer(NULL) { }
 
     MOCK_METHOD3(render_copy, bool(Texture *tex, SDL_Rect *src_rect,

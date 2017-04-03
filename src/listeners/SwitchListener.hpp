@@ -14,10 +14,11 @@
  * Catches a SWITCH Event and switches control to the next Unit.
  */
 class SwitchListener : public Listener {
-private:
+ private:
     std::queue<Unit *> *units;
-public:
-    SwitchListener(std::queue<Unit *> *units);
+
+ public:
+    explicit SwitchListener(std::queue<Unit *> *units);
     void catch_event(Event *event);
 };
 

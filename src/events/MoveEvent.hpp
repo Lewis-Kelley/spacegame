@@ -10,10 +10,11 @@
  * Event dealing with moving units.
  */
 class MoveEvent : public Event {
-private:
+ private:
     Direction dir;
-public:
-    MoveEvent(Direction dir);
+
+ public:
+    explicit MoveEvent(Direction dir);
     virtual Event_Type get_type();
 
     /**

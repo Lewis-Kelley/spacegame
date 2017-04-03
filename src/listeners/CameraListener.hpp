@@ -16,7 +16,7 @@
  * accordingly.
  */
 class CameraListener : public Listener {
-private:
+ private:
     std::vector<Drawable *> *images;
     Direction camera_dir;
     bool given_images;
@@ -24,9 +24,10 @@ private:
     void handle_camera_move_event(CameraMoveEvent *event);
     void handle_camera_stop_move_event(StopCameraMoveEvent *event);
     void add_as_listener();
-public:
+
+ public:
     CameraListener();
-    CameraListener(std::vector<Drawable *> *images);
+    explicit CameraListener(std::vector<Drawable *> *images);
     ~CameraListener() { if (!given_images) delete images; }
     void catch_event(Event *event);
 };

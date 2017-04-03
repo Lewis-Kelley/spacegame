@@ -7,7 +7,7 @@
  * Event dealing with the animation of a movement ending.
  */
 class MoveFinishedEvent : public Event {
-public:
+ public:
     virtual Event_Type get_type() { return UNIT_MOVE_FINISHED; }
 };
 

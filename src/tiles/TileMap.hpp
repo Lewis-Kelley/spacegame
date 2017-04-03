@@ -1,6 +1,7 @@
 #ifndef TILEMAP_H
 #define TILEMAP_H
 
+#include <stdint.h>
 #include <stdexcept>
 #include <vector>
 
@@ -12,7 +13,7 @@
  * Holds a full grid of Tile's.
  */
 class TileMap {
-private:
+ private:
     class OutOfBounds : public std::exception {
         virtual const char* what() const throw()
         {
@@ -21,15 +22,15 @@ private:
     };
 
     Tile **tiles;
-    short width;
-    short height;
+    uint16_t width;
+    uint16_t height;
 
-    bool in_bounds(short row, short col);
-public:
-    TileMap(short width, short height);
+    bool in_bounds(uint16_t row, uint16_t col);
+ public:
+    TileMap(uint16_t width, uint16_t height);
     ~TileMap();
-    Tile *at(short row, short col);
-    void set(Tile *tile, short row, short col);
+    Tile *at(uint16_t row, uint16_t col);
+    void set(Tile *tile, uint16_t row, uint16_t col);
     std::vector<Rectangle *> get_tile_rects();
 };
 

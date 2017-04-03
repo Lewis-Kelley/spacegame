@@ -19,10 +19,11 @@ class Unit;
  * tile on the board.
  */
 class Entity : public DrawableDecorator {
-protected:
-    Tile *occ_tile; ///< The tile this entity occupies
-public:
-    Entity(Tile *tile);
+ protected:
+    Tile *occ_tile;  ///< The tile this entity occupies
+
+ public:
+    explicit Entity(Tile *tile);
     Entity(Tile *tile, TileDrawable *img);
 
     /**

@@ -10,13 +10,14 @@
  * A Drawable rectangle. Nothing fancy.
  */
 class Rectangle : public Drawable {
-private:
+ private:
     double x;
     double y;
     SDL_Surface *rect_surf;
     SDL_Rect *dest_rect;
     SDL_Color *color;
-protected:
+
+ protected:
     double get_draw_x();
     double get_draw_y();
     double get_width();
@@ -25,7 +26,8 @@ protected:
     void set_draw_y(double y);
     void set_width(double width);
     void set_height(double height);
-public:
+
+ public:
     Rectangle(SDL_Rect dest_rect, SDL_Color *color);
     ~Rectangle();
     virtual bool draw(Renderer *rend);

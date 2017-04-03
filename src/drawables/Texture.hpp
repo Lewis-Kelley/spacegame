@@ -12,17 +12,18 @@ bool operator==(const SDL_Rect &lhs, const SDL_Rect &rhs);
  * Adapter class for an SDL_Texture.
  */
 class Texture {
-private:
+ private:
     SDL_Texture *tex;
 
-    Texture(Texture *other);
-public:
+    explicit Texture(Texture *other);
+
+ public:
     /**
      * Create a new Texture from the given SDL_Texture.
      *
      * @param tex The SDL_Texture this Texture will wrap.
      */
-    Texture(SDL_Texture *tex);
+    explicit Texture(SDL_Texture *tex);
 
     /**
      * Create a new Texture from the given file using the passed

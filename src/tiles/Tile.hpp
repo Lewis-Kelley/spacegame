@@ -1,9 +1,10 @@
 #ifndef TILE_H
 #define TILE_H
 
-#include <vector>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdexcept>
+#include <vector>
 
 #include "../util/GameState.hpp"
 #include "../drawables/Drawable.hpp"
@@ -19,20 +20,21 @@
  * Represents a single tile on the game board.
  */
 class Tile : public Listener {
-private:
+ private:
     SDL_Color color;
     Rectangle rect;
-    short row;
-    short col;
-    Tile *neighbors[4]; ///< The 4 tiles next to this tile ordered by direction
-    std::vector<Entity *> occ_ents; ///< The Entity's in this Tile
+    uint16_t row;
+    uint16_t col;
+    Tile *neighbors[4];  ///< The 4 tiles next to this tile ordered by direction
+    std::vector<Entity *> occ_ents;  ///< The Entity's in this Tile
     bool in_range;
 
     void handle_select_unit_event(SelectUnitEvent *event);
     void handle_deselect_unit_event(DeselectUnitEvent *event);
-    void define_range(Entity *ent, short move_range);
-public:
-    Tile(short row, short col);
+    void define_range(Entity *ent, uint16_t move_range);
+
+ public:
+    Tile(uint16_t row, uint16_t col);
     virtual ~Tile() { }
     void set_neighbor(Direction dir, Tile *neighbor);
     void add_neighbor(Direction dir, Tile *neighbor);
@@ -51,12 +53,12 @@ public:
     /**
      * @return The row this Tile currently occupies.
      */
-    short get_row() { return row; }
+    uint16_t get_row() { return row; }
 
     /**
      * @return The column this Tile currently occupies.
      */
-    short get_col() { return col; }
+    uint16_t get_col() { return col; }
 
     /**
      * @return The Rectangle held by this Tile.

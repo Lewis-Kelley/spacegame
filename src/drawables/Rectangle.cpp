@@ -63,19 +63,19 @@ void Rectangle::set_height(double height)
     dest_rect->h = height;
 }
 
-int my_round(double num)
+int near_round(double num)
 {
-    if (num - (int)num < 0.5 - ROUNDOFF) {
-        return (int)num;
+    if (num - static_cast<int>(num) < 0.5 - ROUNDOFF) {
+        return static_cast<int>(num);
     } else {
-        return (int)num + 1;
+        return static_cast<int>(num) + 1;
     }
 }
 
 bool Rectangle::draw(Renderer *rend)
 {
-    dest_rect->x = my_round(x);
-    dest_rect->y = my_round(y);
+    dest_rect->x = near_round(x);
+    dest_rect->y = near_round(y);
 
     rend->fill_rect(dest_rect, color);
 

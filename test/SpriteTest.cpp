@@ -5,8 +5,6 @@
 #include "MockRenderer.hpp"
 #include "MockTexture.hpp"
 
-using namespace testing;
-
 TEST(SpriteTest, ConstructorTexture)
 {
     MockTexture tex;
@@ -101,7 +99,8 @@ TEST(SpriteTest, DrawZeroTexture)
     MockRenderer rend;
     Sprite tested(&tex);
 
-    EXPECT_CALL(rend, render_copy(&tex, _, _)).WillOnce(Return(true));
+    EXPECT_CALL(rend, render_copy(&tex, testing::_, testing::_))
+        .WillOnce(testing::Return(true));
 
     ASSERT_TRUE(tested.draw(&rend));
 }
@@ -114,7 +113,8 @@ TEST(SpriteTest, DrawActualTexture)
     SDL_Rect dest = (SDL_Rect){6, 8, 9, 3};
     Sprite tested(src, dest, &tex);
 
-    EXPECT_CALL(rend, render_copy(&tex, Pointee(src), Pointee(dest)));
+    EXPECT_CALL(rend, render_copy(&tex, testing::Pointee(src),
+                                  testing::Pointee(dest)));
 
     tested.draw(&rend);
 }
@@ -132,7 +132,8 @@ TEST(SpriteTest, UpdateDimensionsAndDraw)
     dest.x = 3;
     dest.w = 4;
 
-    EXPECT_CALL(rend, render_copy(&tex, Pointee(src), Pointee(dest)));
+    EXPECT_CALL(rend, render_copy(&tex, testing::Pointee(src),
+                                  testing::Pointee(dest)));
     tested.draw(&rend);
 
     tested.set_draw_y(3);
@@ -140,7 +141,8 @@ TEST(SpriteTest, UpdateDimensionsAndDraw)
     dest.y = 3;
     dest.h = 4;
 
-    EXPECT_CALL(rend, render_copy(&tex, Pointee(src), Pointee(dest)));
+    EXPECT_CALL(rend, render_copy(&tex, testing::Pointee(src),
+                                  testing::Pointee(dest)));
 
     tested.draw(&rend);
 }
@@ -154,6 +156,6 @@ TEST(SpriteTest, Move)
 
 int main(int argc, char *argv[])
 {
-    InitGoogleMock(&argc, argv);
+    testing::InitGoogleMock(&argc, argv);
     return RUN_ALL_TESTS();
 }

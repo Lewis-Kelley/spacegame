@@ -10,16 +10,17 @@
  * Handles the movement of the camera.
  */
 class CameraMoveEvent : public Event {
-private:
+ private:
     double speed;
     Direction dir;
-public:
+
+ public:
     /**
      * Create a new CameraMoveEvent in the given Direction.
      *
      * @param dir The Direction this event is moving the camera.
      */
-    CameraMoveEvent(Direction dir) : speed(CAMERA_SPEED), dir(dir) { }
+    explicit CameraMoveEvent(Direction dir) : speed(CAMERA_SPEED), dir(dir) { }
 
     /**
      * Create a new CameraMoveEvent in the given Direction with the provided

@@ -1,6 +1,8 @@
 #ifndef ATTACK_H
 #define ATTACK_H
 
+#include <stdint.h>
+
 #include "../entities/Component.hpp"
 
 /**
@@ -8,10 +10,11 @@
  * that can be easily passed around.
  */
 class Attack {
-private:
-    Component tar_comp; ///< The targeted component
-    short distance; ///< The grid distance between attacker and attacked unit
-public:
+ private:
+    Component tar_comp;  ///< The targeted component
+    uint16_t distance;  ///< The grid distance between origin and destination
+
+ public:
     /**
      * @return The component under attack.
      */
@@ -21,7 +24,7 @@ public:
      * @return The Manhattan distance between the attacking entity and
      * the targeted unit.
      */
-    short get_distance() { return distance; }
+    uint16_t get_distance() { return distance; }
 
     /**
      * Calculates the base damage for this attack. This will be
@@ -29,7 +32,7 @@ public:
      *
      * @return The base damage of this attack.
      */
-    virtual short get_base_dmg() = 0;
+    virtual uint16_t get_base_dmg() = 0;
 };
 
 #endif /* ATTACK_H */

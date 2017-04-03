@@ -13,19 +13,22 @@
  * A decorator that handles drawings that are bound to tiles.
  */
 class TileDrawable : public DrawableDecorator {
-private:
+ private:
     class AlreadyMovingException : public std::exception {
         virtual const char* what() const throw()
         {
             return "This Drawable is already moving perpendicularly!\n";
         }
     };
+
     Movement curr_movement;
-    double tile_width; ///< The width of an onscreen Tile
+    double tile_width;  ///< The width of an onscreen Tile
     double rem_x;
     double rem_y;
-public:
-    TileDrawable(double tile_width, Drawable *inner, short row, short col);
+
+ public:
+    TileDrawable(double tile_width, Drawable *inner,
+                 uint16_t row, uint16_t col);
     void update(double delta);
     void start_tile_move(double speed, int num_tiles, Direction dir);
     void kill_move();

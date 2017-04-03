@@ -8,15 +8,16 @@
  * Handles the ending of moving the camera.
  */
 class StopCameraMoveEvent : public Event {
-private:
+ private:
     Direction dir;
-public:
+
+ public:
     /**
      * Create a new StopCameraMoveEvent in the given Direction.
      *
      * @param dir The Direction this event is moving the camera.
      */
-    StopCameraMoveEvent(Direction dir) { this->dir = dir; }
+    explicit StopCameraMoveEvent(Direction dir) { this->dir = dir; }
     virtual Event_Type get_type() { return STOP_CAMERA_MOVE; }
 
     /**

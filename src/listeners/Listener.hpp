@@ -10,7 +10,7 @@
  * upon some SDL_Event.
  */
 class Listener {
-public:
+ public:
     /**
      * Handles whatever SDL_Event it expects to get. The
      * implementation is heavily dependent on the specific instance.

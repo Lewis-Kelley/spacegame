@@ -10,10 +10,11 @@
  * Event dealing with moving units.
  */
 class StopMoveEvent : public Event {
-private:
+ private:
     Direction dir;
-public:
-    StopMoveEvent(Direction dir);
+
+ public:
+    explicit StopMoveEvent(Direction dir);
     virtual Event_Type get_type();
 
     /**

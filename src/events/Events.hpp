@@ -25,6 +25,6 @@ namespace events {
 
     template <std::map<SDL_Keycode, Event *(*)()> *keymap>
     Event *handle_key(SDL_Event *sdl_event);
-}
+}  // namespace events
 
 #endif /* EVENTS_H */

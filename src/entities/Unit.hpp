@@ -2,6 +2,7 @@
 #define UNIT_H
 
 #include <string>
+#include <utility>
 
 #include "../drawables/Drawable.hpp"
 #include "Entity.hpp"
@@ -16,14 +17,15 @@ class TileMap;
  * An entity that has stats and can be attacked
  */
 class Unit : public Entity {
-private:
+ private:
     std::string team_name;
-public:
-    Unit(TileMap *tilemap, short row, short col);
-    Unit(TileMap *tilemap, short row, short col, TileDrawable *img);
-    Unit(double tile_width, TileMap *tilemap, short row, short col,
+
+ public:
+    Unit(TileMap *tilemap, int16_t row, int16_t col);
+    Unit(TileMap *tilemap, int16_t row, int16_t col, TileDrawable *img);
+    Unit(double tile_width, TileMap *tilemap, int16_t row, int16_t col,
          Drawable *img);
-    Unit(Tile *tile);
+    explicit Unit(Tile *tile);
     Unit(Tile *tile, TileDrawable *img);
 
     /**
@@ -32,58 +34,58 @@ public:
      * @return The health of the hull of this unit (a.k.a. max energy
      * allocation)
      */
-    virtual short get_hull_health() = 0;
+    virtual int16_t get_hull_health() = 0;
 
     /**
      * @return The health of the shield of this unit. (a.k.a. max
      * energy allocation)
      */
-    virtual short get_shield_health() = 0;
+    virtual int16_t get_shield_health() = 0;
 
     /**
      * @return The health of the engine of this unit. (a.k.a. max
      * energy allocation)
      */
-    virtual short get_engine_health() = 0;
+    virtual int16_t get_engine_health() = 0;
 
     /**
      * @return The health of the weapon of this unit. (a.k.a. max
      * energy allocation)
      */
-    virtual short get_weapon_health() = 0;
+    virtual int16_t get_weapon_health() = 0;
 
     /**
      * @return The total available power for this unit, allocated or
      * not.
      */
-    virtual short get_total_power() = 0;
+    virtual int16_t get_total_power() = 0;
 
     /**
      * @return The power currently allocated to the shield.
      */
-    virtual short get_shield_power() = 0;
+    virtual int16_t get_shield_power() = 0;
 
     /**
      * @return The power currently allocated to the engine.
      */
-    virtual short get_engine_power() = 0;
+    virtual int16_t get_engine_power() = 0;
 
     /**
      * @return The power currently allocated to the weapon.
      */
-    virtual short get_weapon_power() = 0;
+    virtual int16_t get_weapon_power() = 0;
 
     /**
      * @return The number of unobstructed tiles this unit can move
      * before any reductions.
      */
-    virtual short get_move_range() = 0;
+    virtual int16_t get_move_range() = 0;
 
     /**
      * @return A pair of radii from the current Unit, where the first
      * value is the minimum radius and the second the maximum radius.
      */
-    virtual std::pair<short, short> get_attack_range() = 0;
+    virtual std::pair<int16_t, int16_t> get_attack_range() = 0;
 
     /**
      * Accepts an attack targeted at this unit and handles it in
@@ -92,7 +94,7 @@ public:
     virtual void handle_attack(Attack *att) = 0;
 
     virtual bool stops_ent(Entity *other);
-    virtual bool blocks_ent(Entity *other) { return true; };
+    virtual bool blocks_ent(Entity *other) { return true; }
 
     /**
      * Sets the team name for this Unit.

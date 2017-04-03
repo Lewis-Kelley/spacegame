@@ -9,7 +9,7 @@
  * @param col The column this TileDrawable will draw in.
  */
 TileDrawable::TileDrawable(double tile_width, Drawable *inner,
-                           short row, short col)
+                           uint16_t row, uint16_t col)
     : DrawableDecorator(inner), tile_width(tile_width) {
     DrawableDecorator::set_draw_x(col * tile_width);
     DrawableDecorator::set_draw_y(row * tile_width);
@@ -46,7 +46,6 @@ void TileDrawable::update(double delta)
  */
 void TileDrawable::start_tile_move(double speed, int num_tiles, Direction dir)
 {
-    double base_goal;
     double *rem_goal;
     double *rem_other;
     double *d_goal;
@@ -54,13 +53,11 @@ void TileDrawable::start_tile_move(double speed, int num_tiles, Direction dir)
     int sign = (dir == EAST || dir == SOUTH ? 1 : -1);
 
     if (dir == EAST || dir == WEST) {
-        base_goal = get_draw_x();
         rem_goal = &rem_x;
         rem_other = &rem_y;
         d_goal = &curr_movement.dx;
         d_other = &curr_movement.dy;
     } else {
-        base_goal = get_draw_y();
         rem_goal = &rem_y;
         rem_other = &rem_x;
         d_goal = &curr_movement.dy;
@@ -72,9 +69,6 @@ void TileDrawable::start_tile_move(double speed, int num_tiles, Direction dir)
         throw ex;
     }
 
-    if (NEAR_ZERO(*d_goal)) {
-        *rem_goal = base_goal;
-    }
     *rem_goal = sign * (num_tiles != -1 ? num_tiles : MAX_TILES) * tile_width;
     *rem_other = 0;
 
