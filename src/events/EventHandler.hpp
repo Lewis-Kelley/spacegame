@@ -3,24 +3,30 @@
 
 #include <SDL2/SDL.h>
 #include <map>
-#include <vector>
 #include <stdexcept>
+#include <typeinfo>
+#include <typeindex>
+#include <vector>
 
 #include "Event.hpp"
 #include "../listeners/Listener.hpp"
 
 class EventHandler {
  public:
-    typedef std::map<Event::Event_Type, std::vector<Listener *>*> listener_map;
+    typedef std::map<std::type_index, std::vector<Listener *>*> listener_map;
 
  private:
     static EventHandler *self;
     listener_map *listeners;
+    bool given_map;
 
-    EventHandler() : listeners() { }
+    EventHandler() : listeners()
+    {
+        listeners = new listener_map(); given_map = false;
+    }
 
  protected:
-    EventHandler(listener_map *map) : listeners(map) { }
+    EventHandler(listener_map *map) : listeners(map) { given_map = true; }
 
  public:
     class InvalidListenerException : public std::exception {
@@ -44,9 +50,11 @@ class EventHandler {
     static EventHandler *get_instance();
     static void reset();
 
+    ~EventHandler();
+
     void handle_event(Event *event) const;
-    void add_listener(Event::Event_Type type, Listener *obs);
-    void remove_listener(Event::Event_Type type, Listener *obs);
+    void add_listener(Event *sample_event, Listener *obs);
+    void remove_listener(Event *sample_event, Listener *obs);
 };
 
 #endif

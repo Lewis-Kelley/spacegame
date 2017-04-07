@@ -5,9 +5,6 @@
 
 #include "../src/events/Event.hpp"
 
-class MockEvent : public Event {
- public:
-    MOCK_METHOD0(get_type, Event_Type());
-};
+class MockEvent : public Event { };
 
 #endif /* MOCKEVENT_H */

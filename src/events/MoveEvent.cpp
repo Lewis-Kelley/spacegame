@@ -9,8 +9,3 @@ MoveEvent::MoveEvent(Direction dir)
 {
     this->dir = dir;
 }
-
-Event::Event_Type MoveEvent::get_type()
-{
-    return START_UNIT_MOVE;
-}

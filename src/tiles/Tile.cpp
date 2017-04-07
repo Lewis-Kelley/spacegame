@@ -7,7 +7,8 @@
  * @param col The column this Tile occupies
  */
 Tile::Tile(uint16_t row, uint16_t col)
-    : color((SDL_Color){0, 255, 255, 255}),
+    : select_listener(this), deselect_listener(this),
+      color((SDL_Color){0, 255, 255, 255}),
       rect((SDL_Rect){col * gamestate::tile_size,
                   row * gamestate::tile_size,
                   gamestate::tile_size, gamestate::tile_size}, &color),
@@ -19,6 +20,13 @@ Tile::Tile(uint16_t row, uint16_t col)
     }
 
     in_range = false;
+
+    auto handler = EventHandler::get_instance();
+
+    SelectUnitEvent select_event;
+    DeselectUnitEvent deselect_event;
+    handler->add_listener(&select_event, &select_listener);
+    handler->add_listener(&deselect_event, &deselect_listener);
 }
 
 /**
@@ -136,38 +144,25 @@ bool Tile::accepts_entity(Entity *ent)
     return in_range && !stops_entity(ent);
 }
 
-void Tile::handle_select_unit_event(SelectUnitEvent *event)
+void Tile::SelectUnitListener::catch_event(Event *event)
 {
-    Unit *unit = event->get_selected();
-    for (int i = 0; i < static_cast<int>(occ_ents.size()); i++) {
-        if (occ_ents.at(i) == unit) {
+    auto select_event = dynamic_cast<SelectUnitEvent *>(event);
+
+    Unit *unit = select_event->get_selected();
+    for (int i = 0; i < static_cast<int>(outer->occ_ents.size()); i++) {
+        if (outer->occ_ents.at(i) == unit) {
             // The 1+ is for the current Tile since it doesn't take any
             // movement.
-            define_range(unit, 1 + unit->get_move_range());
+            outer->define_range(unit, 1 + unit->get_move_range());
             return;
         }
     }
 }
 
-void Tile::handle_deselect_unit_event(DeselectUnitEvent *event)
+void Tile::DeselectUnitListener::catch_event(Event *)
 {
-    in_range = false;
-    color.r = 0;
-}
-
-void Tile::catch_event(Event *event)
-{
-    switch (event->get_type()) {
-    case Event::SELECT_UNIT:
-        handle_select_unit_event(reinterpret_cast<SelectUnitEvent *>(event));
-        break;
-    case Event::DESELECT_UNIT:
-        handle_deselect_unit_event(reinterpret_cast<DeselectUnitEvent *>
-                                   (event));
-        break;
-    default:
-        break;
-    }
+    outer->in_range = false;
+    outer->color.r = 0;
 }
 
 /**

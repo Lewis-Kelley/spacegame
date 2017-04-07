@@ -8,7 +8,6 @@
  * doesn't contain the Unit's that will be affected.
  */
 class TriggerSwitchEvent : public Event {
-    Event_Type get_type() { return Event::TRIGGER_SWITCH; }
 };
 
 #endif /* TRIGGERSWITCHEVENT_H */

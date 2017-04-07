@@ -3,8 +3,12 @@
 void CameraListener::add_as_listener()
 {
     auto handler = EventHandler::get_instance();
-    handler->add_listener(Event::START_CAMERA_MOVE, this);
-    handler->add_listener(Event::STOP_CAMERA_MOVE, this);
+
+    CameraMoveEvent camera_event;
+    StopCameraMoveEvent stop_event;
+
+    handler->add_listener(&camera_event, &start_move_listener);
+    handler->add_listener(&stop_event, &end_move_listener);
 }
 
 /**
@@ -12,7 +16,8 @@ void CameraListener::add_as_listener()
  * update.
  */
 CameraListener::CameraListener()
-    : images(new std::vector<Drawable *>), camera_dir(NO_DIRECTION)
+    : start_move_listener(this), end_move_listener(this),
+      images(new std::vector<Drawable *>), camera_dir(NO_DIRECTION)
 {
     add_as_listener();
     given_images = false;
@@ -26,10 +31,18 @@ CameraListener::CameraListener()
  * appropriate.
  */
 CameraListener::CameraListener(std::vector<Drawable *> *images)
-    : images(images), camera_dir(NO_DIRECTION)
+    : start_move_listener(this), end_move_listener(this),
+      images(images), camera_dir(NO_DIRECTION)
 {
     add_as_listener();
     given_images = true;
+}
+
+CameraListener::~CameraListener()
+{
+    if (!given_images && images != NULL) {
+        delete images;
+    }
 }
 
 /**
@@ -38,19 +51,23 @@ CameraListener::CameraListener(std::vector<Drawable *> *images)
  *
  * @param event The CameraMoveEvent to handle.
  */
-void CameraListener::handle_camera_move_event(CameraMoveEvent *event)
+void CameraListener::StartMoveListener::catch_event(Event *event)
 {
-    Direction event_dir = event->get_dir();
+    auto start_event = dynamic_cast<CameraMoveEvent *>(event);
+
+    Direction event_dir = start_event->get_dir();
     MovementType type = is_horiz_dir(event_dir) ? CAMERA_X : CAMERA_Y;
 
     // Check if either the camera isn't moving OR that it wasn't
     // moving in the opposite direction to this new move
-    if (camera_dir == NO_DIRECTION
-        || (is_cardinal_dir(camera_dir) && event_dir != opp_dir(camera_dir))) {
-        camera_dir = merge_directions(camera_dir, event_dir);
+    if (outer->camera_dir == NO_DIRECTION
+        || (is_cardinal_dir(outer->camera_dir)
+            && event_dir != opp_dir(outer->camera_dir))) {
+        outer->camera_dir = merge_directions(outer->camera_dir, event_dir);
 
-        for (Drawable *image : *images) {
-            image->start_move(event->get_dx(), event->get_dy(), type);
+        for (Drawable *image : *outer->images) {
+            image->start_move(start_event->get_dx(), start_event->get_dy(),
+                              type);
         }
     }
 }
@@ -61,37 +78,27 @@ void CameraListener::handle_camera_move_event(CameraMoveEvent *event)
  *
  * @param event The StopCameraMoveEvent to handle.
  */
-void CameraListener::handle_camera_stop_move_event(StopCameraMoveEvent *event)
+void CameraListener::EndMoveListener::catch_event(Event *event)
 {
-    if (!has_direction(event->get_dir(), camera_dir)) {
+    auto stop_event = dynamic_cast<StopCameraMoveEvent *>(event);
+
+    if (!has_direction(stop_event->get_dir(), outer->camera_dir)) {
         return;
     }
 
     MovementType type;
 
-    if (has_direction(event->get_dir(), EAST)
-        || has_direction(event->get_dir(), WEST)) {
+    if (has_direction(stop_event->get_dir(), EAST)
+        || has_direction(stop_event->get_dir(), WEST)) {
         type = CAMERA_X;
     } else {
         type = CAMERA_Y;
     }
 
-    for (Drawable *image : *images) {
+    for (Drawable *image : *outer->images) {
         image->end_move(type);
     }
 
-    camera_dir = remove_direction(camera_dir, event->get_dir());
-}
-void CameraListener::catch_event(Event *event)
-{
-    switch (event->get_type()) {
-    case Event::START_CAMERA_MOVE:
-        handle_camera_move_event((CameraMoveEvent *)event);
-        break;
-    case Event::STOP_CAMERA_MOVE:
-        handle_camera_stop_move_event((StopCameraMoveEvent *)event);
-        break;
-    default:
-        break;
-    }
+    outer->camera_dir
+        = remove_direction(outer->camera_dir, stop_event->get_dir());
 }

@@ -12,6 +12,8 @@ class SelectUnitEvent : public Event {
     Unit *selected;
 
  public:
+    SelectUnitEvent() { }
+
     /**
      * Initialize a new SselectUnitEvent with the given Unit as the
      * one that has been selected.
@@ -19,7 +21,6 @@ class SelectUnitEvent : public Event {
      * @param selected The Unit that has been selected.
      */
     explicit SelectUnitEvent(Unit *selected) : selected(selected) { }
-    Event_Type get_type() { return SELECT_UNIT; }
 
     /**
      * @return The Unit that was selected.

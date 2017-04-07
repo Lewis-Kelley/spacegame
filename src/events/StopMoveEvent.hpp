@@ -14,8 +14,8 @@ class StopMoveEvent : public Event {
     Direction dir;
 
  public:
+    StopMoveEvent() { }
     explicit StopMoveEvent(Direction dir);
-    virtual Event_Type get_type();
 
     /**
      * @return The direction this StopMoveEvent corresponds to.

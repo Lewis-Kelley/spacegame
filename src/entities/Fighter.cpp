@@ -39,15 +39,11 @@ void Fighter::handle_attack(Attack *att)
     // TODO
 }
 
-void Fighter::catch_event(Event *event)
+void Fighter::catch_event(Event *)
 {
-    switch (event->get_type()) {
-    default:
-        break;
-    }
 }
 
-Attack *Fighter::make_attack(Unit *target)
+Attack *Fighter::make_attack(Unit *)
 {
     // TODO Implement
     return NULL;

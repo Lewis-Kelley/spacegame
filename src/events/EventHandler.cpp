@@ -20,6 +20,13 @@ void EventHandler::reset()
     self = new EventHandler();
 }
 
+EventHandler::~EventHandler()
+{
+    if (listeners != NULL && !given_map) {
+        delete listeners;
+    }
+}
+
 /**
  * Calls any listeners that are waiting for the passed event.
  *
@@ -31,8 +38,8 @@ void EventHandler::handle_event(Event *event) const
         throw InvalidEventException("Passed Event was NULL.\n");
     }
 
-    if (listeners->find(event->get_type()) != listeners->end()) {
-        for (Listener *listener : *listeners->at(event->get_type())) {
+    if (listeners->find(typeid(*event)) != listeners->end()) {
+        for (Listener *listener : *listeners->at(typeid(*event))) {
             listener->catch_event(event);
         }
     }
@@ -44,16 +51,22 @@ void EventHandler::handle_event(Event *event) const
  * @param type The type of the event this Listener should listen for.
  * @param obs The Listener to add to the observer list.
  */
-void EventHandler::add_listener(Event::Event_Type type, Listener *obs)
+void EventHandler::add_listener(Event *sample_event, Listener *obs)
 {
     if (obs == NULL) {
         throw InvalidListenerException("Attempting to add NULL Listener.\n");
     }
 
-    typedef std::pair<Event::Event_Type, std::vector<Listener *> *>
+    if (sample_event == NULL) {
+        throw InvalidEventException("Cannot listen for NULL Events.\n");
+    }
+
+    std::type_index type(typeid(*sample_event));
+
+    typedef std::pair<std::type_index, std::vector<Listener *> *>
         type_listeners_pair;
 
-    if (listeners->find(type) == listeners->end()) { // Key doesn't exist
+    if (listeners->find(type) == listeners->end()) {
         std::vector<Listener *> *vec = new std::vector<Listener *>();
         listeners->insert(type_listeners_pair(type, vec));
     }
@@ -68,13 +81,14 @@ void EventHandler::add_listener(Event::Event_Type type, Listener *obs)
  * @param type The type of Event from which to remove obs.
  * @param obs The Listener to remove.
  */
-void EventHandler::remove_listener(Event::Event_Type type, Listener *obs)
+void EventHandler::remove_listener(Event *sample_event, Listener *obs)
 {
     if (obs == NULL) {
         throw InvalidListenerException("Attempting to remove NULL Listener.\n");
     }
 
     std::vector<Listener *> *vec;
+    std::type_index type(typeid(*sample_event));
 
     if (listeners->find(type) == listeners->end()) { // Key doesn't exist
         throw InvalidListenerException("Listener not found in given type.\n");
@@ -89,5 +103,5 @@ void EventHandler::remove_listener(Event::Event_Type type, Listener *obs)
         }
     }
 
-        throw InvalidListenerException("Listener not found in given type.\n");
+    throw InvalidListenerException("Listener not found in given type.\n");
 }

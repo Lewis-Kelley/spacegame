@@ -14,8 +14,8 @@ class MoveEvent : public Event {
     Direction dir;
 
  public:
+    MoveEvent() { }
     explicit MoveEvent(Direction dir);
-    virtual Event_Type get_type();
 
     /**
      * @return The direction this MoveEvent corresponds to.

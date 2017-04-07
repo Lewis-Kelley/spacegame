@@ -4,12 +4,11 @@ QuitListener::QuitListener()
 {
     auto handler = EventHandler::get_instance();
 
-    handler->add_listener(Event::QUIT, this);
+    QuitEvent quit_event;
+    handler->add_listener(&quit_event, this);
 }
 
-void QuitListener::catch_event(Event *event)
+void QuitListener::catch_event(Event *)
 {
-    if (event->get_type() == Event::QUIT) {
-        gamestate::running = false;
-    }
+    gamestate::running = false;
 }

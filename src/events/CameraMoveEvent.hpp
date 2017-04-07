@@ -15,6 +15,8 @@ class CameraMoveEvent : public Event {
     Direction dir;
 
  public:
+    CameraMoveEvent() { }
+
     /**
      * Create a new CameraMoveEvent in the given Direction.
      *
@@ -30,9 +32,6 @@ class CameraMoveEvent : public Event {
      * @param dir The Direction this event is moving the camera.
      */
     CameraMoveEvent(double speed, Direction dir) : speed(speed), dir(dir) { }
-
-
-    virtual Event_Type get_type() { return START_CAMERA_MOVE; }
 
     /**
      * @return The Direction this camera movement corresponds to.

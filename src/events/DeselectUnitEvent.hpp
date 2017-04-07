@@ -12,6 +12,8 @@ class DeselectUnitEvent : public Event {
     Unit *deselected;
 
  public:
+    DeselectUnitEvent() { }
+
     /**
      * Initialize a new DeselectUnitEvent with the given Unit as the
      * one that has been deselected.
@@ -19,7 +21,6 @@ class DeselectUnitEvent : public Event {
      * @param deselected The Unit that has been deselected.
      */
     explicit DeselectUnitEvent(Unit *deselected) : deselected(deselected) { }
-    Event_Type get_type() { return DESELECT_UNIT; }
 
     /**
      * @return The Unit that was deselected.

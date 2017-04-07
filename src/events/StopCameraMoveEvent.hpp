@@ -12,13 +12,14 @@ class StopCameraMoveEvent : public Event {
     Direction dir;
 
  public:
+    StopCameraMoveEvent() { }
+
     /**
      * Create a new StopCameraMoveEvent in the given Direction.
      *
      * @param dir The Direction this event is moving the camera.
      */
     explicit StopCameraMoveEvent(Direction dir) { this->dir = dir; }
-    virtual Event_Type get_type() { return STOP_CAMERA_MOVE; }
 
     /**
      * @return The Direction of motion this event stops.

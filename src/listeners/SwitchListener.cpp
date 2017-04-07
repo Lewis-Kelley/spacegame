@@ -7,15 +7,13 @@
 SwitchListener::SwitchListener(std::queue<Unit *> *units) : units(units)
 {
     auto handler = EventHandler::get_instance();
-    handler->add_listener(Event::TRIGGER_SWITCH, this);
+
+    TriggerSwitchEvent switch_event;
+    handler->add_listener(&switch_event, this);
 }
 
-void SwitchListener::catch_event(Event *event)
+void SwitchListener::catch_event(Event *)
 {
-    if (event->get_type() != Event::TRIGGER_SWITCH) {
-        return;
-    }
-
     Unit *temp = units->front();
 
     if (!temp->can_stop()) {

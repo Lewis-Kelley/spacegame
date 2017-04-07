@@ -19,8 +19,28 @@
 /**
  * Represents a single tile on the game board.
  */
-class Tile : public Listener {
+class Tile {
  private:
+    class SelectUnitListener : public Listener {
+     private:
+        Tile *outer;
+
+     public:
+        SelectUnitListener(Tile *outer) : outer(outer) { }
+        virtual ~SelectUnitListener() { }
+        void catch_event(Event *);
+    } select_listener;
+
+    class DeselectUnitListener : public Listener {
+     private:
+        Tile *outer;
+
+     public:
+        DeselectUnitListener(Tile *outer) : outer(outer) { }
+        virtual ~DeselectUnitListener() { }
+        void catch_event(Event *);
+    } deselect_listener;
+
     SDL_Color color;
     Rectangle rect;
     uint16_t row;
@@ -29,8 +49,6 @@ class Tile : public Listener {
     std::vector<Entity *> occ_ents;  ///< The Entity's in this Tile
     bool in_range;
 
-    void handle_select_unit_event(SelectUnitEvent *event);
-    void handle_deselect_unit_event(DeselectUnitEvent *event);
     void define_range(Entity *ent, uint16_t move_range);
 
  public:
@@ -64,8 +82,6 @@ class Tile : public Listener {
      * @return The Rectangle held by this Tile.
      */
     Rectangle *get_rect() { return &rect; }
-
-    void catch_event(Event *event);
 };
 
 #endif /* TILE_H */

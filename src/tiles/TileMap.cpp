@@ -9,7 +9,6 @@
  */
 TileMap::TileMap(uint16_t width, uint16_t height)
 {
-    auto handler = EventHandler::get_instance();
     Tile *tile;
 
     this->width = width;
@@ -18,31 +17,23 @@ TileMap::TileMap(uint16_t width, uint16_t height)
 
     tile = new Tile(0, 0);
     set(tile, 0, 0);
-    handler->add_listener(Event::SELECT_UNIT, tile);
-    handler->add_listener(Event::DESELECT_UNIT, tile);
 
     for (uint16_t col = 1; col < width; col++) {
         tile = new Tile(0, col);
         set(tile, 0, col);
         tile->add_neighbor(WEST, at(0, col - 1));
-        handler->add_listener(Event::SELECT_UNIT, tile);
-        handler->add_listener(Event::DESELECT_UNIT, tile);
     }
 
     for (uint16_t row = 1; row < height; row++) {
         tile = new Tile(row, 0);
         set(tile, row, 0);
         tile->add_neighbor(NORTH, at(row - 1, 0));
-        handler->add_listener(Event::SELECT_UNIT, tile);
-        handler->add_listener(Event::DESELECT_UNIT, tile);
 
         for (uint16_t col = 1; col < width; col++) {
             tile = new Tile(row, col);
             set(tile, row, col);
             tile->add_neighbor(NORTH, at(row - 1, col));
             tile->add_neighbor(WEST, at(row, col - 1));
-            handler->add_listener(Event::SELECT_UNIT, tile);
-            handler->add_listener(Event::DESELECT_UNIT, tile);
         }
     }
 }

@@ -4,6 +4,7 @@
 #include "Listener.hpp"
 #include "../util/GameState.hpp"
 #include "../events/EventHandler.hpp"
+#include "../events/QuitEvent.hpp"
 
 /**
  * Catches a QUIT Event and quits the game.

@@ -15,21 +15,38 @@
  * Listener for camera events that updates all it's held images
  * accordingly.
  */
-class CameraListener : public Listener {
+class CameraListener {
  private:
+    class StartMoveListener : public Listener {
+     private:
+        CameraListener *outer;
+
+     public:
+        StartMoveListener(CameraListener *outer) : outer(outer) { }
+        virtual ~StartMoveListener() { }
+        void catch_event(Event *event);
+    } start_move_listener;
+
+    class EndMoveListener : public Listener {
+     private:
+        CameraListener *outer;
+
+     public:
+        EndMoveListener(CameraListener *outer) : outer(outer) { }
+        virtual ~EndMoveListener() { }
+        void catch_event(Event *event);
+    } end_move_listener;
+
     std::vector<Drawable *> *images;
     Direction camera_dir;
     bool given_images;
 
-    void handle_camera_move_event(CameraMoveEvent *event);
-    void handle_camera_stop_move_event(StopCameraMoveEvent *event);
     void add_as_listener();
 
  public:
     CameraListener();
     explicit CameraListener(std::vector<Drawable *> *images);
-    ~CameraListener() { if (!given_images) delete images; }
-    void catch_event(Event *event);
+    ~CameraListener();
 };
 
 #endif /* CAMERALISTENER_H */

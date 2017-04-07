@@ -9,8 +9,3 @@ StopMoveEvent::StopMoveEvent(Direction dir)
 {
     this->dir = dir;
 }
-
-Event::Event_Type StopMoveEvent::get_type()
-{
-    return END_UNIT_MOVE;
-}
