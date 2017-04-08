@@ -10,7 +10,6 @@
 #include "../drawables/Drawable.hpp"
 #include "../util/Direction.hpp"
 #include "../entities/Entity.hpp"
-#include "../listeners/Listener.hpp"
 #include "../events/Event.hpp"
 #include "../events/SelectUnitEvent.hpp"
 #include "../events/DeselectUnitEvent.hpp"
@@ -21,26 +20,6 @@
  */
 class Tile {
  private:
-    class SelectUnitListener : public Listener {
-     private:
-        Tile *outer;
-
-     public:
-        SelectUnitListener(Tile *outer) : outer(outer) { }
-        virtual ~SelectUnitListener() { }
-        void catch_event(Event *);
-    } select_listener;
-
-    class DeselectUnitListener : public Listener {
-     private:
-        Tile *outer;
-
-     public:
-        DeselectUnitListener(Tile *outer) : outer(outer) { }
-        virtual ~DeselectUnitListener() { }
-        void catch_event(Event *);
-    } deselect_listener;
-
     SDL_Color color;
     Rectangle rect;
     uint16_t row;
@@ -62,6 +41,9 @@ class Tile {
     bool move_entity(Entity *ent, Direction dir);
     bool accepts_entity(Entity *ent);
     bool stops_entity(Entity *ent);
+
+    void handle_select(Event *event);
+    void handle_deselect(Event *event);
 
     /**
      * @return The vector of all Entity's occupying this Tile.

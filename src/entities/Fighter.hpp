@@ -7,7 +7,6 @@
 #include "../events/StopMoveEvent.hpp"
 #include "../events/MoveEvent.hpp"
 #include "Unit.hpp"
-#include "../listeners/Listener.hpp"
 #include "../drawables/Sprite.hpp"
 #include "../drawables/TileDrawable.hpp"
 #include "../events/CameraMoveEvent.hpp"
@@ -18,7 +17,7 @@
 /**
  * The standard Fighter Unit that will be the primary game board Unit.
  */
-class Fighter : public Unit, public Listener {
+class Fighter : public Unit {
  private:
     int16_t hull_health;
     int16_t shield_health;
@@ -48,7 +47,6 @@ class Fighter : public Unit, public Listener {
     int16_t get_move_range();
     std::pair<int16_t, int16_t> get_attack_range();
     void handle_attack(Attack *att);
-    void catch_event(Event *event);
 };
 
 #endif /* FIGHTER_H */

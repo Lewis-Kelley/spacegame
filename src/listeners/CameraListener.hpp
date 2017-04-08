@@ -3,7 +3,6 @@
 
 #include <vector>
 
-#include "Listener.hpp"
 #include "../events/Event.hpp"
 #include "../drawables/Drawable.hpp"
 #include "../util/Direction.hpp"
@@ -17,26 +16,6 @@
  */
 class CameraListener {
  private:
-    class StartMoveListener : public Listener {
-     private:
-        CameraListener *outer;
-
-     public:
-        StartMoveListener(CameraListener *outer) : outer(outer) { }
-        virtual ~StartMoveListener() { }
-        void catch_event(Event *event);
-    } start_move_listener;
-
-    class EndMoveListener : public Listener {
-     private:
-        CameraListener *outer;
-
-     public:
-        EndMoveListener(CameraListener *outer) : outer(outer) { }
-        virtual ~EndMoveListener() { }
-        void catch_event(Event *event);
-    } end_move_listener;
-
     std::vector<Drawable *> *images;
     Direction camera_dir;
     bool given_images;
@@ -47,6 +26,8 @@ class CameraListener {
     CameraListener();
     explicit CameraListener(std::vector<Drawable *> *images);
     ~CameraListener();
+    void handle_start_move(Event *event);
+    void handle_stop_move(Event *event);
 };
 
 #endif /* CAMERALISTENER_H */

@@ -7,8 +7,10 @@ void CameraListener::add_as_listener()
     CameraMoveEvent camera_event;
     StopCameraMoveEvent stop_event;
 
-    handler->add_listener(&camera_event, &start_move_listener);
-    handler->add_listener(&stop_event, &end_move_listener);
+    handler->add_listener(&camera_event, [this](Event *event)
+                          { handle_start_move(event); });
+    handler->add_listener(&stop_event, [this](Event *event)
+                          { handle_stop_move(event); });
 }
 
 /**
@@ -16,8 +18,7 @@ void CameraListener::add_as_listener()
  * update.
  */
 CameraListener::CameraListener()
-    : start_move_listener(this), end_move_listener(this),
-      images(new std::vector<Drawable *>), camera_dir(NO_DIRECTION)
+    : images(new std::vector<Drawable *>), camera_dir(NO_DIRECTION)
 {
     add_as_listener();
     given_images = false;
@@ -31,8 +32,7 @@ CameraListener::CameraListener()
  * appropriate.
  */
 CameraListener::CameraListener(std::vector<Drawable *> *images)
-    : start_move_listener(this), end_move_listener(this),
-      images(images), camera_dir(NO_DIRECTION)
+    : images(images), camera_dir(NO_DIRECTION)
 {
     add_as_listener();
     given_images = true;
@@ -51,7 +51,7 @@ CameraListener::~CameraListener()
  *
  * @param event The CameraMoveEvent to handle.
  */
-void CameraListener::StartMoveListener::catch_event(Event *event)
+void CameraListener::handle_start_move(Event *event)
 {
     auto start_event = dynamic_cast<CameraMoveEvent *>(event);
 
@@ -60,12 +60,12 @@ void CameraListener::StartMoveListener::catch_event(Event *event)
 
     // Check if either the camera isn't moving OR that it wasn't
     // moving in the opposite direction to this new move
-    if (outer->camera_dir == NO_DIRECTION
-        || (is_cardinal_dir(outer->camera_dir)
-            && event_dir != opp_dir(outer->camera_dir))) {
-        outer->camera_dir = merge_directions(outer->camera_dir, event_dir);
+    if (camera_dir == NO_DIRECTION
+        || (is_cardinal_dir(camera_dir)
+            && event_dir != opp_dir(camera_dir))) {
+        camera_dir = merge_directions(camera_dir, event_dir);
 
-        for (Drawable *image : *outer->images) {
+        for (Drawable *image : *images) {
             image->start_move(start_event->get_dx(), start_event->get_dy(),
                               type);
         }
@@ -78,11 +78,11 @@ void CameraListener::StartMoveListener::catch_event(Event *event)
  *
  * @param event The StopCameraMoveEvent to handle.
  */
-void CameraListener::EndMoveListener::catch_event(Event *event)
+void CameraListener::handle_stop_move(Event *event)
 {
     auto stop_event = dynamic_cast<StopCameraMoveEvent *>(event);
 
-    if (!has_direction(stop_event->get_dir(), outer->camera_dir)) {
+    if (!has_direction(stop_event->get_dir(), camera_dir)) {
         return;
     }
 
@@ -95,10 +95,10 @@ void CameraListener::EndMoveListener::catch_event(Event *event)
         type = CAMERA_Y;
     }
 
-    for (Drawable *image : *outer->images) {
+    for (Drawable *image : *images) {
         image->end_move(type);
     }
 
-    outer->camera_dir
-        = remove_direction(outer->camera_dir, stop_event->get_dir());
+    camera_dir
+        = remove_direction(camera_dir, stop_event->get_dir());
 }

@@ -4,7 +4,6 @@
 #include <queue>
 
 #include "../entities/Unit.hpp"
-#include "Listener.hpp"
 #include "../events/Events.hpp"
 #include "../events/DeselectUnitEvent.hpp"
 #include "../events/SelectUnitEvent.hpp"
@@ -13,13 +12,13 @@
 /**
  * Catches a SWITCH Event and switches control to the next Unit.
  */
-class SwitchListener : public Listener {
+class SwitchListener {
  private:
     std::queue<Unit *> *units;
 
  public:
     explicit SwitchListener(std::queue<Unit *> *units);
-    void catch_event(Event *event);
+    void handle_switch(Event *event);
 };
 
 #endif /* SWITCHLISTENER_H */

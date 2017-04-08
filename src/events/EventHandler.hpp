@@ -2,6 +2,7 @@
 #define EVENT_HANDLER_H
 
 #include <SDL2/SDL.h>
+#include <functional>
 #include <map>
 #include <stdexcept>
 #include <typeinfo>
@@ -9,24 +10,30 @@
 #include <vector>
 
 #include "Event.hpp"
-#include "../listeners/Listener.hpp"
 
 class EventHandler {
  public:
-    typedef std::map<std::type_index, std::vector<Listener *>*> listener_map;
+    typedef uint16_t listener_key_t;
+    typedef std::function<void(Event *)> listener_t;
+    typedef std::pair<listener_key_t,
+                      std::function<void(Event *)>> listener_pair_t;
+    typedef std::map<std::type_index,
+                     std::vector<listener_pair_t> *> listener_map_t;
 
  private:
     static EventHandler *self;
-    listener_map *listeners;
+    static listener_key_t next_listener_key;
+
+    listener_map_t *listeners;
     bool given_map;
 
     EventHandler() : listeners()
     {
-        listeners = new listener_map(); given_map = false;
+        listeners = new listener_map_t(); given_map = false;
     }
 
  protected:
-    EventHandler(listener_map *map) : listeners(map) { given_map = true; }
+    EventHandler(listener_map_t *map) : listeners(map) { given_map = true; }
 
  public:
     class InvalidListenerException : public std::exception {
@@ -53,8 +60,8 @@ class EventHandler {
     ~EventHandler();
 
     void handle_event(Event *event) const;
-    void add_listener(Event *sample_event, Listener *obs);
-    void remove_listener(Event *sample_event, Listener *obs);
+    listener_key_t add_listener(Event *sample_event, listener_t obs);
+    void remove_listener(listener_key_t obs);
 };
 
 #endif

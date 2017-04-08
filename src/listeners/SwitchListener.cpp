@@ -9,10 +9,11 @@ SwitchListener::SwitchListener(std::queue<Unit *> *units) : units(units)
     auto handler = EventHandler::get_instance();
 
     TriggerSwitchEvent switch_event;
-    handler->add_listener(&switch_event, this);
+    handler->add_listener(&switch_event, [this](Event *event)
+                          { handle_switch(event); });
 }
 
-void SwitchListener::catch_event(Event *)
+void SwitchListener::handle_switch(Event *)
 {
     Unit *temp = units->front();
 

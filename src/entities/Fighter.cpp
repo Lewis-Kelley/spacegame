@@ -39,10 +39,6 @@ void Fighter::handle_attack(Attack *att)
     // TODO
 }
 
-void Fighter::catch_event(Event *)
-{
-}
-
 Attack *Fighter::make_attack(Unit *)
 {
     // TODO Implement
