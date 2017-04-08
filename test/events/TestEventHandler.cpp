@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "../src/events/EventHandler.hpp"
+#include "../../src/events/EventHandler.hpp"
 #include "MockEvent.hpp"
 
 class ExposedEventHandler : public EventHandler {

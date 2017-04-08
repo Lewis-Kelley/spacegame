@@ -1,7 +1,7 @@
 #include <string>
 
 #include <gmock/gmock.h>
-#include "../src/drawables/Texture.hpp"
+#include "../../src/drawables/Texture.hpp"
 
 class MockTexture : public Texture {
  public:

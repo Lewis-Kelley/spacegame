@@ -1,5 +1,5 @@
 #include <gmock/gmock.h>
-#include "../src/drawables/Renderer.hpp"
+#include "../../src/drawables/Renderer.hpp"
 
 class MockRenderer : public Renderer {
  public:

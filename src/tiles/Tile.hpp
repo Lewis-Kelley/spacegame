@@ -31,7 +31,7 @@ class Tile {
     void define_range(Entity *ent, uint16_t move_range);
 
  public:
-    Tile(uint16_t row, uint16_t col);
+    Tile(GameState *state, uint16_t row, uint16_t col);
     virtual ~Tile() { }
     void set_neighbor(Direction dir, Tile *neighbor);
     void add_neighbor(Direction dir, Tile *neighbor);

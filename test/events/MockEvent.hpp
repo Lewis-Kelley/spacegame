@@ -3,7 +3,7 @@
 
 #include <gmock/gmock.h>
 
-#include "../src/events/Event.hpp"
+#include "../../src/events/Event.hpp"
 
 class MockEvent : public Event { };
 

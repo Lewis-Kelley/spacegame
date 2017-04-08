@@ -6,12 +6,21 @@
 #include "Window.hpp"
 #include "../drawables/Drawable.hpp"
 
-namespace gamestate {
-    extern std::vector<Drawable *> drawings;
-    extern int tile_size;
-    extern bool running;
+class GameState {
+ private:
+    static GameState *self;
+    bool running;
 
-    void draw_all(double delta);
-}
+ public:
+    static GameState *get_instance();
+
+    std::vector<Drawable *> drawings;
+    int tile_size;
+
+    virtual bool get_is_running() { return running; }
+    virtual void set_is_running(bool running) { this->running = running; }
+
+    virtual void draw_all(double delta);
+};
 
 #endif /* GAMESTATE_H */

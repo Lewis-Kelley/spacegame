@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../src/drawables/Sprite.hpp"
+#include "../../src/drawables/Sprite.hpp"
 #include "TestDrawable.hpp"
 #include "MockRenderer.hpp"
 #include "MockTexture.hpp"

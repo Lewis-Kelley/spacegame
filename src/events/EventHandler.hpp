@@ -57,11 +57,11 @@ class EventHandler {
     static EventHandler *get_instance();
     static void reset();
 
-    ~EventHandler();
+    virtual ~EventHandler();
 
-    void handle_event(Event *event) const;
-    listener_key_t add_listener(Event *sample_event, listener_t obs);
-    void remove_listener(listener_key_t obs);
+    virtual void handle_event(Event *event) const;
+    virtual listener_key_t add_listener(Event *sample_event, listener_t obs);
+    virtual void remove_listener(listener_key_t obs);
 };
 
 #endif

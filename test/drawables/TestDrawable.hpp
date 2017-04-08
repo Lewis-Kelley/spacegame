@@ -3,7 +3,7 @@
 
 #include <gtest/gtest.h>
 
-#include "../src/drawables/Drawable.hpp"
+#include "../../src/drawables/Drawable.hpp"
 
 void ASSERT_DIMENSIONS(Drawable *tested, double x, double y, double w, double h)
 {

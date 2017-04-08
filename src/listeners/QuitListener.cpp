@@ -1,9 +1,7 @@
 #include "QuitListener.hpp"
 
-QuitListener::QuitListener()
+void QuitListener::add_as_listener(EventHandler *handler)
 {
-    auto handler = EventHandler::get_instance();
-
     QuitEvent quit_event;
     handler->add_listener(&quit_event, [this](Event *event)
                           { handle_quit(event); });
@@ -11,5 +9,5 @@ QuitListener::QuitListener()
 
 void QuitListener::handle_quit(Event *)
 {
-    gamestate::running = false;
+    state->set_is_running(false);
 }

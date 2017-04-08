@@ -9,9 +9,13 @@
  * Catches a QUIT Event and quits the game.
  */
 class QuitListener {
+ private:
+    GameState *state;
+
  public:
-    QuitListener();
-    void handle_quit(Event *event);
+    QuitListener(GameState *state) : state(state) { }
+    virtual void add_as_listener(EventHandler *handler);
+    virtual void handle_quit(Event *event);
 };
 
 #endif /* QUIT_LISTENER_H */

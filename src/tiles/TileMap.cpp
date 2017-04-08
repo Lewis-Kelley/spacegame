@@ -9,28 +9,29 @@
  */
 TileMap::TileMap(uint16_t width, uint16_t height)
 {
+    GameState *state = GameState::get_instance();
     Tile *tile;
 
     this->width = width;
     this->height = height;
     tiles = new Tile *[width * height]();
 
-    tile = new Tile(0, 0);
+    tile = new Tile(state, 0, 0);
     set(tile, 0, 0);
 
     for (uint16_t col = 1; col < width; col++) {
-        tile = new Tile(0, col);
+        tile = new Tile(state, 0, col);
         set(tile, 0, col);
         tile->add_neighbor(WEST, at(0, col - 1));
     }
 
     for (uint16_t row = 1; row < height; row++) {
-        tile = new Tile(row, 0);
+        tile = new Tile(state, row, 0);
         set(tile, row, 0);
         tile->add_neighbor(NORTH, at(row - 1, 0));
 
         for (uint16_t col = 1; col < width; col++) {
-            tile = new Tile(row, col);
+            tile = new Tile(state, row, col);
             set(tile, row, col);
             tile->add_neighbor(NORTH, at(row - 1, col));
             tile->add_neighbor(WEST, at(row, col - 1));

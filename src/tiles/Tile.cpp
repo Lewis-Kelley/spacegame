@@ -6,11 +6,11 @@
  * @param row The row this Tile occupies
  * @param col The column this Tile occupies
  */
-Tile::Tile(uint16_t row, uint16_t col)
+Tile::Tile(GameState *state, uint16_t row, uint16_t col)
     : color((SDL_Color){0, 255, 255, 255}),
-      rect((SDL_Rect){col * gamestate::tile_size,
-                  row * gamestate::tile_size,
-                  gamestate::tile_size, gamestate::tile_size}, &color),
+      rect((SDL_Rect){col * state->tile_size,
+                  row * state->tile_size,
+                  state->tile_size, state->tile_size}, &color),
       row(row),
       col(col)
 {
