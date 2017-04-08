@@ -54,7 +54,6 @@ add_test(NAME sprite_test COMMAND TestSprite)
 
 add_executable(TestEventHandler "test/events/TestEventHandler.cpp"
   "src/events/EventHandler.cpp")
-
 target_link_libraries(TestEventHandler gtest gtest_main gmock gmock_main "-pthread")
 add_test(NAME test_event_handler COMMAND TestEventHandler)
 
@@ -63,6 +62,10 @@ add_executable(TestQuitListener "test/listeners/TestQuitListener.cpp"
   "src/util/GameState.cpp" "src/util/Window.cpp" "src/drawables/Renderer.cpp"
   "src/drawables/Texture.cpp")
 target_link_libraries(TestQuitListener ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
-
 target_link_libraries(TestQuitListener gtest gtest_main gmock gmock_main "-pthread")
 add_test(NAME test_quit_listener COMMAND TestQuitListener)
+
+add_executable(TestDirection "test/util/TestDirection.cpp"
+  "src/util/Direction.cpp")
+target_link_libraries(TestDirection gtest gtest_main gmock gmock_main "-pthread")
+add_test(NAME test_direction COMMAND TestDirection)

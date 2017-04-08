@@ -24,6 +24,16 @@ int index_value(Direction dir)
         return 2;
     case SOUTH:
         return 3;
+    case NORTH_EAST:
+        return 4;
+    case NORTH_WEST:
+        return 5;
+    case SOUTH_WEST:
+        return 6;
+    case SOUTH_EAST:
+        return 7;
+    case NO_DIRECTION:
+        return 8;
     default:
         return -1;
     }
@@ -64,9 +74,10 @@ Direction merge_directions(Direction dirA, Direction dirB)
 {
     Direction res = NO_DIRECTION;
 
-    for (Direction i = EAST; i <= SOUTH; i = (Direction)(i << 1)) {
-        if ((dirA & i) != 0 && (dirB & opp_dir(i)) != 0) {
-            res = (Direction)(res + i);
+    for (Direction i = EAST; i <= SOUTH; i = static_cast<Direction>(i << 1)) {
+        if (((dirA & i) != 0 && (dirB & opp_dir(i)) == 0)
+            || ((dirB & i) != 0 && (dirA & opp_dir(i)) == 0)) {
+            res = static_cast<Direction>(res + i);
         }
     }
 

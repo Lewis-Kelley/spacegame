@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 
+#define NUM_DIRS 9
+
 enum Direction {
     NO_DIRECTION = 0,
     EAST = 1,
