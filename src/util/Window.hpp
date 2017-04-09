@@ -44,7 +44,7 @@ class Window {
     virtual ~Window();
 
     SDL_Window *get_wind() { return wind; }
-    Renderer *get_rend() { return rend; }
+    virtual Renderer *get_rend() { return rend; }
 
     uint16_t get_width() { return width; }
     uint16_t get_height() { return height; }

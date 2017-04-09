@@ -24,7 +24,7 @@ class Drawable {
     typedef std::pair<MovementType, Movement *> movement_pair;
 
  public:
-    virtual ~Drawable() {}
+    virtual ~Drawable() { }
 
     /**
      * @return The x coordinate of where the image is.

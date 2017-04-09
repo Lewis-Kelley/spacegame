@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include "../util/MockWindow.hpp"
 #include "../util/MockGameState.hpp"
 #include "../../src/listeners/QuitListener.hpp"
 #include "../events/MockEventHandler.hpp"
@@ -19,7 +20,8 @@ bool run_callback(std::function<void(Event *)> callback)
 TEST(AddAsListener, AddToHandlerMap)
 {
     MockEventHandler handler;
-    MockGameState state;
+    MockWindow wind;
+    MockGameState state(&wind);
 
     PMockQuitListener quit_listener(&state);
 
@@ -31,7 +33,8 @@ TEST(AddAsListener, AddToHandlerMap)
 
 TEST(HandleQuit, RunningFalse)
 {
-    MockGameState state;
+    MockWindow wind;
+    MockGameState state(&wind);
     QuitListener quit_listener(&state);
 
     EXPECT_CALL(state, set_is_running(false));

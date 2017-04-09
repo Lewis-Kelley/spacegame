@@ -9,10 +9,12 @@
 class GameState {
  private:
     static GameState *self;
+
+    Window *wind;
     bool running;
 
  protected:
-    GameState();
+    GameState(Window *wind);
 
  public:
     static GameState *get_instance();

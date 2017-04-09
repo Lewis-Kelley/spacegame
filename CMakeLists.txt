@@ -75,3 +75,11 @@ add_executable(TestWindow "test/util/TestWindow.cpp"
 target_link_libraries(TestWindow gtest gtest_main gmock gmock_main "-pthread")
 target_link_libraries(TestWindow ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
 add_test(NAME test_window COMMAND TestWindow)
+
+add_executable(TestGameState "test/util/TestGameState.cpp"
+  "src/util/GameState.cpp" "src/drawables/Renderer.cpp"
+  "src/drawables/Texture.cpp" "src/util/Window.cpp"
+  "src/drawables/Drawable.cpp")
+target_link_libraries(TestGameState gtest gtest_main gmock gmock_main "-pthread")
+target_link_libraries(TestGameState ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
+add_test(NAME test_game_state COMMAND TestGameState)

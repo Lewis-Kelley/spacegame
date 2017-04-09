@@ -7,6 +7,8 @@
 
 class MockGameState : public GameState {
 public:
+    MockGameState(Window *wind) : GameState(wind) { }
+
     MOCK_METHOD1(draw_all, void(double));
     MOCK_METHOD0(get_is_running, bool());
     MOCK_METHOD1(set_is_running, void(bool));
