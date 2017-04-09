@@ -1,5 +1,17 @@
 #include "Renderer.hpp"
 
+Renderer::Renderer(SDL_Window *wind)
+{
+    rend = SDL_CreateRenderer(wind, -1, SDL_RENDERER_ACCELERATED
+                              | SDL_RENDERER_PRESENTVSYNC);
+
+    if (rend == NULL) {
+        throw SDL_GetError();
+    }
+
+    SDL_SetRenderDrawColor(rend, 0x00, 0x00, 0x00, 0xFF);
+}
+
 Renderer::~Renderer()
 {
     SDL_DestroyRenderer(rend);

@@ -14,13 +14,12 @@ class Renderer {
  private:
     SDL_Renderer *rend;
 
+ protected:
+    Renderer() : rend(NULL) { }
+
  public:
-    /**
-     * Wrap a new Renderer around the passsed SDL_Renderer.
-     *
-     * @param rend The SDL_Renderer to be used by this Renderer.
-     */
-    explicit Renderer(SDL_Renderer *rend) : rend(rend) { }
+    explicit Renderer(SDL_Window *wind);
+
     virtual ~Renderer();
 
     /**

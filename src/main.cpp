@@ -46,6 +46,7 @@ Fighter *init_fighter(TileMap *tile_map, int row, int col, Texture *tex,
 int main(int argc, char *argv[])
 {
     Window *wind = Window::get_instance();
+    wind->init();
 
     std::queue<Unit *> units;
     MovementListener movProx;

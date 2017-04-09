@@ -2,6 +2,15 @@
 
 Window *Window::self = nullptr;
 
+Window *Window::get_instance()
+{
+    if (self == nullptr) {
+        self = new Window(INIT_WIDTH, INIT_HEIGHT);
+    }
+
+    return self;
+}
+
 /**
  * Initializes SDL using the default values for width and height.
  *
@@ -9,59 +18,44 @@ Window *Window::self = nullptr;
  */
 void Window::init()
 {
-    init(INIT_WIDTH, INIT_HEIGHT);
+    init_sdl_video();
+    init_sdl_image();
+
+    wind = create_window();
+    rend = create_renderer();
 }
 
-/**
- * Initializes SDL using the passed values for width and height.
- *
- * @param width The initial width of the Window.
- * @param height The initial height of the Window.
- * @return true if success, false if there was an error.
- */
-void Window::init(uint16_t width, uint16_t height)
+void Window::init_sdl_video()
 {
-    if (self != nullptr) {
-        delete self;
-    }
-
-    self = new Window();
-
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         throw SDL_GetError();
     }
+}
 
-    self->wind = SDL_CreateWindow("spacegame",
-                            SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                            width, height, SDL_WINDOW_SHOWN);
-    if (self->wind == nullptr) {
-        throw SDL_GetError();
-    }
-
-    SDL_Renderer *sdl_rend
-        = SDL_CreateRenderer(self->wind, -1, SDL_RENDERER_ACCELERATED
-                             | SDL_RENDERER_PRESENTVSYNC);
-
-    if (sdl_rend == NULL) {
-        throw SDL_GetError();
-    }
-
-    // Set default color
-    SDL_SetRenderDrawColor(sdl_rend, 0x00, 0x00, 0x00, 0xFF);
+void Window::init_sdl_image()
+{
     if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
         throw SDL_GetError();
     }
-
-    self->rend = new Renderer(sdl_rend);
 }
 
-Window *Window::get_instance()
+SDL_Window *Window::create_window()
 {
-    if (self == nullptr) {
-        init();
+    SDL_Window *window;
+    window
+        = SDL_CreateWindow("spacegame", SDL_WINDOWPOS_UNDEFINED,
+                           SDL_WINDOWPOS_UNDEFINED, width, height,
+                           SDL_WINDOW_SHOWN);
+    if (window == nullptr) {
+        throw SDL_GetError();
     }
 
-    return self;
+    return window;
+}
+
+Renderer *Window::create_renderer()
+{
+    return new Renderer(wind);
 }
 
 /**
@@ -101,5 +95,9 @@ void Window::present_render()
  */
 double Window::get_delta()
 {
+    if (prev_time == -1) {
+        throw NoPreviousTimeException();
+    }
+
     return SDL_GetTicks() - prev_time;
 }

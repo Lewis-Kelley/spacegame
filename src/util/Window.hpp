@@ -12,22 +12,36 @@
 
 class Window {
  private:
-    static Window *self;
-
     double prev_time;
     SDL_Window *wind;
     Renderer *rend;
     uint16_t width;
     uint16_t height;
 
-    Window() { }
+ protected:
+    static Window *self;
+
+    Window(uint16_t width, uint16_t height)
+        : prev_time(-1), wind(nullptr), rend(nullptr),
+          width(width), height(height) { }
+
+    virtual void init_sdl_video();
+    virtual void init_sdl_image();
+    virtual SDL_Window *create_window();
+    virtual Renderer *create_renderer();
 
  public:
-    static void init();
-    static void init(uint16_t width, uint16_t height);
-    static Window *get_instance();
+    class NoPreviousTimeException : public std::exception {
+        virtual const char* what() const throw()
+        {
+            return "Delta cannot be found without a previous render time.\n";
+        }
+    };
 
-    ~Window();
+    static Window *get_instance();
+    void init();
+
+    virtual ~Window();
 
     SDL_Window *get_wind() { return wind; }
     Renderer *get_rend() { return rend; }

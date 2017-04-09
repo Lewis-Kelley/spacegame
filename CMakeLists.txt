@@ -69,3 +69,9 @@ add_executable(TestDirection "test/util/TestDirection.cpp"
   "src/util/Direction.cpp")
 target_link_libraries(TestDirection gtest gtest_main gmock gmock_main "-pthread")
 add_test(NAME test_direction COMMAND TestDirection)
+
+add_executable(TestWindow "test/util/TestWindow.cpp"
+  "src/util/Window.cpp" "src/drawables/Renderer.cpp" "src/drawables/Texture.cpp")
+target_link_libraries(TestWindow gtest gtest_main gmock gmock_main "-pthread")
+target_link_libraries(TestWindow ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
+add_test(NAME test_window COMMAND TestWindow)

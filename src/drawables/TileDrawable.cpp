@@ -65,8 +65,7 @@ void TileDrawable::start_tile_move(double speed, int num_tiles, Direction dir)
     }
 
     if (!NEAR_ZERO(*d_other)) {
-        AlreadyMovingException ex;
-        throw ex;
+        throw AlreadyMovingException();
     }
 
     *rem_goal = sign * (num_tiles != -1 ? num_tiles : MAX_TILES) * tile_width;
