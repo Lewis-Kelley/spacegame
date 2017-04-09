@@ -56,7 +56,6 @@ void CameraListener::handle_start_move(Event *event)
     auto start_event = dynamic_cast<CameraMoveEvent *>(event);
 
     Direction event_dir = start_event->get_dir();
-    MovementType type = is_horiz_dir(event_dir) ? CAMERA_X : CAMERA_Y;
 
     // Check if either the camera isn't moving OR that it wasn't
     // moving in the opposite direction to this new move
@@ -67,7 +66,7 @@ void CameraListener::handle_start_move(Event *event)
 
         for (Drawable *image : *images) {
             image->start_move(start_event->get_dx(), start_event->get_dy(),
-                              type);
+                              CAMERA);
         }
     }
 }
@@ -82,23 +81,16 @@ void CameraListener::handle_stop_move(Event *event)
 {
     auto stop_event = dynamic_cast<StopCameraMoveEvent *>(event);
 
-    if (!has_direction(stop_event->get_dir(), camera_dir)) {
+    if (!has_direction(camera_dir, stop_event->get_dir())) {
         return;
     }
 
-    MovementType type;
-
-    if (has_direction(stop_event->get_dir(), EAST)
-        || has_direction(stop_event->get_dir(), WEST)) {
-        type = CAMERA_X;
-    } else {
-        type = CAMERA_Y;
-    }
-
     for (Drawable *image : *images) {
-        image->end_move(type);
+        image->end_move(CAMERA);
     }
 
     camera_dir
         = remove_direction(camera_dir, stop_event->get_dir());
+
+    handle_start_move(new CameraMoveEvent(camera_dir));
 }

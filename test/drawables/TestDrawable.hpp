@@ -89,7 +89,7 @@ void ASSERT_START_MOVE(Drawable *tested)
 
     time = 1.0;
 
-    tested->start_move(&move, CAMERA_X);
+    tested->start_move(&move, CAMERA);
 
     tested->update(time);
     dim.x += move.dx * time;

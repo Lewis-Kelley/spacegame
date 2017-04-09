@@ -2,6 +2,12 @@
 
 GameState *GameState::self = nullptr;
 
+GameState::GameState()
+{
+    running = false;
+    tile_size = 50;
+}
+
 GameState *GameState::get_instance()
 {
     if (self == nullptr) {

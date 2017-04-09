@@ -22,7 +22,6 @@ TileMap::TileMap(uint16_t width, uint16_t height)
     for (uint16_t col = 1; col < width; col++) {
         tile = new Tile(state, 0, col);
         set(tile, 0, col);
-        tile->add_neighbor(WEST, at(0, col - 1));
     }
 
     for (uint16_t row = 1; row < height; row++) {

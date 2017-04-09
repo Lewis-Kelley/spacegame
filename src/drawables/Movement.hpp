@@ -22,9 +22,8 @@ struct Movement {
  * Legal types of Movement's.
  */
 enum MovementType {
-    CAMERA_X = 1,
-    CAMERA_Y = 2,
-    MOVEMENT = 3
+    CAMERA,
+    MOVEMENT
 };
 
 #endif /* MOVEMENT_H */

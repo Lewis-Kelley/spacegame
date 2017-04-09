@@ -65,6 +65,7 @@ class Entity : public DrawableDecorator {
 
     virtual bool can_stop();
 };
+
 #include "../tiles/Tile.hpp"
 #include "Unit.hpp"
 

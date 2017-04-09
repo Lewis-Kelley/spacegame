@@ -24,7 +24,8 @@ Fighter::Fighter(TileMap *tilemap, short row, short col, TileDrawable *img)
  * be wrapped in a new TileDrawable object.
  */
 Fighter::Fighter(double tile_width, TileMap *tilemap, short row, short col,
-                 Drawable *img) : Unit(tile_width, tilemap, row, col, img) {}
+                 Drawable *img) : Unit(tile_width, tilemap, row, col, img)
+{}
 
 /**
  * Constructs a new Fighter by calling the Unit's constructor.

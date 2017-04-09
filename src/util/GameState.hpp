@@ -11,6 +11,9 @@ class GameState {
     static GameState *self;
     bool running;
 
+ protected:
+    GameState();
+
  public:
     static GameState *get_instance();
 
