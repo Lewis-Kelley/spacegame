@@ -63,9 +63,12 @@ void CameraListener::handle_start_move(Event *event)
         || (is_cardinal_dir(camera_dir)
             && event_dir != opp_dir(camera_dir))) {
         camera_dir = merge_directions(camera_dir, event_dir);
+        // FIXME Maybe move the pertinant logic out of the Event so we
+        // don't make a new one?
+        CameraMoveEvent *move_event = new CameraMoveEvent(camera_dir);
 
         for (Drawable *image : *images) {
-            image->start_move(start_event->get_dx(), start_event->get_dy(),
+            image->start_move(move_event->get_dx(), move_event->get_dy(),
                               CAMERA);
         }
     }

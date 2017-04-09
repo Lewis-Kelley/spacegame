@@ -5,6 +5,7 @@
 #include "../util/Direction.hpp"
 
 #define CAMERA_SPEED 0.1
+#define ONE_OVER_SQRT2 0.707106781188
 
 /**
  * Handles the movement of the camera.
