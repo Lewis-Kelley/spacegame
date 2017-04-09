@@ -10,19 +10,35 @@
 
 #include "../drawables/Renderer.hpp"
 
-namespace window {
-    extern double prev_time;
-    extern SDL_Window *wind;
-    extern Renderer *rend;
-    extern uint16_t width;
-    extern uint16_t height;
+class Window {
+ private:
+    static Window *self;
 
-    bool init();
-    bool init(uint16_t width, uint16_t height);
-    void free();
+    double prev_time;
+    SDL_Window *wind;
+    Renderer *rend;
+    uint16_t width;
+    uint16_t height;
+
+    Window() { }
+
+ public:
+    static void init();
+    static void init(uint16_t width, uint16_t height);
+    static Window *get_instance();
+
+    ~Window();
+
+    SDL_Window *get_wind() { return wind; }
+    Renderer *get_rend() { return rend; }
+
+    uint16_t get_width() { return width; }
+    uint16_t get_height() { return height; }
+
+    double get_delta();
+
     void clear_render();
     void present_render();
-    double get_delta();
-}  // namespace window
+};
 
 #endif /* WINDOW_H */

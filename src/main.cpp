@@ -45,7 +45,8 @@ Fighter *init_fighter(TileMap *tile_map, int row, int col, Texture *tex,
 
 int main(int argc, char *argv[])
 {
-    window::init();
+    Window *wind = Window::get_instance();
+
     std::queue<Unit *> units;
     MovementListener movProx;
 
@@ -55,9 +56,9 @@ int main(int argc, char *argv[])
     add_tile_rects(tile_map.get_tile_rects());
     Fighter *red_fighter = nullptr;
     Fighter *blue_fighter = nullptr;
-    Texture *red_ship_tex = window::rend->
+    Texture *red_ship_tex = wind->get_rend()->
         load_texture("/home/lewis/programs/spacegame/assets/red_ship.png");
-    Texture *blue_ship_tex = window::rend->
+    Texture *blue_ship_tex = wind->get_rend()->
         load_texture("/home/lewis/programs/spacegame/assets/blue_ship.png");
     try {
         red_fighter = init_fighter(&tile_map, 0, 0, red_ship_tex, "Enemies");
@@ -84,7 +85,7 @@ int main(int argc, char *argv[])
     state->set_is_running(true);
 
     while (state->get_is_running()) {
-        window::clear_render();
+        wind->clear_render();
 
         while (SDL_PollEvent(&sdl_event) != 0) {
             event = events::convert_SDL_Event(&sdl_event);
@@ -98,9 +99,9 @@ int main(int argc, char *argv[])
             events::event_queue.pop();
         }
 
-        delta = window::get_delta();
+        delta = wind->get_delta();
         state->draw_all(delta);
-        window::present_render();
+        wind->present_render();
     }
 
     if (red_fighter != nullptr) {
@@ -110,7 +111,7 @@ int main(int argc, char *argv[])
     delete red_ship_tex;
     delete blue_ship_tex;
 
-    window::free();
+    delete wind;
 
     return 0;
 }

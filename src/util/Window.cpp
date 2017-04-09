@@ -1,19 +1,15 @@
 #include "Window.hpp"
 
-double window::prev_time;
-SDL_Window *window::wind;
-Renderer *window::rend;
-uint16_t window::width;
-uint16_t window::height;
+Window *Window::self = nullptr;
 
 /**
  * Initializes SDL using the default values for width and height.
  *
  * @return true if success, false if there was an error.
  */
-bool window::init()
+void Window::init()
 {
-    return init(INIT_WIDTH, INIT_HEIGHT);
+    init(INIT_WIDTH, INIT_HEIGHT);
 }
 
 /**
@@ -23,23 +19,27 @@ bool window::init()
  * @param height The initial height of the Window.
  * @return true if success, false if there was an error.
  */
-bool window::init(uint16_t width, uint16_t height)
+void Window::init(uint16_t width, uint16_t height)
 {
-    free();
+    if (self != nullptr) {
+        delete self;
+    }
+
+    self = new Window();
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         throw SDL_GetError();
     }
 
-    wind = SDL_CreateWindow("spacegame",
+    self->wind = SDL_CreateWindow("spacegame",
                             SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                             width, height, SDL_WINDOW_SHOWN);
-    if (wind == NULL) {
+    if (self->wind == nullptr) {
         throw SDL_GetError();
     }
 
     SDL_Renderer *sdl_rend
-        = SDL_CreateRenderer(wind, -1, SDL_RENDERER_ACCELERATED
+        = SDL_CreateRenderer(self->wind, -1, SDL_RENDERER_ACCELERATED
                              | SDL_RENDERER_PRESENTVSYNC);
 
     if (sdl_rend == NULL) {
@@ -52,16 +52,23 @@ bool window::init(uint16_t width, uint16_t height)
         throw SDL_GetError();
     }
 
-    rend = new Renderer(sdl_rend);
+    self->rend = new Renderer(sdl_rend);
+}
 
-    return true;
+Window *Window::get_instance()
+{
+    if (self == nullptr) {
+        init();
+    }
+
+    return self;
 }
 
 /**
  * Free all the memory used by the SDL Window and renderer, as well as
  * quit all the SDL processes.
  */
-void window::free()
+Window::~Window()
 {
     if (rend != NULL) {
         delete rend;
@@ -75,7 +82,7 @@ void window::free()
 /**
  * Clears the renderer for a new buffer to be drawn.
  */
-void window::clear_render()
+void Window::clear_render()
 {
     rend->clear();
 }
@@ -83,7 +90,7 @@ void window::clear_render()
 /**
  * Draws whatever has been held in the renderer to the screen.
  */
-void window::present_render()
+void Window::present_render()
 {
     prev_time = SDL_GetTicks();
     rend->present();
@@ -92,7 +99,7 @@ void window::present_render()
 /**
  * Return the delta time since last the previous render.
  */
-double window::get_delta()
+double Window::get_delta()
 {
     return SDL_GetTicks() - prev_time;
 }

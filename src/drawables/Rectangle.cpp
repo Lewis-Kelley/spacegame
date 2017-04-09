@@ -10,8 +10,9 @@
 Rectangle::Rectangle(SDL_Rect dest_rect, SDL_Color *color)
     : dest_rect(new SDL_Rect(dest_rect)), color(color)
 {
+    Window *wind = Window::get_instance();
     rect_surf
-        = SDL_CreateRGBSurface(0, window::width, window::height,
+        = SDL_CreateRGBSurface(0, wind->get_width(), wind->get_height(),
                                32, 0, 0, 0, 0);
     x = dest_rect.x;
     y = dest_rect.y;

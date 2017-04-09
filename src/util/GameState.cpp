@@ -19,8 +19,11 @@ GameState *GameState::get_instance()
 
 void GameState::draw_all(double delta)
 {
+    Window *wind = Window::get_instance();
+    Renderer *rend = wind->get_rend();
+
     for (int i = 0; i < static_cast<int>(drawings.size()); i++) {
         drawings.at(i)->update(delta);
-        drawings.at(i)->draw(window::rend);
+        drawings.at(i)->draw(rend);
     }
 }
